@@ -9,7 +9,7 @@ upd = json.loads(m.group(1))
 data = json.load(open("shops.json", encoding="utf-8"))
 shops = data["shops"]
 by_id = {s["id"]: s for s in shops}
-FIELDS = ["n", "c", "p", "h", "la", "ln", "r", "v", "walk", "link", "dish"]
+FIELDS = ["n", "c", "cat", "p", "h", "la", "ln", "r", "v", "walk", "link", "dish"]
 log = []
 
 for a in upd.get("add", []):
