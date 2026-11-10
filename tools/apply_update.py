@@ -42,6 +42,10 @@ for s in data["shops"]:
     assert isinstance(s.get("h"), list) and len(s["h"]) == 7, f"{s['n']} 營業時間格式錯誤"
     assert s.get("p") in (1, 2), f"{s['n']} 價位只能是 1 或 2"
 
+if not log:
+    open("apply_log.txt", "w", encoding="utf-8").write("沒有變更")
+    print("沒有變更"); sys.exit(0)
+
 data["updated"] = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).strftime("%Y-%m-%d %H:%M")
 json.dump(data, open("shops.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 open("apply_log.txt", "w", encoding="utf-8").write("\n".join(log) or "沒有變更")
