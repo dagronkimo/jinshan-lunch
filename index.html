@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>金山街今天吃啥</title>
+<style>
+:root{--bg:#faf7f2;--card:#fff;--ink:#2b2622;--mute:#7a7067;--line:#e8e1d8;--acc:#d9480f;--acc2:#2f6f5e;--road:#d9cfc2;--map:#f3eee6}
+@media (prefers-color-scheme:dark){:root{--bg:#1c1a18;--card:#262320;--ink:#f1ece6;--mute:#a69c92;--line:#3a3530;--acc:#ff7a3d;--acc2:#6cc2a7;--road:#4a443d;--map:#211f1c}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:26px;margin:4px 0 2px}.sub{color:var(--mute);font-size:13px;margin-bottom:16px}
+h3{margin:0 0 8px;font-size:16px}
+.grid{display:grid;grid-template-columns:1fr;gap:16px}@media(min-width:860px){.grid{grid-template-columns:420px 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.wheelbox{position:relative;width:100%;max-width:380px;margin:0 auto;aspect-ratio:1}
+canvas{width:100%;height:100%;display:block}
+.pointer{position:absolute;top:-4px;left:50%;transform:translateX(-50%);border-left:14px solid transparent;border-right:14px solid transparent;border-top:26px solid var(--acc);filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));z-index:2}
+.hub{position:absolute;inset:0;margin:auto;width:66px;height:66px;border-radius:50%;background:var(--card);border:3px solid var(--acc);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--acc);cursor:pointer;user-select:none}
+.btn{appearance:none;border:0;border-radius:10px;padding:12px 18px;font-size:16px;font-weight:700;background:var(--acc);color:#fff;cursor:pointer;width:100%;margin-top:14px}
+.btn:disabled{opacity:.5}.btn2{background:transparent;color:var(--acc);border:1px solid var(--acc);border-radius:10px;padding:7px 12px;font-size:14px;cursor:pointer}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}.seg button{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+.seg button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+label.chk{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--mute);margin:3px 0}
+.res h2{margin:0 0 4px;font-size:22px}.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--line);margin:0 6px 4px 0}
+.meta{color:var(--mute);font-size:14px;margin:6px 0 12px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+a.maps{display:inline-block;padding:8px 12px;border-radius:10px;background:var(--acc2);color:#fff;text-decoration:none;font-size:14px;font-weight:600}
+.count{font-size:13px;color:var(--mute)}
+#map{width:100%;height:auto;display:block;background:var(--map);border-radius:10px;touch-action:manipulation}
+.road{fill:none;stroke:var(--road);stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.road.main{stroke-width:14}.rl{fill:var(--mute);font-size:13px;font-weight:600;paint-order:stroke;stroke:var(--map);stroke-width:4px}
+.pin{cursor:pointer}.pin circle{stroke:#fff;stroke-width:2}.pin text{fill:#fff;font-size:11px;font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.pin.off circle{fill:#aaa!important;opacity:.45}.pin.win circle{stroke:var(--ink);stroke-width:3}
+.pulse{fill:none;stroke:var(--acc);stroke-width:3;animation:pl 1.4s ease-out infinite}@keyframes pl{from{r:12;opacity:1}to{r:34;opacity:0}}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mute);margin-top:8px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px;vertical-align:middle}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th{font-size:12px;color:var(--mute);font-weight:600}
+td.nm{white-space:normal}td.n{font-variant-numeric:tabular-nums}tr.off td{opacity:.35}tr.hit td{background:color-mix(in srgb,var(--acc) 14%,transparent)}
+td a{color:inherit}.foot{color:var(--mute);font-size:12px;margin-top:14px;line-height:1.7}
+</style></head><body><div class="wrap">
+<h1>🍱 金山街今天中午吃啥</h1>
+<div class="sub">新竹金山街＋附近｜只收中午有營業、Google 價位 $～$$、評論 ≥ 400 則、≥ 4.2 星｜共 <b id="tot"></b> 間｜資料擷取 2026-11-10</div>
+<div class="grid">
+<div>
+ <div class="card">
+  <div class="seg" id="zone"><button data-z="all" class="on">全部</button><button data-z="core">金山街一帶</button><button data-z="near">附近（約 1–1.3 km）</button></div>
+  <label class="chk"><input type="checkbox" id="today" checked> 只轉今天中午有開的（<span id="dname"></span>）</label>
+  <label class="chk"><input type="checkbox" id="cheap"> 只要最便宜的 $ 等級</label>
+  <div class="wheelbox"><div class="pointer"></div><canvas id="w" width="760" height="760"></canvas><div class="hub" id="hub">GO</div></div>
+  <button class="btn" id="spin">轉！今天中午吃這間</button>
+  <div class="count" id="cnt" style="text-align:center;margin-top:6px"></div>
+ </div>
+ <div class="card res" id="res" style="margin-top:16px"><div class="meta">按下轉盤，或點地圖上的點看店家 🎯</div></div>
+</div>
+<div>
+ <div class="card">
+  <div class="row" style="justify-content:space-between"><h3 style="margin:0">📍 位置地圖（簡易示意）</h3><div class="seg" id="mv" style="margin:0"><button data-v="full" class="on">全區</button><button data-v="core">金山街放大</button></div></div>
+  <svg id="map" viewBox="0 0 640 520"></svg>
+  <div class="legend"><span><span class="dot" style="background:#d9480f"></span>金山街一帶</span><span><span class="dot" style="background:#1971c2"></span>附近</span><span><span class="dot" style="background:#aaa"></span>不在轉盤上</span><span>數字＝排名</span></div>
+ </div>
+ <div class="card" style="margin-top:16px">
+  <div class="row" style="justify-content:space-between"><b>排名（評分 × 評論數加權）</b><div class="row"><button class="btn2" id="all">全選</button><button class="btn2" id="none">全不選</button></div></div>
+  <div class="count" style="margin:4px 0 8px">取消勾選就不會出現在轉盤上</div>
+  <div style="overflow-x:auto"><table><thead><tr><th></th><th>#</th><th>店名</th><th>類型</th><th>星</th><th>評論</th><th>價位</th><th>今日午餐</th><th>距離</th></tr></thead><tbody id="tb"></tbody></table></div>
+  <div class="foot">已排除：薑母鴨、居酒屋、串燒、燒肉、酒吧、咖啡店，以及只開晚上的店（如 Ramen KIKKOU、八牛匯平日午餐不開）；也排除高價的 鼎盛十里（和牛放題）、沐府、BBQ House、孫太太燒肉。<br>價位用 Google 的等級：$ 大約 NT$200 以下、$$ 大約 NT$200–400。<br>排名分數＝貝氏加權平均，評論越多，星數越可信。距離為到金山街中段的直線距離。<br>地圖的道路線條是依店家座標畫的示意，不是精確街道圖；導航請按「Google 地圖」。營業時間會變動，出發前建議再確認。</div>
+ </div>
+</div>
+</div></div>
+<script>
+const D=[{"n": "今日魚市 竹科關新店", "c": "日式丼飯", "r": 4.8, "v": 6400, "p": 2, "id": "ChIJDe_Ki0Y3aDQRuTdcGWL0fqM", "la": 24.7882218, "ln": 121.01915269999999, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30"], "d": 1250, "z": "near", "s": 4.771, "k": 1}, {"n": "Thai Town 泰式", "c": "泰式", "r": 4.8, "v": 4356, "p": 2, "id": "ChIJB4B0j0U3aDQRrX-IheWTLs4", "la": 24.786719899999998, "ln": 121.0189641, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–15:00", "11:30–15:00"], "d": 1100, "z": "near", "s": 4.759, "k": 2}, {"n": "JAM 竹科金山站", "c": "健康餐盒", "r": 4.8, "v": 3581, "p": 1, "id": "ChIJXQrighc3aDQRPnasGjPl_SA", "la": 24.7777468, "ln": 121.0224118, "h": ["10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00"], "d": 50, "z": "core", "s": 4.751, "k": 3}, {"n": "初原麵場 關新店", "c": "拉麵", "r": 4.8, "v": 2328, "p": 2, "id": "ChIJT93Kg9Y3aDQRRaBMMsToIuo", "la": 24.784139999999997, "ln": 121.01600400000001, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30"], "d": 1000, "z": "near", "s": 4.729, "k": 4}, {"n": "墨竹亭 燃麵本家", "c": "麵食", "r": 4.7, "v": 3361, "p": 1, "id": "ChIJsXz3nDE3aDQRGKNFTr0JK20", "la": 24.776523100000002, "ln": 121.021821, "h": ["11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30"], "d": 100, "z": "core", "s": 4.661, "k": 5}, {"n": "築山拉麵 金山店", "c": "拉麵", "r": 4.9, "v": 520, "p": 2, "id": "ChIJRQudQgA3aDQRYilpQICyEgw", "la": 24.7756469, "ln": 121.0265625, "h": ["11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30"], "d": 450, "z": "core", "s": 4.655, "k": 6}, {"n": "早飯晚雞", "c": "雞肉飯", "r": 4.8, "v": 583, "p": 1, "id": "ChIJe4LmCQA3aDQR66rmHDkMWG8", "la": 24.7757841, "ln": 121.0265915, "h": ["11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "", ""], "d": 450, "z": "core", "s": 4.615, "k": 7}, {"n": "一碗鮮米線&砂鍋菜", "c": "米線", "r": 4.7, "v": 908, "p": 2, "id": "ChIJCaL8aQA3aDQRz-vaxR5a9d8", "la": 24.7873879, "ln": 121.01575109999999, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 1300, "z": "near", "s": 4.593, "k": 8}, {"n": "金春喜韓廚 關新店", "c": "韓式", "r": 4.6, "v": 2881, "p": 2, "id": "ChIJZwiwRzM3aDQRH5H1QKxXqNM", "la": 24.784282299999997, "ln": 121.01849109999999, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–22:00", "11:00–22:00"], "d": 900, "z": "near", "s": 4.57, "k": 9}, {"n": "麵匡匡拉麵食堂 關新店", "c": "拉麵", "r": 4.7, "v": 537, "p": 2, "id": "ChIJi5M800M3aDQRaATwvulSBD8", "la": 24.783156599999998, "ln": 121.0184349, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 800, "z": "near", "s": 4.555, "k": 10}, {"n": "泰式料理（金山十一街13號）", "c": "泰式", "r": 4.6, "v": 1497, "p": 2, "id": "ChIJbb3kMb43aDQRnsffZLpwGk0", "la": 24.776932499999997, "ln": 121.02182409999999, "h": ["11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–20:00", "11:00–20:30"], "d": 50, "z": "core", "s": 4.55, "k": 11}, {"n": "MEGOPUN Hamburger", "c": "漢堡", "r": 4.7, "v": 501, "p": 2, "id": "ChIJB_PSppM3aDQRbeWaIpa-QOE", "la": 24.7860302, "ln": 121.0169302, "h": ["10:30–13:30", "", "10:30–13:30", "10:30–13:30", "10:30–13:30", "09:00–16:00", "09:00–16:00"], "d": 1150, "z": "near", "s": 4.55, "k": 12}, {"n": "舊港2號 原形原味料理", "c": "海鮮/中式", "r": 4.6, "v": 1163, "p": 2, "id": "ChIJ6W1Cnzk2aDQR33VJyJTuKnU", "la": 24.7874171, "ln": 121.01936339999999, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1200, "z": "near", "s": 4.54, "k": 13}, {"n": "食麥smile 早午餐", "c": "早午餐", "r": 4.6, "v": 742, "p": 1, "id": "ChIJbXodmRw3aDQRqyyasXYVv6g", "la": 24.7832959, "ln": 121.01223929999999, "h": ["06:00–14:00", "", "06:00–14:00", "06:00–14:00", "06:00–14:00", "06:00–14:00", "06:00–14:00"], "d": 1250, "z": "near", "s": 4.519, "k": 14}, {"n": "里斯廚房 金山店", "c": "炸物/義麵", "r": 4.6, "v": 658, "p": 1, "id": "ChIJ1QoTk1I3aDQRU4-FtVwjkHo", "la": 24.777193099999998, "ln": 121.0234886, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 100, "z": "core", "s": 4.514, "k": 15}, {"n": "有飯食光 金山店", "c": "便當", "r": 4.6, "v": 400, "p": 1, "id": "ChIJj0IdG4Y3aDQRQlwF9SS6ehI", "la": 24.7781791, "ln": 121.02100249999998, "h": ["11:00–14:00", "11:00–14:00", "11:00–13:30", "11:00–14:00", "11:00–13:30", "11:00–14:00", "11:00–14:00"], "d": 200, "z": "core", "s": 4.489, "k": 16}, {"n": "硬派主廚的軟嫩料理", "c": "日式定食", "r": 4.5, "v": 1106, "p": 2, "id": "ChIJc75UTcM3aDQRVu5M6PhTojg", "la": 24.7864571, "ln": 121.02130179999999, "h": ["", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00"], "d": 1050, "z": "near", "s": 4.469, "k": 17}, {"n": "大饌鐵板燒", "c": "鐵板燒", "r": 4.5, "v": 928, "p": 2, "id": "ChIJo3-8eSU2aDQRaBUv311JFXs", "la": 24.777919699999998, "ln": 121.02135169999998, "h": ["11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", ""], "d": 150, "z": "core", "s": 4.465, "k": 18}, {"n": "越南料理（金山十二街31號）", "c": "越式河粉", "r": 4.5, "v": 731, "p": 1, "id": "ChIJg-iVfS82aDQRGFdOavabIwE", "la": 24.7768132, "ln": 121.02225039999999, "h": ["10:30–14:00", "10:30–14:00", "10:30–14:00", "10:30–14:00", "10:30–14:00", "", "10:30–14:00"], "d": 50, "z": "core", "s": 4.459, "k": 19}, {"n": "歐浮找餐 金山店", "c": "早午餐", "r": 4.5, "v": 666, "p": 1, "id": "ChIJ2xcL1vE3aDQRYcOYnDYY9f4", "la": 24.7775442, "ln": 121.0207816, "h": ["06:30–21:00", "06:30–21:00", "", "06:30–21:00", "06:30–21:00", "07:00–20:30", "07:00–20:30"], "d": 200, "z": "core", "s": 4.457, "k": 20}, {"n": "玉山家川牛肉麵", "c": "牛肉麵", "r": 4.5, "v": 527, "p": 2, "id": "ChIJM4OtC-M3aDQRYJcm6bB2-uQ", "la": 24.788585299999998, "ln": 121.02026829999998, "h": ["", "", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1300, "z": "near", "s": 4.451, "k": 21}, {"n": "Feed Burger 2.0", "c": "漢堡", "r": 4.5, "v": 481, "p": 2, "id": "ChIJu9VBJfI1aDQRv4h9WpAUYzk", "la": 24.7778684, "ln": 121.020323, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–21:00", "11:30–21:00"], "d": 250, "z": "core", "s": 4.449, "k": 22}, {"n": "Daima 大馬南洋料理", "c": "南洋", "r": 4.4, "v": 1887, "p": 2, "id": "ChIJ3aNpiiU2aDQRcnil5AnxC8o", "la": 24.776324199999998, "ln": 121.0217987, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 100, "z": "core", "s": 4.4, "k": 23}, {"n": "Nu pasta", "c": "義大利麵", "r": 4.4, "v": 1837, "p": 2, "id": "ChIJl4SPiTk2aDQRi8-qPsJ9jhE", "la": 24.787184999999997, "ln": 121.0206572, "h": ["11:00–14:30", "11:00–15:00", "11:00–21:00", "11:00–15:00", "11:00–15:00", "11:00–21:00", "11:00–21:00"], "d": 1100, "z": "near", "s": 4.4, "k": 24}, {"n": "法諾義式廚房 竹科店", "c": "義大利麵", "r": 4.4, "v": 427, "p": 2, "id": "ChIJW3ank9Q3aDQRHdS4IOh9_kk", "la": 24.7751229, "ln": 121.0262177, "h": ["11:00–14:30", "", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 450, "z": "core", "s": 4.4, "k": 25}, {"n": "素食園", "c": "素食自助", "r": 4.4, "v": 740, "p": 1, "id": "ChIJQ6pluSU2aDQRxqXniVab7p4", "la": 24.7769919, "ln": 121.0200899, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", ""], "d": 250, "z": "core", "s": 4.4, "k": 26}, {"n": "Bhabhis 印度料理", "c": "印度", "r": 4.3, "v": 701, "p": 2, "id": "ChIJU-W4lS42aDQR_1HQBm2W1rU", "la": 24.775245, "ln": 121.026603, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:30", "11:00–14:30"], "d": 450, "z": "core", "s": 4.342, "k": 27}, {"n": "秦老大的小館子", "c": "川味/乾鍋", "r": 4.3, "v": 1572, "p": 2, "id": "ChIJlUnPKBY2aDQRlZNmx82tdhY", "la": 24.778106599999997, "ln": 121.02041499999999, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–15:00", ""], "d": 250, "z": "core", "s": 4.324, "k": 28}, {"n": "川家客家料理", "c": "客家菜", "r": 4.3, "v": 1638, "p": 2, "id": "ChIJffG8Ajs2aDQRHm2Ugw-yK1g", "la": 24.7828576, "ln": 121.01911129999999, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 700, "z": "near", "s": 4.323, "k": 29}, {"n": "非常食鍋韓國料理", "c": "韓式", "r": 4.3, "v": 3111, "p": 2, "id": "ChIJk2H_lHM2aDQRxVC6e5J8T4o", "la": 24.7774318, "ln": 121.0229729, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 50, "z": "core", "s": 4.314, "k": 30}, {"n": "火鍋（金山街128號）", "c": "小火鍋", "r": 4.2, "v": 657, "p": 2, "id": "ChIJ6-c_CS82aDQRWmc3YhBy5r4", "la": 24.7762865, "ln": 121.0249198, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 250, "z": "core", "s": 4.286, "k": 31}, {"n": "重慶孫子文牛肉麵 金山店", "c": "牛肉麵", "r": 4.2, "v": 724, "p": 1, "id": "ChIJYc5NSg43aDQRwk4zKmCwU2A", "la": 24.7784395, "ln": 121.0196993, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 300, "z": "core", "s": 4.282, "k": 32}, {"n": "KIYO 博多拉麵", "c": "拉麵", "r": 4.2, "v": 760, "p": 2, "id": "ChIJ0eFogU83aDQRAVQztuQiZ2k", "la": 24.7869216, "ln": 121.01796929999998, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:30–14:30", "11:30–14:30"], "d": 1150, "z": "near", "s": 4.279, "k": 33}, {"n": "福樂餐館", "c": "中式合菜", "r": 4.2, "v": 1430, "p": 2, "id": "ChIJwxWfnTk2aDQR5HTOVh7uWwc", "la": 24.7866727, "ln": 121.019396, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1100, "z": "near", "s": 4.252, "k": 34}];
+const DAYS=["週一","週二","週三","週四","週五","週六","週日"],TD=(new Date().getDay()+6)%7;
+let zone="all",excluded=new Set(),rot=0,spinning=false,pool=[],sel=null;
+try{excluded=new Set(JSON.parse(localStorage.getItem("js2_ex")||"[]"))}catch(e){}
+const $=s=>document.querySelector(s);
+const pal=["#e8590c","#f08c00","#2f9e44","#1971c2","#7048e8","#c2255c","#0c8599","#5c940d","#d6336c","#495057"];
+const save=()=>{try{localStorage.setItem("js2_ex",JSON.stringify([...excluded]))}catch(e){}};
+const url=x=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.n)}&query_place_id=${x.id}`;
+const price=x=>"$".repeat(x.p||1);
+const inZone=x=>zone=="all"||x.z==zone;
+const onWheel=x=>inZone(x)&&!excluded.has(x.id)&&(!$("#today").checked||x.h[TD])&&(!$("#cheap").checked||x.p==1);
+$("#tot").textContent=D.length;$("#dname").textContent=DAYS[TD];
+function compute(){pool=D.filter(onWheel);$("#cnt").textContent=`轉盤上共 ${pool.length} 間`;$("#spin").disabled=!pool.length;draw();table();map();}
+function draw(){const cv=$("#w"),g=cv.getContext("2d"),R=380,n=pool.length;g.clearRect(0,0,760,760);g.save();g.translate(R,R);g.rotate(rot);
+ if(!n){g.fillStyle="#999";g.beginPath();g.arc(0,0,R-6,0,7);g.fill();g.restore();return}
+ const a=2*Math.PI/n;for(let i=0;i<n;i++){g.beginPath();g.moveTo(0,0);g.arc(0,0,R-6,i*a,(i+1)*a);g.closePath();g.fillStyle=pal[i%pal.length];g.fill();g.strokeStyle="rgba(255,255,255,.6)";g.lineWidth=2;g.stroke();
+  g.save();g.rotate(i*a+a/2);g.textAlign="right";g.textBaseline="middle";g.fillStyle="#fff";const fs=Math.max(14,Math.min(30,Math.floor(540/n)+8));
+  g.font=`600 ${fs}px -apple-system,"PingFang TC","Noto Sans TC",sans-serif`;let t=pool[i].n.replace(/（.*?）/,"");const mx=n>25?7:n>14?9:12;if([...t].length>mx)t=[...t].slice(0,mx).join("")+"…";g.fillText(t,R-22,0);g.restore();}
+ g.restore();}
+function table(){$("#tb").innerHTML=D.filter(inZone).map(x=>`<tr class="${onWheel(x)?"":"off"} ${sel&&x.id==sel.id?"hit":""}"><td><input type="checkbox" data-id="${x.id}" ${excluded.has(x.id)?"":"checked"}></td><td class="n">${x.k}</td><td class="nm"><a href="${url(x)}" target="_blank" rel="noopener">${x.n}</a></td><td>${x.c}</td><td class="n">${x.r.toFixed(1)}</td><td class="n">${x.v.toLocaleString()}</td><td>${price(x)}</td><td class="n">${x.h[TD]||"休"}</td><td class="n">${x.d<100?"本街":x.d+"m"}</td></tr>`).join("");}
+// map
+const lat0=24.7805,cosl=Math.cos(lat0*Math.PI/180);
+const VB={full:{minLa:24.7743,maxLa:24.7893,minLn:121.0113,maxLn:121.0283},core:{minLa:24.7743,maxLa:24.7792,minLn:121.0186,maxLn:121.0283}};
+let view="full",B,sc,offx,offy;const W=640,H=520,pad=26;
+function setView(){B=VB[view];const sx=(W-2*pad)/((B.maxLn-B.minLn)*cosl),sy=(H-2*pad)/(B.maxLa-B.minLa);sc=Math.min(sx,sy);offx=(W-(B.maxLn-B.minLn)*cosl*sc)/2;offy=(H-(B.maxLa-B.minLa)*sc)/2;}
+setView();
+const P=(la,ln)=>[offx+(ln-B.minLn)*cosl*sc,H-offy-(la-B.minLa)*sc];
+const inV=(la,ln)=>la>=B.minLa&&la<=B.maxLa&&ln>=B.minLn&&ln<=B.maxLn;
+const roads=[
+ {n:"金山街",main:1,p:[[24.77844,121.01970],[24.77775,121.02241],[24.77719,121.02349],[24.77629,121.02492],[24.77565,121.02656],[24.77519,121.02762]],lab:{full:[24.7745,121.0240,-24],core:[24.7768,121.0257,-28]}},
+ {n:"光復路一段",main:1,p:[[24.78087,121.02621],[24.78130,121.02320],[24.78189,121.02191],[24.78286,121.01911],[24.78497,121.01351],[24.7865,121.0110]],lab:{full:[24.7853,121.0125,-24]}},
+ {n:"關新路",p:[[24.78428,121.01849],[24.78667,121.01940],[24.78742,121.01936],[24.7895,121.0193]],lab:{full:[24.7887,121.0201,85]}},
+ {n:"關東路",p:[[24.78646,121.02130],[24.78718,121.02066],[24.78859,121.02027]],lab:{full:[24.7882,121.0214,-70]}},
+ {n:"中興路四段（竹中）",p:[[24.7795,121.0280],[24.78087,121.02621],[24.7815,121.0255]],lab:{full:[24.7792,121.0262,0]}},
+];
+function map(){const s=$("#map");let h="";
+ for(const r of roads){h+=`<polyline class="road ${r.main?"main":""}" points="${r.p.map(q=>P(...q).join(",")).join(" ")}"/>`}
+ for(const r of roads){const L=r.lab[view];if(!L)continue;const [x,y]=P(L[0],L[1]);const _=r.lab;h+=`<text class="rl" x="${x}" y="${y}" text-anchor="middle" transform="rotate(${L[2]} ${x} ${y})">${r.n}</text>`}
+ const [cx,cy]=P(24.77775,121.02241);if(view=="core")h+=`<text class="rl" x="${cx}" y="${cy+30}" text-anchor="middle" style="font-size:11px">⭐ 金山街中段</text>`;
+ const list=[...D].sort((a,b)=>b.k-a.k);
+ const pr=view=="core"?13:10;const pos={};const vis=list.filter(x=>inV(x.la,x.ln));vis.forEach(x=>pos[x.id]=P(x.la,x.ln));
+ for(let it=0;it<40;it++)for(let i=0;i<vis.length;i++)for(let j=i+1;j<vis.length;j++){const a=pos[vis[i].id],b=pos[vis[j].id];let dx=b[0]-a[0],dy=b[1]-a[1],dd=Math.hypot(dx,dy)||0.01,mn=pr*2+1;if(dd<mn){const k=(mn-dd)/2/dd;a[0]-=dx*k;a[1]-=dy*k;b[0]+=dx*k;b[1]+=dy*k}}
+ for(const x of vis){const [px,py]=pos[x.id];const on=onWheel(x),win=sel&&sel.id==x.id;
+  h+=`<g class="pin ${on?"":"off"} ${win?"win":""}" data-id="${x.id}"><circle cx="${px}" cy="${py}" r="${pr}" fill="${x.z=="core"?"#d9480f":"#1971c2"}"/><text x="${px}" y="${py}">${x.k}</text><title>${x.k}. ${x.n}</title></g>`}
+ if(sel&&pos[sel.id]){const [px,py]=pos[sel.id];h+=`<circle class="pulse" cx="${px}" cy="${py}" r="12"/>`;const [qx,qy]=pos[sel.id];h+=`<g class="pin win"><circle cx="${qx}" cy="${qy}" r="${pr+2}" fill="${sel.z=="core"?"#d9480f":"#1971c2"}"/><text x="${qx}" y="${qy}">${sel.k}</text></g>`}
+ s.innerHTML=h;}
+$("#map").onclick=e=>{const g=e.target.closest(".pin");if(!g||!g.dataset.id)return;show(D.find(x=>x.id==g.dataset.id),false)};
+function spin(){if(spinning||!pool.length)return;spinning=true;$("#spin").disabled=true;const n=pool.length,a=2*Math.PI/n,idx=Math.floor(Math.random()*n);
+ const target=-Math.PI/2-(idx*a+a/2)+(Math.random()-.5)*a*.7,start=rot%(2*Math.PI),delta=((target-start)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)+2*Math.PI*6,t0=performance.now(),dur=4200;
+ (function f(t){const p=Math.min(1,(t-t0)/dur);rot=start+delta*(1-Math.pow(1-p,4));draw();if(p<1)requestAnimationFrame(f);else{spinning=false;$("#spin").disabled=false;show(pool[idx],true)}})(t0);}
+function show(x,fromSpin){sel=x;const wk=x.h.map((v,i)=>`${DAYS[i].slice(1)} ${v||"休"}`).join("　");
+ $("#res").innerHTML=`<div class="count">${fromSpin?"今天中午就吃 👇":"店家資訊"}</div><h2>${x.n}</h2>
+ <div><span class="tag">${x.c}</span><span class="tag">${price(x)}</span><span class="tag">${x.z=="core"?"金山街一帶":"附近 "+x.d+"m"}</span><span class="tag">排名 #${x.k}</span></div>
+ <div class="meta">⭐ ${x.r.toFixed(1)}｜${x.v.toLocaleString()} 則評論<br>今天（${DAYS[TD]}）午餐：<b>${x.h[TD]||"公休"}</b><br><span style="font-size:12px">${wk}</span></div>
+ <div class="row"><a class="maps" href="${url(x)}" target="_blank" rel="noopener">📍 Google 地圖</a>${fromSpin?'<button class="btn2" id="skip">不想吃，移除再轉</button>':""}</div>`;
+ if(fromSpin)$("#skip").onclick=()=>{excluded.add(x.id);save();compute();spin()};table();map();}
+$("#mv").onclick=e=>{const b=e.target.closest("button");if(!b)return;view=b.dataset.v;[...$("#mv").children].forEach(c=>c.classList.toggle("on",c==b));setView();map()};
+$("#spin").onclick=spin;$("#hub").onclick=spin;$("#today").onchange=compute;$("#cheap").onchange=compute;
+$("#zone").onclick=e=>{const b=e.target.closest("button");if(!b)return;zone=b.dataset.z;[...$("#zone").children].forEach(c=>c.classList.toggle("on",c==b));compute()};
+$("#tb").onchange=e=>{const id=e.target.dataset.id;if(!id)return;e.target.checked?excluded.delete(id):excluded.add(id);save();compute()};
+$("#all").onclick=()=>{excluded.clear();save();compute()};$("#none").onclick=()=>{D.forEach(x=>excluded.add(x.id));save();compute()};
+compute();
+</script></body></html>
