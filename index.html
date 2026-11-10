@@ -160,6 +160,34 @@ a:focus-visible,button:focus-visible,input:focus-visible+span,select:focus-visib
 .sheet ol li.hot i{background:var(--yellow)}
 .sheet .src{font-size:.78rem;opacity:.85;margin-top:10px;line-height:1.7}
 .sheet .x{position:absolute;right:14px;top:12px}
+.wx{margin-top:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;background:#EAF5FA}
+.wx .em{font-size:2.2rem;line-height:1;flex:none;width:52px;height:52px;border:var(--line);border-radius:16px;background:var(--white);display:grid;place-items:center}
+.wx b{font-weight:400;font-size:1.05rem}.wx small{display:block;font-size:.82rem}
+.wxbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.82rem;margin:-6px 0 12px}
+.rainy{background:var(--sky);border:2.5px solid var(--ink);border-radius:14px;padding:8px 12px;font-size:.86rem;margin-bottom:12px}
+.vb{font-size:.72rem;border:2px solid var(--ink);border-radius:999px;padding:0 7px;background:var(--green);white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stats div{border:var(--line);border-radius:16px;text-align:center;padding:8px 2px;background:var(--white)}
+.stats b{display:block;font-weight:400;font-size:1.5rem;line-height:1.2}
+.stats span{font-size:.78rem}
+.logs{display:grid;gap:10px}
+.logi{padding:10px 14px;display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:center}
+.logi .dt{border:2.5px solid var(--ink);border-radius:12px;text-align:center;background:var(--yellow);padding:2px 0;line-height:1.2}
+.logi .dt b{display:block;font-weight:400;font-size:1.1rem}.logi .dt small{font-size:.7rem}
+.logi h4{font-weight:400;font-size:1rem;line-height:1.3}.logi p{font-size:.8rem;opacity:.85}
+.frm label{display:block;font-size:.88rem;margin-top:10px}
+.frm input[type=text],.frm input[type=date],.frm input[type=number],.frm select,.frm textarea{width:100%;font-family:inherit;font-size:.95rem;color:var(--ink);border:2.5px solid var(--ink);border-radius:12px;padding:6px 10px;background:var(--white);margin-top:4px}
+.frm textarea{min-height:70px}
+.frm .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.frm .days7{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.frm .days7 label{margin:0;display:flex;align-items:center;gap:2px;border:2px solid var(--ink);border-radius:10px;padding:1px 7px;font-size:.82rem;background:var(--white)}
+.frm .hint{font-size:.76rem;opacity:.8;margin-top:3px}
+.hearts button{font-size:1.4rem;background:none;border:0;cursor:pointer;padding:0 2px;filter:grayscale(1);opacity:.4}
+.hearts button.on{filter:none;opacity:1}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--paper);border-radius:999px;padding:8px 16px;font-size:.9rem;z-index:3000;display:none}
+.toast.show{display:block;animation:pop .45s cubic-bezier(.3,1.6,.5,1) both}
+.tag-new{font-size:.7rem;border:2px solid var(--ink);border-radius:999px;padding:0 6px;background:var(--coral)}
 footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + env(safe-area-inset-bottom))}
 .ver{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:0 10px;margin-bottom:6px;background:var(--white)}
 
@@ -181,7 +209,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
 <body>
 <nav class="nav" aria-label="主選單"><div class="in">
  <span class="logo" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M6 20h28a14 12 0 0 1-28 0z" fill="#F6D27A" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><path d="M10 20c4-3 6 2 10-1s6 2 10-1" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/><path d="M24 6l-8 14M30 8l-10 12" stroke="#3E3A39" stroke-width="3" stroke-linecap="round"/></svg>金山街午餐</span>
- <a class="lk" href="#home">首頁</a><a class="lk" href="#wheel">轉盤</a><a class="lk" href="#days">午餐行程</a><a class="lk" href="#map">地圖</a><a class="lk" href="#list">名單</a>
+ <a class="lk" href="#home">首頁</a><a class="lk" href="#wheel">轉盤</a><a class="lk" href="#days">午餐行程</a><a class="lk" href="#map">地圖</a><a class="lk" href="#list">名單</a><a class="lk" href="#log">聚餐紀錄</a>
 </div></nav>
 <main class="wrap">
 
@@ -235,6 +263,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
  <p class="sub">新竹金山街＋附近 <b id="tot"></b> 間｜中午有開・價位 $～$$・Google 4.2 星以上、400 則評論以上</p>
  <div class="count" aria-live="polite"><div><b id="cd-h">--</b><span>時</span></div><div><b id="cd-m">--</b><span>分</span></div><div><b id="cd-s">--</b><span>秒</span></div></div>
  <p class="count-msg" id="cd-msg">距離午休還有</p>
+ <div class="card wx" id="wxCard" aria-live="polite"><div class="em">⏳</div><div><b>讀取天氣中…</b><small>金山街這週中午的天氣</small></div></div>
  <a class="card today-card" id="todayCard" href="#days" style="text-decoration:none"></a>
 </section>
 
@@ -267,6 +296,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
   <button class="sbtn" id="resetWeek">重新排這週</button>
  </div>
  <div class="tabs" id="tabs" role="tablist" aria-label="選擇日期"></div>
+ <div id="dayWx"></div>
  <div id="dayPanel" role="tabpanel"></div>
 </section>
 
@@ -287,23 +317,40 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
 <section id="list">
  <h2><span class="dot" style="background:var(--green)"></span>午餐名單</h2>
  <p class="note">排名＝評分 × 評論數加權（評論越多越可信）。點店名或「🍽 招牌菜」看熱門餐點和評論重點；按「不想吃」會從轉盤和推薦行程排除。</p>
+ <div class="toolbar"><button class="sbtn y" id="addShop">➕ 新增店家</button><a class="sbtn s" target="_blank" rel="noopener" href="https://www.google.com/maps/search/%E9%A4%90%E5%BB%B3/@24.7772,121.0225,17z">🔍 找附近新開的店</a><button class="sbtn g" id="publish">📤 發布給大家</button><button class="sbtn" id="showHidden">👀 已隱藏的店</button></div>
+ <p class="note" id="localNote" style="display:none"></p>
  <div class="pills" id="lzone" role="group" aria-label="名單區域"><button class="pill" data-z="all" aria-pressed="true">全部</button><button class="pill" data-z="core" aria-pressed="false">金山街一帶</button><button class="pill" data-z="near" aria-pressed="false">附近</button></div>
  <label class="chkl"><input type="checkbox" id="lHide"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>隱藏「不想吃」的</label>
  <div class="list" id="shops"></div>
 </section>
 
+<section id="log">
+ <h2><span class="dot" style="background:var(--coral)"></span>聚餐紀錄</h2>
+ <p class="note">記下哪天和誰去吃了哪間。紀錄只存在這支手機，換手機前記得「備份」。</p>
+ <div class="stats"><div><b id="stShops">0</b><span>去過幾間</span></div><div><b id="stTimes">0</b><span>聚餐次數</span></div><div><b id="stLeft">0</b><span>還沒去過</span></div></div>
+ <div class="toolbar"><button class="sbtn y" id="newLog">📝 記一筆聚餐</button><button class="sbtn" id="backup">💾 備份／還原</button></div>
+ <label class="chkl"><input type="checkbox" id="avoidRecent"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>轉盤和推薦避開「最近 7 天吃過」的店</label>
+ <label class="chkl"><input type="checkbox" id="onlyNew"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>轉盤只轉「還沒去過」的店（探險模式）</label>
+ <div class="logs" id="logs" style="margin-top:12px"></div>
+</section>
+
 <footer>
- <span class="ver">版本 2026/11/10・午餐繪本版＋招牌菜</span><br>
+ <span class="ver">版本 2026/11/10・繪本版＋招牌菜＋聚餐紀錄＋天氣</span><br>
  店家資料為 Google 地圖（2026 年 11 月）；價位 $ 約 NT$200 以下、$$ 約 NT$200–400<br>
- 走路／騎車時間以直線距離估算，營業時間可能變動，出發前請再確認<br>
+ 走路／騎車時間以直線距離估算，營業時間可能變動，出發前請再確認<br>天氣資料：<a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>（金山街座標，中午 12:00 預報）<br>
  已排除：薑母鴨、居酒屋、串燒、燒肉、酒吧、咖啡店、只開晚上與高價吃到飽的店
 </footer>
 </main>
 
+<div class="toast" id="toast" role="status"></div>
 <div class="sheet-bg" id="sheetBg" aria-hidden="true"><div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="店家小卡" style="position:relative"></div></div>
 <script>
-const D=[{"n": "今日魚市 竹科關新店", "c": "日式丼飯", "r": 4.8, "v": 6400, "p": 2, "id": "ChIJDe_Ki0Y3aDQRuTdcGWL0fqM", "la": 24.7882218, "ln": 121.01915269999999, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30"], "d": 1250, "z": "near", "s": 4.771, "k": 1}, {"n": "Thai Town 泰式", "c": "泰式", "r": 4.8, "v": 4356, "p": 2, "id": "ChIJB4B0j0U3aDQRrX-IheWTLs4", "la": 24.786719899999998, "ln": 121.0189641, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–15:00", "11:30–15:00"], "d": 1100, "z": "near", "s": 4.759, "k": 2}, {"n": "JAM 竹科金山站", "c": "健康餐盒", "r": 4.8, "v": 3581, "p": 1, "id": "ChIJXQrighc3aDQRPnasGjPl_SA", "la": 24.7777468, "ln": 121.0224118, "h": ["10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00"], "d": 50, "z": "core", "s": 4.751, "k": 3}, {"n": "初原麵場 關新店", "c": "拉麵", "r": 4.8, "v": 2328, "p": 2, "id": "ChIJT93Kg9Y3aDQRRaBMMsToIuo", "la": 24.784139999999997, "ln": 121.01600400000001, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30"], "d": 1000, "z": "near", "s": 4.729, "k": 4}, {"n": "墨竹亭 燃麵本家", "c": "麵食", "r": 4.7, "v": 3361, "p": 1, "id": "ChIJsXz3nDE3aDQRGKNFTr0JK20", "la": 24.776523100000002, "ln": 121.021821, "h": ["11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30"], "d": 100, "z": "core", "s": 4.661, "k": 5}, {"n": "築山拉麵 金山店", "c": "拉麵", "r": 4.9, "v": 520, "p": 2, "id": "ChIJRQudQgA3aDQRYilpQICyEgw", "la": 24.7756469, "ln": 121.0265625, "h": ["11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30"], "d": 450, "z": "core", "s": 4.655, "k": 6}, {"n": "早飯晚雞", "c": "雞肉飯", "r": 4.8, "v": 583, "p": 1, "id": "ChIJe4LmCQA3aDQR66rmHDkMWG8", "la": 24.7757841, "ln": 121.0265915, "h": ["11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "", ""], "d": 450, "z": "core", "s": 4.615, "k": 7}, {"n": "一碗鮮米線&砂鍋菜", "c": "米線", "r": 4.7, "v": 908, "p": 2, "id": "ChIJCaL8aQA3aDQRz-vaxR5a9d8", "la": 24.7873879, "ln": 121.01575109999999, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 1300, "z": "near", "s": 4.593, "k": 8}, {"n": "金春喜韓廚 關新店", "c": "韓式", "r": 4.6, "v": 2881, "p": 2, "id": "ChIJZwiwRzM3aDQRH5H1QKxXqNM", "la": 24.784282299999997, "ln": 121.01849109999999, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–22:00", "11:00–22:00"], "d": 900, "z": "near", "s": 4.57, "k": 9}, {"n": "麵匡匡拉麵食堂 關新店", "c": "拉麵", "r": 4.7, "v": 537, "p": 2, "id": "ChIJi5M800M3aDQRaATwvulSBD8", "la": 24.783156599999998, "ln": 121.0184349, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 800, "z": "near", "s": 4.555, "k": 10}, {"n": "泰式料理（金山十一街13號）", "c": "泰式", "r": 4.6, "v": 1497, "p": 2, "id": "ChIJbb3kMb43aDQRnsffZLpwGk0", "la": 24.776932499999997, "ln": 121.02182409999999, "h": ["11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–20:00", "11:00–20:30"], "d": 50, "z": "core", "s": 4.55, "k": 11}, {"n": "MEGOPUN Hamburger", "c": "漢堡", "r": 4.7, "v": 501, "p": 2, "id": "ChIJB_PSppM3aDQRbeWaIpa-QOE", "la": 24.7860302, "ln": 121.0169302, "h": ["10:30–13:30", "", "10:30–13:30", "10:30–13:30", "10:30–13:30", "09:00–16:00", "09:00–16:00"], "d": 1150, "z": "near", "s": 4.55, "k": 12}, {"n": "舊港2號 原形原味料理", "c": "海鮮/中式", "r": 4.6, "v": 1163, "p": 2, "id": "ChIJ6W1Cnzk2aDQR33VJyJTuKnU", "la": 24.7874171, "ln": 121.01936339999999, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1200, "z": "near", "s": 4.54, "k": 13}, {"n": "食麥smile 早午餐", "c": "早午餐", "r": 4.6, "v": 742, "p": 1, "id": "ChIJbXodmRw3aDQRqyyasXYVv6g", "la": 24.7832959, "ln": 121.01223929999999, "h": ["06:00–14:00", "", "06:00–14:00", "06:00–14:00", "06:00–14:00", "06:00–14:00", "06:00–14:00"], "d": 1250, "z": "near", "s": 4.519, "k": 14}, {"n": "里斯廚房 金山店", "c": "炸物/義麵", "r": 4.6, "v": 658, "p": 1, "id": "ChIJ1QoTk1I3aDQRU4-FtVwjkHo", "la": 24.777193099999998, "ln": 121.0234886, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 100, "z": "core", "s": 4.514, "k": 15}, {"n": "有飯食光 金山店", "c": "便當", "r": 4.6, "v": 400, "p": 1, "id": "ChIJj0IdG4Y3aDQRQlwF9SS6ehI", "la": 24.7781791, "ln": 121.02100249999998, "h": ["11:00–14:00", "11:00–14:00", "11:00–13:30", "11:00–14:00", "11:00–13:30", "11:00–14:00", "11:00–14:00"], "d": 200, "z": "core", "s": 4.489, "k": 16}, {"n": "硬派主廚的軟嫩料理", "c": "日式定食", "r": 4.5, "v": 1106, "p": 2, "id": "ChIJc75UTcM3aDQRVu5M6PhTojg", "la": 24.7864571, "ln": 121.02130179999999, "h": ["", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00"], "d": 1050, "z": "near", "s": 4.469, "k": 17}, {"n": "大饌鐵板燒", "c": "鐵板燒", "r": 4.5, "v": 928, "p": 2, "id": "ChIJo3-8eSU2aDQRaBUv311JFXs", "la": 24.777919699999998, "ln": 121.02135169999998, "h": ["11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", ""], "d": 150, "z": "core", "s": 4.465, "k": 18}, {"n": "越南料理（金山十二街31號）", "c": "越式河粉", "r": 4.5, "v": 731, "p": 1, "id": "ChIJg-iVfS82aDQRGFdOavabIwE", "la": 24.7768132, "ln": 121.02225039999999, "h": ["10:30–14:00", "10:30–14:00", "10:30–14:00", "10:30–14:00", "10:30–14:00", "", "10:30–14:00"], "d": 50, "z": "core", "s": 4.459, "k": 19}, {"n": "歐浮找餐 金山店", "c": "早午餐", "r": 4.5, "v": 666, "p": 1, "id": "ChIJ2xcL1vE3aDQRYcOYnDYY9f4", "la": 24.7775442, "ln": 121.0207816, "h": ["06:30–21:00", "06:30–21:00", "", "06:30–21:00", "06:30–21:00", "07:00–20:30", "07:00–20:30"], "d": 200, "z": "core", "s": 4.457, "k": 20}, {"n": "玉山家川牛肉麵", "c": "牛肉麵", "r": 4.5, "v": 527, "p": 2, "id": "ChIJM4OtC-M3aDQRYJcm6bB2-uQ", "la": 24.788585299999998, "ln": 121.02026829999998, "h": ["", "", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1300, "z": "near", "s": 4.451, "k": 21}, {"n": "Feed Burger 2.0", "c": "漢堡", "r": 4.5, "v": 481, "p": 2, "id": "ChIJu9VBJfI1aDQRv4h9WpAUYzk", "la": 24.7778684, "ln": 121.020323, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–21:00", "11:30–21:00"], "d": 250, "z": "core", "s": 4.449, "k": 22}, {"n": "Daima 大馬南洋料理", "c": "南洋", "r": 4.4, "v": 1887, "p": 2, "id": "ChIJ3aNpiiU2aDQRcnil5AnxC8o", "la": 24.776324199999998, "ln": 121.0217987, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 100, "z": "core", "s": 4.4, "k": 23}, {"n": "Nu pasta", "c": "義大利麵", "r": 4.4, "v": 1837, "p": 2, "id": "ChIJl4SPiTk2aDQRi8-qPsJ9jhE", "la": 24.787184999999997, "ln": 121.0206572, "h": ["11:00–14:30", "11:00–15:00", "11:00–21:00", "11:00–15:00", "11:00–15:00", "11:00–21:00", "11:00–21:00"], "d": 1100, "z": "near", "s": 4.4, "k": 24}, {"n": "法諾義式廚房 竹科店", "c": "義大利麵", "r": 4.4, "v": 427, "p": 2, "id": "ChIJW3ank9Q3aDQRHdS4IOh9_kk", "la": 24.7751229, "ln": 121.0262177, "h": ["11:00–14:30", "", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 450, "z": "core", "s": 4.4, "k": 25}, {"n": "素食園", "c": "素食自助", "r": 4.4, "v": 740, "p": 1, "id": "ChIJQ6pluSU2aDQRxqXniVab7p4", "la": 24.7769919, "ln": 121.0200899, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", ""], "d": 250, "z": "core", "s": 4.4, "k": 26}, {"n": "Bhabhis 印度料理", "c": "印度", "r": 4.3, "v": 701, "p": 2, "id": "ChIJU-W4lS42aDQR_1HQBm2W1rU", "la": 24.775245, "ln": 121.026603, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:30", "11:00–14:30"], "d": 450, "z": "core", "s": 4.342, "k": 27}, {"n": "秦老大的小館子", "c": "川味/乾鍋", "r": 4.3, "v": 1572, "p": 2, "id": "ChIJlUnPKBY2aDQRlZNmx82tdhY", "la": 24.778106599999997, "ln": 121.02041499999999, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–15:00", ""], "d": 250, "z": "core", "s": 4.324, "k": 28}, {"n": "川家客家料理", "c": "客家菜", "r": 4.3, "v": 1638, "p": 2, "id": "ChIJffG8Ajs2aDQRHm2Ugw-yK1g", "la": 24.7828576, "ln": 121.01911129999999, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 700, "z": "near", "s": 4.323, "k": 29}, {"n": "非常食鍋韓國料理", "c": "韓式", "r": 4.3, "v": 3111, "p": 2, "id": "ChIJk2H_lHM2aDQRxVC6e5J8T4o", "la": 24.7774318, "ln": 121.0229729, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 50, "z": "core", "s": 4.314, "k": 30}, {"n": "火鍋（金山街128號）", "c": "小火鍋", "r": 4.2, "v": 657, "p": 2, "id": "ChIJ6-c_CS82aDQRWmc3YhBy5r4", "la": 24.7762865, "ln": 121.0249198, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 250, "z": "core", "s": 4.286, "k": 31}, {"n": "重慶孫子文牛肉麵 金山店", "c": "牛肉麵", "r": 4.2, "v": 724, "p": 1, "id": "ChIJYc5NSg43aDQRwk4zKmCwU2A", "la": 24.7784395, "ln": 121.0196993, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 300, "z": "core", "s": 4.282, "k": 32}, {"n": "KIYO 博多拉麵", "c": "拉麵", "r": 4.2, "v": 760, "p": 2, "id": "ChIJ0eFogU83aDQRAVQztuQiZ2k", "la": 24.7869216, "ln": 121.01796929999998, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:30–14:30", "11:30–14:30"], "d": 1150, "z": "near", "s": 4.279, "k": 33}, {"n": "福樂餐館", "c": "中式合菜", "r": 4.2, "v": 1430, "p": 2, "id": "ChIJwxWfnTk2aDQR5HTOVh7uWwc", "la": 24.7866727, "ln": 121.019396, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1100, "z": "near", "s": 4.252, "k": 34}];
-const DISH={"ChIJDe_Ki0Y3aDQRuTdcGWL0fqM": {"d": ["★當季鮪魚丼／套餐", "生魚片丼", "握壽司"], "n": "評論最常提到魚料新鮮、份量大、價格合理；海帶味噌湯可以續。", "t": "晚上 7 點後常要排隊，中午早點去比較穩。"}, "ChIJB4B0j0U3aDQRrX-IheWTLs4": {"d": ["★綠咖哩雞", "清蒸檸檬魚", "月亮蝦餅", "泰式奶茶"], "n": "評論常點綠咖哩雞和清蒸魚，泰奶也有人推；空間寬敞，適合多人一起吃。", "t": "有評論提到白飯要點整份，多人分食較划算。"}, "ChIJXQrighc3aDQRPnasGjPl_SA": {"d": ["★自選健康餐盒", "鴨胸", "多種特調醬料"], "n": "增肌、減脂都能自己配；評論特別提到鴨胸和醬料好吃，也有素食選項。"}, "ChIJT93Kg9Y3aDQRRaBMMsToIuo": {"d": ["★焙煎雞白湯拉麵", "焙煎醬油／味噌豚骨拉麵", "唐揚雞", "起司可樂餅"], "n": "連鎖招牌是炒過的「焙煎」湯頭，雞白湯最多人推；免費加炸蒜和辣椒。", "t": "點餐機點餐、自助回收；各分店菜單可能略有不同。", "src": [["初原麵場菜單（menupans）", "https://menupans.com/place/chu-yuan-mian-chang-sanchong-jinan-store-019b976bb8667452a72c54fe0e397fcb"], ["初原麵場食記（蕃薯藤）", "https://travel.yam.com/article/121819"]]}, "ChIJsXz3nDE3aDQRGKNFTr0JK20": {"d": ["★招牌本家燃麵", "鮮蝦／紅油抄手燃麵", "蟹黃拌麵（季節限定）", "口水雞・怪味雞", "炙燒煎餃"], "n": "從金山街起家的燃麵店，評論最常點蟹黃麵和抄手燃麵；辣度可以自己用 3 種辣醬調。", "t": "柚香豆薯小菜免費自取；掃碼點餐。", "src": [["食尚玩家：墨竹亭燃麵", "https://supertaste.tvbs.com.tw/food/358276"], ["工商時報：墨竹亭燃麵新菜單", "https://www.ctee.com.tw/news/20250613701689-431207"]]}, "ChIJRQudQgA3aDQRYilpQICyEgw": {"d": ["★炙燒叉燒拉麵"], "n": "評論提到叉燒另外炙燒過，湯頭好喝，店內乾淨、有飲料。", "t": "中午只開到 13:30，要早點出發。", "thin": 1}, "ChIJe4LmCQA3aDQR66rmHDkMWG8": {"d": ["★海南雞飯", "咖椰吐司", "叉燒・滷雞", "肉骨茶湯"], "n": "評論說雞肉嫩、搭油蔥醬很香，泰國長米粒粒分明；咖椰吐司也很多人推。", "t": "點餐機點餐，等叫號取餐。"}, "ChIJCaL8aQA3aDQRz-vaxR5a9d8": {"d": ["★招牌米線", "砂鍋菜", "炒青菜"], "n": "評論說湯頭濃、料新鮮、份量大；也有人覺得口味偏清淡。"}, "ChIJZwiwRzM3aDQRH5H1QKxXqNM": {"d": ["★豬肉湯飯（炙燒豬五花）", "馬鈴薯燉肉湯飯", "人蔘雞湯飯", "炸雞年糕", "酥炸海苔冬粉卷"], "n": "連鎖湯飯店，炙燒豬肉湯飯最多人推；小菜和白飯可以續。也有評論嫌肉偏肥、偏少。", "src": [["金春喜韓廚人氣餐點（基隆好好玩）", "https://keelunghihi.com.tw/83245"]]}, "ChIJi5M800M3aDQRaATwvulSBD8": {"d": ["★NO.1 招牌豚骨拉麵", "叉燒雞白湯拉麵", "蛤蜊拉麵", "胡麻沙拉・芝麻豆腐"], "n": "評論說麵條有咬勁、豚骨湯濃；清爽一點可點雞白湯；也有人推蛤蜊拉麵。", "t": "連鎖店，各分店品項可能略有不同。", "src": [["麵匡匡菜單（menufans）", "https://menufans.com/en-US/place/mian-kuang-kuang-la-mian-shi-tang-nei-hu-jin-hu-dian-019b97656c8c7f0d954c867324df2234"]]}, "ChIJbb3kMb43aDQRnsffZLpwGk0": {"d": ["★綠咖哩", "冬蔭功海鮮湯", "酸辣醬豬肉", "半熟蛋"], "n": "評論提到豬肉嫩、酸辣醬配蔬菜很下飯，綠咖哩濃郁；冬蔭功料很多。", "t": "中午到晚上不休息，飲料自取。"}, "ChIJB_PSppM3aDQRbeWaIpa-QOE": {"d": ["★花生牛肉堡", "套餐附 Oreo 厚片", "招牌牛肉堡"], "n": "評論最推花生牛肉堡、牛肉熟度好；有人覺得 BBQ 醬偏甜，洋蔥圈普通。", "t": "週二公休、週一中午會開；二樓座位比較舒服，可線上訂位。"}, "ChIJ6W1Cnzk2aDQR33VJyJTuKnU": {"d": ["★蒜炒水蓮（枸杞）", "蛤蜊湯", "海鮮熱炒"], "n": "評論說出菜快、食材新鮮，適合同事一起點合菜；有人嫌便當的雞肉偏乾。", "t": "人多點熱炒合菜比單吃便當好。"}, "ChIJbXodmRw3aDQRqyyasXYVv6g": {"d": ["★魚排三明治", "火龍果飲"], "n": "評論說食材新鮮、價格合理、服務親切。", "t": "週二公休，只開到下午 2 點。", "thin": 1}, "ChIJ1QoTk1I3aDQRU4-FtVwjkHo": {"d": ["★炸雞排・炸物", "青醬義大利麵"], "n": "評論提到炸雞排很推、青醬義大利麵做得不錯，出餐快。", "thin": 1}, "ChIJj0IdG4Y3aDQRQlwF9SS6ehI": {"d": ["★便當"], "n": "評論說便當不錯、常外帶；也有人覺得鮭魚味噌湯偏貴、料少。", "t": "單點便當就好，湯可以省下來。", "thin": 1}, "ChIJc75UTcM3aDQRVu5M6PhTojg": {"d": ["★鴨胸飯", "燉牛肉", "均衡定食"], "n": "評論說蛋白質和蔬菜很均衡；比起牛排，鴨胸飯更多人推，天冷時燉牛肉也受好評。"}, "ChIJo3-8eSU2aDQRaBUv311JFXs": {"d": ["★平價鐵板燒套餐"], "n": "評論一致說 CP 值高、份量夠；只有一位師傅，客滿時要等。", "t": "中午只到 13:10，建議 11:30 前後就到。"}, "ChIJg-iVfS82aDQRGFdOavabIwE": {"d": ["★越南牛肉河粉", "春捲", "酸辣排骨湯（隱藏版）"], "n": "評論很推牛肉河粉和春捲；酸辣排骨湯菜單上沒有，可以直接跟櫃台點。", "t": "請用門口點餐機點餐付款，桌上的 QR code 容易卡單。"}, "ChIJ2xcL1vE3aDQRYcOYnDYY9f4": {"d": ["★雞肉蛋吐司", "脆皮蛋餅", "義大利麵"], "n": "評論推雞肉蛋吐司（可去美乃滋）、脆皮蛋餅很酥；有人覺得價格偏高一點。", "t": "週三公休。"}, "ChIJM4OtC-M3aDQRYJcm6bB2-uQ": {"d": ["★紅燒牛肉麵", "紅豆湯（免費）"], "n": "評論說牛肉大塊又嫩、麵條 Q；湯頭有人覺得略酸，價格偏高。", "t": "週一、週二公休。"}, "ChIJu9VBJfI1aDQRv4h9WpAUYzk": {"d": ["★黑松露蘑菇牛肉堡", "花生醬漢堡", "黑櫻桃堡", "檸檬塔"], "n": "評論常說是新竹最好吃的漢堡之一，黑松露蘑菇最多人推；肉排可選牛或豬，加料很多。", "t": "卡通風美式裝潢，週末全天營業。"}, "ChIJ3aNpiiU2aDQRcnil5AnxC8o": {"d": ["★海鮮叻沙", "海南雞飯", "椰漿飯 Nasi Lemak", "咖椰吐司", "乾撈麵"], "n": "叻沙最常被推（海鮮多、可選拉麵或米粉）；海南雞飯和咖椰吐司也常出現，價格稍高。", "t": "週一公休；有附圖英文菜單。"}, "ChIJl4SPiTk2aDQRi8-qPsJ9jhE": {"d": ["★蔬菜義大利麵", "馬鈴薯麵疙瘩", "燉飯"], "n": "評論說蔬菜給很多、出餐快；麵疙瘩和燉飯評價比義大利麵好，有人覺得麵偏軟。"}, "ChIJW3ank9Q3aDQRHdS4IOh9_kk": {"d": ["★粉紅醬義大利麵", "玉米濃湯", "燉飯", "青醬義大利麵"], "n": "評論最推粉紅醬，玉米濃湯也好喝、燉飯份量大；青醬常賣完。", "t": "週二公休；尖峰時段從點餐到上菜可能要半小時。"}, "ChIJQ6pluSU2aDQRxqXniVab7p4": {"d": ["★素食自助餐（秤重）", "炒飯（可調辣度）"], "n": "全素中式自助餐，評論說每道菜都不錯；也可以單點炒飯。", "t": "週日公休；附近不好停車。"}, "ChIJU-W4lS42aDQR_1HQBm2W1rU": {"d": ["★奶油雞", "雞肉提卡瑪莎拉", "印度香飯 Biryani", "奶油烤餅", "馬鈴薯花椰菜"], "n": "評論常點奶油雞和提卡瑪莎拉，Biryani 也很多人推；辣度可調、偏台灣人口味。", "t": "週一公休；想吃 Biryani 建議先打電話預訂。"}, "ChIJlUnPKBY2aDQRlZNmx82tdhY": {"d": ["★麻辣乾鍋（肉自選）"], "n": "評論最推麻辣乾鍋，價格合理、調味到位。", "t": "點餐機自助點餐；週日公休。"}, "ChIJffG8Ajs2aDQRHm2Ugw-yK1g": {"d": ["★薑絲炒大腸", "白斬放山雞", "梅干扣肉"], "n": "傳統客家菜，評論說份量足、像家常菜；白飯吃到飽。", "t": "附近不好停車；人多點合菜最划算。"}, "ChIJk2H_lHM2aDQRxVC6e5J8T4o": {"d": ["★石鍋拌飯", "海鮮煎餅", "韓式炸雞套餐"], "n": "飲料和小菜可續；評價兩極，有人覺得價格偏高、服務普通。", "t": "午餐 14:30 收，快打烊時會被催。"}, "ChIJ6-c_CS82aDQRWmc3YhBy5r4": {"d": ["★個人小火鍋"], "n": "評論說湯頭好、份量足；有人覺得蒜泥醬偏稀。", "thin": 1}, "ChIJYc5NSg43aDQRwk4zKmCwU2A": {"d": ["★紅燒牛肉麵（加酸菜）", "紅油抄手", "櫃台小菜"], "n": "川味牛肉麵，評論建議加酸菜更夠味；紅油抄手和小菜也常被提到。", "t": "小菜在櫃台自取。"}, "ChIJ0eFogU83aDQRAVQztuQiZ2k": {"d": ["★博多豚骨拉麵"], "n": "評論普遍說表現普通，叉燒偏薄；方便、可用 LINE Pay 和街口付款。", "thin": 1}, "ChIJwxWfnTk2aDQR5HTOVh7uWwc": {"d": ["★家常合菜"], "n": "評論說份量比想像大、上菜快，有英文菜單，適合同事聚餐。", "t": "8 個人約點 8 道菜就夠。", "thin": 1}};
+const EMBED=[{"n": "今日魚市 竹科關新店", "c": "日式丼飯", "r": 4.8, "v": 6400, "p": 2, "id": "ChIJDe_Ki0Y3aDQRuTdcGWL0fqM", "la": 24.7882218, "ln": 121.01915269999999, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30"], "d": 1250, "z": "near", "s": 4.771, "k": 1}, {"n": "Thai Town 泰式", "c": "泰式", "r": 4.8, "v": 4356, "p": 2, "id": "ChIJB4B0j0U3aDQRrX-IheWTLs4", "la": 24.786719899999998, "ln": 121.0189641, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–15:00", "11:30–15:00"], "d": 1100, "z": "near", "s": 4.759, "k": 2}, {"n": "JAM 竹科金山站", "c": "健康餐盒", "r": 4.8, "v": 3581, "p": 1, "id": "ChIJXQrighc3aDQRPnasGjPl_SA", "la": 24.7777468, "ln": 121.0224118, "h": ["10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00", "10:30–20:00"], "d": 50, "z": "core", "s": 4.751, "k": 3}, {"n": "初原麵場 關新店", "c": "拉麵", "r": 4.8, "v": 2328, "p": 2, "id": "ChIJT93Kg9Y3aDQRRaBMMsToIuo", "la": 24.784139999999997, "ln": 121.01600400000001, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30"], "d": 1000, "z": "near", "s": 4.729, "k": 4}, {"n": "墨竹亭 燃麵本家", "c": "麵食", "r": 4.7, "v": 3361, "p": 1, "id": "ChIJsXz3nDE3aDQRGKNFTr0JK20", "la": 24.776523100000002, "ln": 121.021821, "h": ["11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30", "11:30–20:30"], "d": 100, "z": "core", "s": 4.661, "k": 5}, {"n": "築山拉麵 金山店", "c": "拉麵", "r": 4.9, "v": 520, "p": 2, "id": "ChIJRQudQgA3aDQRYilpQICyEgw", "la": 24.7756469, "ln": 121.0265625, "h": ["11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30"], "d": 450, "z": "core", "s": 4.655, "k": 6}, {"n": "早飯晚雞", "c": "雞肉飯", "r": 4.8, "v": 583, "p": 1, "id": "ChIJe4LmCQA3aDQR66rmHDkMWG8", "la": 24.7757841, "ln": 121.0265915, "h": ["11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "11:30–13:30", "", ""], "d": 450, "z": "core", "s": 4.615, "k": 7}, {"n": "一碗鮮米線&砂鍋菜", "c": "米線", "r": 4.7, "v": 908, "p": 2, "id": "ChIJCaL8aQA3aDQRz-vaxR5a9d8", "la": 24.7873879, "ln": 121.01575109999999, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 1300, "z": "near", "s": 4.593, "k": 8}, {"n": "金春喜韓廚 關新店", "c": "韓式", "r": 4.6, "v": 2881, "p": 2, "id": "ChIJZwiwRzM3aDQRH5H1QKxXqNM", "la": 24.784282299999997, "ln": 121.01849109999999, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–22:00", "11:00–22:00"], "d": 900, "z": "near", "s": 4.57, "k": 9}, {"n": "麵匡匡拉麵食堂 關新店", "c": "拉麵", "r": 4.7, "v": 537, "p": 2, "id": "ChIJi5M800M3aDQRaATwvulSBD8", "la": 24.783156599999998, "ln": 121.0184349, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 800, "z": "near", "s": 4.555, "k": 10}, {"n": "泰式料理（金山十一街13號）", "c": "泰式", "r": 4.6, "v": 1497, "p": 2, "id": "ChIJbb3kMb43aDQRnsffZLpwGk0", "la": 24.776932499999997, "ln": 121.02182409999999, "h": ["11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–21:00", "11:00–20:00", "11:00–20:30"], "d": 50, "z": "core", "s": 4.55, "k": 11}, {"n": "MEGOPUN Hamburger", "c": "漢堡", "r": 4.7, "v": 501, "p": 2, "id": "ChIJB_PSppM3aDQRbeWaIpa-QOE", "la": 24.7860302, "ln": 121.0169302, "h": ["10:30–13:30", "", "10:30–13:30", "10:30–13:30", "10:30–13:30", "09:00–16:00", "09:00–16:00"], "d": 1150, "z": "near", "s": 4.55, "k": 12}, {"n": "舊港2號 原形原味料理", "c": "海鮮/中式", "r": 4.6, "v": 1163, "p": 2, "id": "ChIJ6W1Cnzk2aDQR33VJyJTuKnU", "la": 24.7874171, "ln": 121.01936339999999, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1200, "z": "near", "s": 4.54, "k": 13}, {"n": "食麥smile 早午餐", "c": "早午餐", "r": 4.6, "v": 742, "p": 1, "id": "ChIJbXodmRw3aDQRqyyasXYVv6g", "la": 24.7832959, "ln": 121.01223929999999, "h": ["06:00–14:00", "", "06:00–14:00", "06:00–14:00", "06:00–14:00", "06:00–14:00", "06:00–14:00"], "d": 1250, "z": "near", "s": 4.519, "k": 14}, {"n": "里斯廚房 金山店", "c": "炸物/義麵", "r": 4.6, "v": 658, "p": 1, "id": "ChIJ1QoTk1I3aDQRU4-FtVwjkHo", "la": 24.777193099999998, "ln": 121.0234886, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 100, "z": "core", "s": 4.514, "k": 15}, {"n": "有飯食光 金山店", "c": "便當", "r": 4.6, "v": 400, "p": 1, "id": "ChIJj0IdG4Y3aDQRQlwF9SS6ehI", "la": 24.7781791, "ln": 121.02100249999998, "h": ["11:00–14:00", "11:00–14:00", "11:00–13:30", "11:00–14:00", "11:00–13:30", "11:00–14:00", "11:00–14:00"], "d": 200, "z": "core", "s": 4.489, "k": 16}, {"n": "硬派主廚的軟嫩料理", "c": "日式定食", "r": 4.5, "v": 1106, "p": 2, "id": "ChIJc75UTcM3aDQRVu5M6PhTojg", "la": 24.7864571, "ln": 121.02130179999999, "h": ["", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00", "11:30–14:00"], "d": 1050, "z": "near", "s": 4.469, "k": 17}, {"n": "大饌鐵板燒", "c": "鐵板燒", "r": 4.5, "v": 928, "p": 2, "id": "ChIJo3-8eSU2aDQRaBUv311JFXs", "la": 24.777919699999998, "ln": 121.02135169999998, "h": ["11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", "11:00–13:10", ""], "d": 150, "z": "core", "s": 4.465, "k": 18}, {"n": "越南料理（金山十二街31號）", "c": "越式河粉", "r": 4.5, "v": 731, "p": 1, "id": "ChIJg-iVfS82aDQRGFdOavabIwE", "la": 24.7768132, "ln": 121.02225039999999, "h": ["10:30–14:00", "10:30–14:00", "10:30–14:00", "10:30–14:00", "10:30–14:00", "", "10:30–14:00"], "d": 50, "z": "core", "s": 4.459, "k": 19}, {"n": "歐浮找餐 金山店", "c": "早午餐", "r": 4.5, "v": 666, "p": 1, "id": "ChIJ2xcL1vE3aDQRYcOYnDYY9f4", "la": 24.7775442, "ln": 121.0207816, "h": ["06:30–21:00", "06:30–21:00", "", "06:30–21:00", "06:30–21:00", "07:00–20:30", "07:00–20:30"], "d": 200, "z": "core", "s": 4.457, "k": 20}, {"n": "玉山家川牛肉麵", "c": "牛肉麵", "r": 4.5, "v": 527, "p": 2, "id": "ChIJM4OtC-M3aDQRYJcm6bB2-uQ", "la": 24.788585299999998, "ln": 121.02026829999998, "h": ["", "", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1300, "z": "near", "s": 4.451, "k": 21}, {"n": "Feed Burger 2.0", "c": "漢堡", "r": 4.5, "v": 481, "p": 2, "id": "ChIJu9VBJfI1aDQRv4h9WpAUYzk", "la": 24.7778684, "ln": 121.020323, "h": ["11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–14:30", "11:30–21:00", "11:30–21:00"], "d": 250, "z": "core", "s": 4.449, "k": 22}, {"n": "Daima 大馬南洋料理", "c": "南洋", "r": 4.4, "v": 1887, "p": 2, "id": "ChIJ3aNpiiU2aDQRcnil5AnxC8o", "la": 24.776324199999998, "ln": 121.0217987, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 100, "z": "core", "s": 4.4, "k": 23}, {"n": "Nu pasta", "c": "義大利麵", "r": 4.4, "v": 1837, "p": 2, "id": "ChIJl4SPiTk2aDQRi8-qPsJ9jhE", "la": 24.787184999999997, "ln": 121.0206572, "h": ["11:00–14:30", "11:00–15:00", "11:00–21:00", "11:00–15:00", "11:00–15:00", "11:00–21:00", "11:00–21:00"], "d": 1100, "z": "near", "s": 4.4, "k": 24}, {"n": "法諾義式廚房 竹科店", "c": "義大利麵", "r": 4.4, "v": 427, "p": 2, "id": "ChIJW3ank9Q3aDQRHdS4IOh9_kk", "la": 24.7751229, "ln": 121.0262177, "h": ["11:00–14:30", "", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 450, "z": "core", "s": 4.4, "k": 25}, {"n": "素食園", "c": "素食自助", "r": 4.4, "v": 740, "p": 1, "id": "ChIJQ6pluSU2aDQRxqXniVab7p4", "la": 24.7769919, "ln": 121.0200899, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", ""], "d": 250, "z": "core", "s": 4.4, "k": 26}, {"n": "Bhabhis 印度料理", "c": "印度", "r": 4.3, "v": 701, "p": 2, "id": "ChIJU-W4lS42aDQR_1HQBm2W1rU", "la": 24.775245, "ln": 121.026603, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:30", "11:00–14:30"], "d": 450, "z": "core", "s": 4.342, "k": 27}, {"n": "秦老大的小館子", "c": "川味/乾鍋", "r": 4.3, "v": 1572, "p": 2, "id": "ChIJlUnPKBY2aDQRlZNmx82tdhY", "la": 24.778106599999997, "ln": 121.02041499999999, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–15:00", ""], "d": 250, "z": "core", "s": 4.324, "k": 28}, {"n": "川家客家料理", "c": "客家菜", "r": 4.3, "v": 1638, "p": 2, "id": "ChIJffG8Ajs2aDQRHm2Ugw-yK1g", "la": 24.7828576, "ln": 121.01911129999999, "h": ["", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 700, "z": "near", "s": 4.323, "k": 29}, {"n": "非常食鍋韓國料理", "c": "韓式", "r": 4.3, "v": 3111, "p": 2, "id": "ChIJk2H_lHM2aDQRxVC6e5J8T4o", "la": 24.7774318, "ln": 121.0229729, "h": ["11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30", "11:00–14:30"], "d": 50, "z": "core", "s": 4.314, "k": 30}, {"n": "火鍋（金山街128號）", "c": "小火鍋", "r": 4.2, "v": 657, "p": 2, "id": "ChIJ6-c_CS82aDQRWmc3YhBy5r4", "la": 24.7762865, "ln": 121.0249198, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 250, "z": "core", "s": 4.286, "k": 31}, {"n": "重慶孫子文牛肉麵 金山店", "c": "牛肉麵", "r": 4.2, "v": 724, "p": 1, "id": "ChIJYc5NSg43aDQRwk4zKmCwU2A", "la": 24.7784395, "ln": 121.0196993, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 300, "z": "core", "s": 4.282, "k": 32}, {"n": "KIYO 博多拉麵", "c": "拉麵", "r": 4.2, "v": 760, "p": 2, "id": "ChIJ0eFogU83aDQRAVQztuQiZ2k", "la": 24.7869216, "ln": 121.01796929999998, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:30–14:30", "11:30–14:30"], "d": 1150, "z": "near", "s": 4.279, "k": 33}, {"n": "福樂餐館", "c": "中式合菜", "r": 4.2, "v": 1430, "p": 2, "id": "ChIJwxWfnTk2aDQR5HTOVh7uWwc", "la": 24.7866727, "ln": 121.019396, "h": ["11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00", "11:00–14:00"], "d": 1100, "z": "near", "s": 4.252, "k": 34}];
+const DISH0={"ChIJDe_Ki0Y3aDQRuTdcGWL0fqM": {"d": ["★當季鮪魚丼／套餐", "生魚片丼", "握壽司"], "n": "評論最常提到魚料新鮮、份量大、價格合理；海帶味噌湯可以續。", "t": "晚上 7 點後常要排隊，中午早點去比較穩。"}, "ChIJB4B0j0U3aDQRrX-IheWTLs4": {"d": ["★綠咖哩雞", "清蒸檸檬魚", "月亮蝦餅", "泰式奶茶"], "n": "評論常點綠咖哩雞和清蒸魚，泰奶也有人推；空間寬敞，適合多人一起吃。", "t": "有評論提到白飯要點整份，多人分食較划算。"}, "ChIJXQrighc3aDQRPnasGjPl_SA": {"d": ["★自選健康餐盒", "鴨胸", "多種特調醬料"], "n": "增肌、減脂都能自己配；評論特別提到鴨胸和醬料好吃，也有素食選項。"}, "ChIJT93Kg9Y3aDQRRaBMMsToIuo": {"d": ["★焙煎雞白湯拉麵", "焙煎醬油／味噌豚骨拉麵", "唐揚雞", "起司可樂餅"], "n": "連鎖招牌是炒過的「焙煎」湯頭，雞白湯最多人推；免費加炸蒜和辣椒。", "t": "點餐機點餐、自助回收；各分店菜單可能略有不同。", "src": [["初原麵場菜單（menupans）", "https://menupans.com/place/chu-yuan-mian-chang-sanchong-jinan-store-019b976bb8667452a72c54fe0e397fcb"], ["初原麵場食記（蕃薯藤）", "https://travel.yam.com/article/121819"]]}, "ChIJsXz3nDE3aDQRGKNFTr0JK20": {"d": ["★招牌本家燃麵", "鮮蝦／紅油抄手燃麵", "蟹黃拌麵（季節限定）", "口水雞・怪味雞", "炙燒煎餃"], "n": "從金山街起家的燃麵店，評論最常點蟹黃麵和抄手燃麵；辣度可以自己用 3 種辣醬調。", "t": "柚香豆薯小菜免費自取；掃碼點餐。", "src": [["食尚玩家：墨竹亭燃麵", "https://supertaste.tvbs.com.tw/food/358276"], ["工商時報：墨竹亭燃麵新菜單", "https://www.ctee.com.tw/news/20250613701689-431207"]]}, "ChIJRQudQgA3aDQRYilpQICyEgw": {"d": ["★炙燒叉燒拉麵"], "n": "評論提到叉燒另外炙燒過，湯頭好喝，店內乾淨、有飲料。", "t": "中午只開到 13:30，要早點出發。", "thin": 1}, "ChIJe4LmCQA3aDQR66rmHDkMWG8": {"d": ["★海南雞飯", "咖椰吐司", "叉燒・滷雞", "肉骨茶湯"], "n": "評論說雞肉嫩、搭油蔥醬很香，泰國長米粒粒分明；咖椰吐司也很多人推。", "t": "點餐機點餐，等叫號取餐。"}, "ChIJCaL8aQA3aDQRz-vaxR5a9d8": {"d": ["★招牌米線", "砂鍋菜", "炒青菜"], "n": "評論說湯頭濃、料新鮮、份量大；也有人覺得口味偏清淡。"}, "ChIJZwiwRzM3aDQRH5H1QKxXqNM": {"d": ["★豬肉湯飯（炙燒豬五花）", "馬鈴薯燉肉湯飯", "人蔘雞湯飯", "炸雞年糕", "酥炸海苔冬粉卷"], "n": "連鎖湯飯店，炙燒豬肉湯飯最多人推；小菜和白飯可以續。也有評論嫌肉偏肥、偏少。", "src": [["金春喜韓廚人氣餐點（基隆好好玩）", "https://keelunghihi.com.tw/83245"]]}, "ChIJi5M800M3aDQRaATwvulSBD8": {"d": ["★NO.1 招牌豚骨拉麵", "叉燒雞白湯拉麵", "蛤蜊拉麵", "胡麻沙拉・芝麻豆腐"], "n": "評論說麵條有咬勁、豚骨湯濃；清爽一點可點雞白湯；也有人推蛤蜊拉麵。", "t": "連鎖店，各分店品項可能略有不同。", "src": [["麵匡匡菜單（menufans）", "https://menufans.com/en-US/place/mian-kuang-kuang-la-mian-shi-tang-nei-hu-jin-hu-dian-019b97656c8c7f0d954c867324df2234"]]}, "ChIJbb3kMb43aDQRnsffZLpwGk0": {"d": ["★綠咖哩", "冬蔭功海鮮湯", "酸辣醬豬肉", "半熟蛋"], "n": "評論提到豬肉嫩、酸辣醬配蔬菜很下飯，綠咖哩濃郁；冬蔭功料很多。", "t": "中午到晚上不休息，飲料自取。"}, "ChIJB_PSppM3aDQRbeWaIpa-QOE": {"d": ["★花生牛肉堡", "套餐附 Oreo 厚片", "招牌牛肉堡"], "n": "評論最推花生牛肉堡、牛肉熟度好；有人覺得 BBQ 醬偏甜，洋蔥圈普通。", "t": "週二公休、週一中午會開；二樓座位比較舒服，可線上訂位。"}, "ChIJ6W1Cnzk2aDQR33VJyJTuKnU": {"d": ["★蒜炒水蓮（枸杞）", "蛤蜊湯", "海鮮熱炒"], "n": "評論說出菜快、食材新鮮，適合同事一起點合菜；有人嫌便當的雞肉偏乾。", "t": "人多點熱炒合菜比單吃便當好。"}, "ChIJbXodmRw3aDQRqyyasXYVv6g": {"d": ["★魚排三明治", "火龍果飲"], "n": "評論說食材新鮮、價格合理、服務親切。", "t": "週二公休，只開到下午 2 點。", "thin": 1}, "ChIJ1QoTk1I3aDQRU4-FtVwjkHo": {"d": ["★炸雞排・炸物", "青醬義大利麵"], "n": "評論提到炸雞排很推、青醬義大利麵做得不錯，出餐快。", "thin": 1}, "ChIJj0IdG4Y3aDQRQlwF9SS6ehI": {"d": ["★便當"], "n": "評論說便當不錯、常外帶；也有人覺得鮭魚味噌湯偏貴、料少。", "t": "單點便當就好，湯可以省下來。", "thin": 1}, "ChIJc75UTcM3aDQRVu5M6PhTojg": {"d": ["★鴨胸飯", "燉牛肉", "均衡定食"], "n": "評論說蛋白質和蔬菜很均衡；比起牛排，鴨胸飯更多人推，天冷時燉牛肉也受好評。"}, "ChIJo3-8eSU2aDQRaBUv311JFXs": {"d": ["★平價鐵板燒套餐"], "n": "評論一致說 CP 值高、份量夠；只有一位師傅，客滿時要等。", "t": "中午只到 13:10，建議 11:30 前後就到。"}, "ChIJg-iVfS82aDQRGFdOavabIwE": {"d": ["★越南牛肉河粉", "春捲", "酸辣排骨湯（隱藏版）"], "n": "評論很推牛肉河粉和春捲；酸辣排骨湯菜單上沒有，可以直接跟櫃台點。", "t": "請用門口點餐機點餐付款，桌上的 QR code 容易卡單。"}, "ChIJ2xcL1vE3aDQRYcOYnDYY9f4": {"d": ["★雞肉蛋吐司", "脆皮蛋餅", "義大利麵"], "n": "評論推雞肉蛋吐司（可去美乃滋）、脆皮蛋餅很酥；有人覺得價格偏高一點。", "t": "週三公休。"}, "ChIJM4OtC-M3aDQRYJcm6bB2-uQ": {"d": ["★紅燒牛肉麵", "紅豆湯（免費）"], "n": "評論說牛肉大塊又嫩、麵條 Q；湯頭有人覺得略酸，價格偏高。", "t": "週一、週二公休。"}, "ChIJu9VBJfI1aDQRv4h9WpAUYzk": {"d": ["★黑松露蘑菇牛肉堡", "花生醬漢堡", "黑櫻桃堡", "檸檬塔"], "n": "評論常說是新竹最好吃的漢堡之一，黑松露蘑菇最多人推；肉排可選牛或豬，加料很多。", "t": "卡通風美式裝潢，週末全天營業。"}, "ChIJ3aNpiiU2aDQRcnil5AnxC8o": {"d": ["★海鮮叻沙", "海南雞飯", "椰漿飯 Nasi Lemak", "咖椰吐司", "乾撈麵"], "n": "叻沙最常被推（海鮮多、可選拉麵或米粉）；海南雞飯和咖椰吐司也常出現，價格稍高。", "t": "週一公休；有附圖英文菜單。"}, "ChIJl4SPiTk2aDQRi8-qPsJ9jhE": {"d": ["★蔬菜義大利麵", "馬鈴薯麵疙瘩", "燉飯"], "n": "評論說蔬菜給很多、出餐快；麵疙瘩和燉飯評價比義大利麵好，有人覺得麵偏軟。"}, "ChIJW3ank9Q3aDQRHdS4IOh9_kk": {"d": ["★粉紅醬義大利麵", "玉米濃湯", "燉飯", "青醬義大利麵"], "n": "評論最推粉紅醬，玉米濃湯也好喝、燉飯份量大；青醬常賣完。", "t": "週二公休；尖峰時段從點餐到上菜可能要半小時。"}, "ChIJQ6pluSU2aDQRxqXniVab7p4": {"d": ["★素食自助餐（秤重）", "炒飯（可調辣度）"], "n": "全素中式自助餐，評論說每道菜都不錯；也可以單點炒飯。", "t": "週日公休；附近不好停車。"}, "ChIJU-W4lS42aDQR_1HQBm2W1rU": {"d": ["★奶油雞", "雞肉提卡瑪莎拉", "印度香飯 Biryani", "奶油烤餅", "馬鈴薯花椰菜"], "n": "評論常點奶油雞和提卡瑪莎拉，Biryani 也很多人推；辣度可調、偏台灣人口味。", "t": "週一公休；想吃 Biryani 建議先打電話預訂。"}, "ChIJlUnPKBY2aDQRlZNmx82tdhY": {"d": ["★麻辣乾鍋（肉自選）"], "n": "評論最推麻辣乾鍋，價格合理、調味到位。", "t": "點餐機自助點餐；週日公休。"}, "ChIJffG8Ajs2aDQRHm2Ugw-yK1g": {"d": ["★薑絲炒大腸", "白斬放山雞", "梅干扣肉"], "n": "傳統客家菜，評論說份量足、像家常菜；白飯吃到飽。", "t": "附近不好停車；人多點合菜最划算。"}, "ChIJk2H_lHM2aDQRxVC6e5J8T4o": {"d": ["★石鍋拌飯", "海鮮煎餅", "韓式炸雞套餐"], "n": "飲料和小菜可續；評價兩極，有人覺得價格偏高、服務普通。", "t": "午餐 14:30 收，快打烊時會被催。"}, "ChIJ6-c_CS82aDQRWmc3YhBy5r4": {"d": ["★個人小火鍋"], "n": "評論說湯頭好、份量足；有人覺得蒜泥醬偏稀。", "thin": 1}, "ChIJYc5NSg43aDQRwk4zKmCwU2A": {"d": ["★紅燒牛肉麵（加酸菜）", "紅油抄手", "櫃台小菜"], "n": "川味牛肉麵，評論建議加酸菜更夠味；紅油抄手和小菜也常被提到。", "t": "小菜在櫃台自取。"}, "ChIJ0eFogU83aDQRAVQztuQiZ2k": {"d": ["★博多豚骨拉麵"], "n": "評論普遍說表現普通，叉燒偏薄；方便、可用 LINE Pay 和街口付款。", "thin": 1}, "ChIJwxWfnTk2aDQR5HTOVh7uWwc": {"d": ["★家常合菜"], "n": "評論說份量比想像大、上菜快，有英文菜單，適合同事聚餐。", "t": "8 個人約點 8 道菜就夠。", "thin": 1}};
+EMBED.forEach(x=>{if(DISH0[x.id])x.dish=DISH0[x.id]});
+let BASE=EMBED.map(x=>({...x}));   // published list (shops.json overrides on load)
+let D=[];
+const REPO="dagronkimo/jinshan-lunch";
 const DAYS=["一","二","三","四","五","六","日"];
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -311,19 +358,31 @@ const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}
 const CENTER=[24.77775,121.02241];
 // group by category
 const G={noodle:{c:"#F6D27A",k:["麵","拉麵","米線","牛肉麵"]},jp:{c:"#F2A497",k:["日式","丼","鐵板燒","炸物"]},intl:{c:"#A8D3E6",k:["泰","越","韓","印度","南洋","義","漢堡","火鍋"]},rice:{c:"#B9DAA5",k:[]}};
-D.forEach(x=>{x.g=Object.keys(G).find(g=>G[g].k.some(k=>x.c.includes(k)))||"rice";x.col=G[x.g].c;
- const m=x.d<=500;x.mode=m?"走路":"騎車";x.mins=Math.max(2,Math.round(m?(x.d*1.3)/75:(x.d*1.35)/250+3));});
+let OV=LS.get("jl_shops",{add:[],edit:{},hide:[]});
+const saveOV=()=>LS.set("jl_shops",OV);
+const distM=(la,ln)=>Math.round(Math.hypot((la-24.7772)*111000,(ln-121.0225)*101000)/50)*50;
+function buildD(){const hide=new Set(OV.hide);
+ const list=BASE.map(x=>OV.edit[x.id]?{...x,...OV.edit[x.id],_ed:1}:{...x}).concat(OV.add.filter(a=>!BASE.some(b=>b.id==a.id)).map(a=>({...a,_new:1})));
+ list.forEach(x=>{x._hidden=hide.has(x.id);if(x.la!=null&&x.ln!=null)x.d=distM(x.la,x.ln);else if(x.d==null)x.d=x.walk?Math.round(x.walk*75/1.3):900;
+  x.z=x.d<500?"core":"near";const r=x.r||4.3,v=x.v||0;x.s=(v/(v+500))*r+(500/(v+500))*4.4;
+  x.g=Object.keys(G).find(g=>G[g].k.some(k=>x.c.includes(k)))||"rice";x.col=G[x.g].c;
+  const m=x.d<=500;x.mode=m?"走路":"騎車";x.mins=Math.max(2,Math.round(m?(x.d*1.3)/75:(x.d*1.35)/250+3));});
+ D=list.filter(x=>!x._hidden).sort((a,b)=>b.s-a.s);D.forEach((x,i)=>x.k=i+1);
+ window.HIDDEN=list.filter(x=>x._hidden);}
+buildD();
 // icons
 const ICON={
  noodle:`<svg viewBox="0 0 48 48"><path class="a-steam" d="M18 10c-3-4 3-6 0-10M28 10c-3-4 3-6 0-10" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round" transform="translate(0 4)"/><path d="M5 22h38a19 15 0 0 1-38 0z" fill="#F6D27A" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><path d="M10 28c4-3 6 2 9-1s6 2 9-1 6 2 9-1" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/><path d="M38 4l-10 16M43 7l-11 14" stroke="#3E3A39" stroke-width="3" stroke-linecap="round"/></svg>`,
  jp:`<svg viewBox="0 0 48 48"><path d="M8 24h32a16 14 0 0 1-32 0z" fill="#F2A497" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><path d="M10 24c2-8 26-8 28 0z" fill="#FFF" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><ellipse cx="20" cy="19" rx="6" ry="3.5" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/><ellipse cx="29" cy="20" rx="5" ry="3" fill="#B9DAA5" stroke="#3E3A39" stroke-width="2.5"/><path d="M36 6l-6 14M42 8l-8 12" stroke="#3E3A39" stroke-width="3" stroke-linecap="round"/></svg>`,
  intl:`<svg viewBox="0 0 48 48"><ellipse cx="24" cy="30" rx="20" ry="10" fill="#FFF" stroke="#3E3A39" stroke-width="3"/><path d="M8 28c2-10 30-10 32 0" fill="#A8D3E6" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><circle cx="18" cy="24" r="3" fill="#F2A497" stroke="#3E3A39" stroke-width="2"/><circle cx="28" cy="23" r="3" fill="#B9DAA5" stroke="#3E3A39" stroke-width="2"/><path d="M33 10l3-4 3 4-3 8z" fill="#B9DAA5" stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round" class="a-wig"/></svg>`,
  rice:`<svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="28" rx="6" fill="#B9DAA5" stroke="#3E3A39" stroke-width="3"/><path d="M24 12v28M6 26h18" stroke="#3E3A39" stroke-width="2.5"/><circle cx="12" cy="19" r="2" fill="#FFF"/><circle cx="17" cy="18" r="2" fill="#FFF"/><ellipse cx="33" cy="20" rx="5" ry="4" fill="#F2A497" stroke="#3E3A39" stroke-width="2.5"/><circle cx="15" cy="33" r="4" fill="#F6D27A" stroke="#3E3A39" stroke-width="2.5"/><path d="M28 32h10" stroke="#3E3A39" stroke-width="3" stroke-linecap="round"/></svg>`};
-const url=x=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.n)}&query_place_id=${x.id}`;
-const nav=x=>`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(x.n)}&destination_place_id=${x.id}&travelmode=${x.mode=="走路"?"walking":"two-wheeler"}`;
+const isG=x=>x.id&&x.id.startsWith("ChIJ");
+const url=x=>x.link||`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.n+(isG(x)?"":" 新竹"))}${isG(x)?"&query_place_id="+x.id:""}`;
+const nav=x=>`https://www.google.com/maps/dir/?api=1&destination=${x.la!=null?x.la+","+x.ln:encodeURIComponent(x.n+" 新竹")}${isG(x)?"&destination_place_id="+x.id:""}&travelmode=${x.mode=="走路"?"walking":"two-wheeler"}`;
 const price=x=>"$".repeat(x.p);
-const nm=x=>x.n;
-const dishOf=x=>DISH[x.id]||{d:[],n:""};
+const nm=x=>esc(x.n)+(x._new?' <span class="tag-new">新增</span>':"");
+const dishOf=x=>x.dish||{d:[],n:""};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
 const chips=(x,n=3)=>{const d=dishOf(x).d.slice(0,n);return d.length?`<div class="dish">${d.map(s=>`<span class="${s.startsWith("★")?"hot":""}">${s.startsWith("★")?"👑 "+s.slice(1):s}</span>`).join("")}</div>`:""};
 const toMin=s=>{const [h,m]=s.split(":").map(Number);return h*60+m};
 const fmt=m=>`${String(Math.floor(m/60)%24).padStart(2,"0")}:${String(m%60).padStart(2,"0")}`;
@@ -334,10 +393,17 @@ const saveSkip=()=>LS.set("jl_skip",[...skip]);
 // ===== dates =====
 const now=new Date(),todayDow=(now.getDay()+6)%7;
 const mon=new Date(now);mon.setHours(0,0,0,0);mon.setDate(mon.getDate()-(todayDow>4?todayDow-7:todayDow)); // weekend -> next week
-const week=[0,1,2,3,4].map(i=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return{i,date:d,key:d.toISOString().slice(0,10),label:`${d.getMonth()+1}/${d.getDate()}`}});
+const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const week=[0,1,2,3,4].map(i=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return{i,date:d,key:ymd(d),label:`${d.getMonth()+1}/${d.getDate()}`}});
 const isToday=w=>w.date.toDateString()==now.toDateString();
 let selDay=todayDow<=4?todayDow:0;
-$("#tot").textContent=D.length;
+
+
+// ===== meal log =====
+let LOG=LS.get("jl_log",[]);const saveLog=()=>LS.set("jl_log",LOG);
+const visits=id=>LOG.filter(l=>l.id==id).sort((a,b)=>b.date.localeCompare(a.date));
+const recent=(id,days,ref)=>{const r=ref||new Date();return LOG.some(l=>l.id==id&&(r-new Date(l.date+"T12:00"))/864e5<days&&(r-new Date(l.date+"T12:00"))/864e5>=-0.5)};
+const vbadge=x=>{const v=visits(x.id);return v.length?` <span class="vb">✔ 去過 ${v.length} 次・${v[0].date.slice(5).replace("-","/")}</span>`:""};
 
 // ===== week plan =====
 function rng(seed){let h=2166136261;for(const c of seed)h=Math.imul(h^c.charCodeAt(0),16777619);return()=>{h^=h<<13;h^=h>>>17;h^=h<<5;return((h>>>0)%10000)/10000}}
@@ -345,16 +411,16 @@ let plan=LS.get("jl_plan_"+week[0].key,null);
 function autoPlan(keep){const used=new Set(),out={},gUsed={};
  week.forEach(w=>{if(keep&&keep[w.key]){out[w.key]=keep[w.key];used.add(keep[w.key]);}});
  week.forEach(w=>{if(out[w.key])return;const r=rng(w.key+"lunch");
-  let c=D.filter(x=>!skip.has(x.id)&&!used.has(x.id)&&x.h[w.i]);
+  let c=D.filter(x=>!skip.has(x.id)&&!used.has(x.id)&&x.h[w.i]&&!($("#avoidRecent").checked&&recent(x.id,7,w.date)));
   if(!c.length)return;
-  const wt=c.map(x=>Math.pow(x.s-4,3)*(gUsed[x.g]?0.35:1)*(x.z=="core"?1.4:1));const sum=wt.reduce((a,b)=>a+b,0);let t=r()*sum,pick=c[0];
+  const wt=c.map(x=>Math.pow(Math.max(.08,x.s-4),3)*(gUsed[x.g]?0.35:1)*(x.z=="core"?1.4:1));const sum=wt.reduce((a,b)=>a+b,0);let t=r()*sum,pick=c[0];
   for(let j=0;j<c.length;j++){t-=wt[j];if(t<=0){pick=c[j];break}}
   out[w.key]=pick.id;used.add(pick.id);gUsed[pick.g]=1;});
  return out;}
 let custom=LS.get("jl_custom_"+week[0].key,{});
 function rebuild(){plan=autoPlan(custom);LS.set("jl_plan_"+week[0].key,plan)}
 rebuild();
-const byId=id=>D.find(x=>x.id==id);
+const byId=id=>D.find(x=>x.id==id)||(window.HIDDEN||[]).find(x=>x.id==id);
 
 // ===== countdown =====
 function tick(){const n=new Date(),min=n.getHours()*60+n.getMinutes(),dep=toMin($("#sDep").value);let target=new Date(n),msg;
@@ -374,7 +440,7 @@ function todayCard(){const w=week[selDay],x=byId(plan[w.key]);const el=$("#today
 // ===== wheel =====
 let zone="all",pool=[],rot=0,spinning=false,lastPick=null;
 const wheelDow=()=>week[selDay].i;
-function wheelPool(){pool=D.filter(x=>(zone=="all"||x.z==zone)&&!skip.has(x.id)&&(!$("#fOpen").checked||x.h[wheelDow()])&&(!$("#fCheap").checked||x.p==1));
+function wheelPool(){pool=D.filter(x=>(zone=="all"||x.z==zone)&&!skip.has(x.id)&&(!$("#fOpen").checked||x.h[wheelDow()])&&(!$("#fCheap").checked||x.p==1)&&!($("#avoidRecent").checked&&recent(x.id,7,week[selDay].date))&&!($("#onlyNew").checked&&visits(x.id).length));
  $("#wcount").textContent=`轉盤上有 ${pool.length} 間`;$("#spin").disabled=!pool.length;$("#fOpenDay").textContent=`${week[selDay].label}（${DAYS[week[selDay].i]}）`;drawWheel();}
 const WC=["#F2A497","#F6D27A","#A8D3E6","#B9DAA5"];
 function drawWheel(){const cv=$("#wc"),g=cv.getContext("2d"),R=360,n=pool.length;g.clearRect(0,0,720,720);g.save();g.translate(R,R);
@@ -408,37 +474,43 @@ function openSheet(x){const w=week[selDay],m=dishOf(x);lastFocus=document.active
  <div class="hd"><div class="ic" style="background:${x.col}">${ICON[x.g]}</div><div><small>#${x.k}・${x.c}・${price(x)}</small><h3>${nm(x)}</h3><small>⭐ ${x.r}（${x.v.toLocaleString()} 則評論）・${x.mode}約 ${x.mins} 分</small></div></div>
  <div class="box2"><h4>🍽 熱門餐點・評論最常點</h4><ol>${m.d.map((s,i)=>`<li class="${s.startsWith("★")?"hot":""}"><i>${i+1}</i>${s.replace("★","")}${s.startsWith("★")?' <span class="tg" style="background:var(--yellow)">招牌</span>':""}</li>`).join("")}</ol></div>
  <div class="box2"><h4>💬 評論常提到</h4><p style="font-size:.92rem">${m.n}</p>${m.t?`<p style="font-size:.88rem;margin-top:6px">💡 ${m.t}</p>`:""}</div>
+ <div class="box2"><h4>📒 我的聚餐紀錄</h4>${visits(x.id).length?`<ol>${visits(x.id).slice(0,5).map(l=>`<li><i>✔</i>${l.date.replace(/-/g,"/")}${l.who?"・"+esc(l.who):""}${l.score?`・<span style="color:#E0786A">${"♥".repeat(l.score)}</span>`:""}${l.note?`<br><small style="opacity:.8">${esc(l.note)}</small>`:""}</li>`).join("")}</ol>`:'<p style="font-size:.9rem">還沒去過，找一天去吃吃看！</p>'}<div class="tags"><button class="sbtn y" data-log="${x.id}">📝 記一筆</button><button class="sbtn" data-edit="${x.id}">✏️ 修改店家</button></div></div>
  <div class="box2"><h4>🕛 ${w.label}（${DAYS[w.i]}）午餐</h4><p style="font-size:.92rem">${x.h[w.i]||'<span class="warn">公休</span>'}</p><p style="font-size:.78rem;opacity:.8;margin-top:4px">${x.h.map((v,i)=>`${DAYS[i]} ${v||"休"}`).join("・")}</p></div>
  <div class="tags" style="margin-top:12px"><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><a class="sbtn" href="${url(x)}" target="_blank" rel="noopener">看 Google 評論</a><button class="sbtn y" data-put="${x.id}">排進 ${w.label}（${DAYS[w.i]}）</button></div>
  <p class="src">${m.thin?"⚠ 這間店的評論資料比較少，餐點僅供參考。<br>":""}資料整理自 Google 地圖評論（2026 年 11 月）${src?"，以及："+src:""}。餐點與價格以店家現場為準。</p>`;
  const bg=$("#sheetBg");bg.classList.add("show");bg.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";$("#shX").focus();}
-function closeSheet(){const bg=$("#sheetBg");bg.classList.remove("show");bg.setAttribute("aria-hidden","true");document.body.style.overflow="";lastFocus&&lastFocus.focus&&lastFocus.focus();}
-$("#sheetBg").onclick=e=>{if(e.target.id=="sheetBg"||e.target.id=="shX")return closeSheet();const b=e.target.closest("[data-put]");if(b){custom[week[selDay].key]=b.dataset.put;LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);closeSheet();location.hash="#days"}};
+function closeSheet(){setTimeout(()=>lastFocus=null,0);const bg=$("#sheetBg");bg.classList.remove("show");bg.setAttribute("aria-hidden","true");document.body.style.overflow="";lastFocus&&lastFocus.focus&&lastFocus.focus();}
+$("#sheetBg").onclick=e=>{if(e.target.id=="sheetBg"||e.target.id=="shX")return closeSheet();if(e.target.closest("[data-log],[data-edit],form,.frm"))return;const b=e.target.closest("[data-put]");if(b){custom[week[selDay].key]=b.dataset.put;LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);closeSheet();location.hash="#days"}};
 addEventListener("keydown",e=>{if(e.key=="Escape"&&$("#sheetBg").classList.contains("show"))closeSheet()});
-document.addEventListener("click",e=>{const b=e.target.closest("[data-sheet]");if(b){e.preventDefault();openSheet(byId(b.dataset.sheet))}});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-sheet]");if(b){e.preventDefault();openSheet(byId(b.dataset.sheet));return}
+ const l=e.target.closest("[data-log]");if(l){e.preventDefault();openLogForm(l.dataset.log,l.dataset.date);return}
+ const ed=e.target.closest("[data-edit]");if(ed){e.preventDefault();openShopForm(ed.dataset.edit);return}});
+function showSheet(html,label){lastFocus=lastFocus||document.activeElement;$("#sheet").innerHTML=`<div class="grab"></div><button class="sbtn x" id="shX" aria-label="關閉">✕ 關閉</button>`+html;$("#sheet").setAttribute("aria-label",label||"視窗");const bg=$("#sheetBg");bg.classList.add("show");bg.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";}
+function toast(s){const t=$("#toast");t.textContent=s;t.classList.remove("show");void t.offsetWidth;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),2400)}
 
 // ===== days =====
-function renderTabs(){$("#tabs").innerHTML=week.map((w,i)=>`<button class="tab ${isToday(w)?"today":""}" role="tab" aria-selected="${i==selDay}" data-i="${i}"><b>${w.label}</b><small>週${DAYS[w.i]}</small></button>`).join("");}
-function renderDay(anim){const w=week[selDay],x=byId(plan[w.key]);const P=$("#dayPanel");
+function renderTabs(){$("#tabs").innerHTML=week.map((w,i)=>`<button class="tab ${isToday(w)?"today":""}" role="tab" aria-selected="${i==selDay}" data-i="${i}"><b>${w.label}</b><small>週${DAYS[w.i]}${WX[w.key]?" "+WMO(WX[w.key].code)[0]:""}</small></button>`).join("");}
+function renderDay(anim){const w=week[selDay],x=byId(plan[w.key]);const P=$("#dayPanel");renderDayWx();
  if(!x){P.innerHTML='<div class="card" style="padding:14px">這天沒有可排的店，試試看把「不想吃」的店加回來。</div>';return}
  const dep=toMin($("#sDep").value),len=+$("#sLen").value,arr=dep+x.mins,wn=win(x,w.i);
  const eatEnd=dep+len-x.mins-5,warn=!wn||arr<wn[0]||arr>wn[1]-30;
  const alts=D.filter(y=>y.id!=x.id&&!skip.has(y.id)&&y.h[w.i]&&!Object.values(plan).includes(y.id)).sort((a,b)=>(a.g==x.g)-(b.g==x.g)||a.d-b.d||b.s-a.s).slice(0,3);
  const isCustom=!!custom[w.key];
- P.innerHTML=`<div class="card dayhead ${anim&&!reduce?"pop":""}">${ICON[x.g]}<div><h3>${w.label}（${DAYS[w.i]}）・${x.c}</h3><p>${isCustom?"✍️ 你選的":"✨ 推薦"}・${nm(x)}・${x.mode}約 ${x.mins} 分</p></div></div>
+ const wx=WX[w.key],rain=wx&&wx.rain>=60&&x.z=="near";const walkAlt=rain?D.find(y=>y.z=="core"&&y.h[w.i]&&!skip.has(y.id)&&!Object.values(plan).includes(y.id)):null;
+ P.innerHTML=(rain&&walkAlt?`<div class="rainy">☔ 這天中午降雨機率 ${wx.rain}%，${esc(x.n)} 要騎車 ${x.mins} 分。要不要換成走路就到的 <b>${esc(walkAlt.n)}</b>？ <button class="sbtn y" data-alt="${walkAlt.id}">換成這間</button></div>`:"")+`<div class="card dayhead ${anim&&!reduce?"pop":""}">${ICON[x.g]}<div><h3>${w.label}（${DAYS[w.i]}）・${x.c}</h3><p>${isCustom?"✍️ 你選的":"✨ 推薦"}・${nm(x)}・${x.mode}約 ${x.mins} 分</p></div></div>
  <div class="tl">
   <div class="it walk ${anim&&!reduce?"pop":""}"><div class="card"><span class="time">${fmt(dep)}</span><h4>從金山街中段出發</h4><p>${x.mode=="走路"?"🚶 走路":"🛵 騎車"}約 ${x.mins} 分（${x.d<100?"就在附近":"直線 "+x.d+" 公尺"}）</p></div></div>
   <div class="it eat ${anim&&!reduce?"pop":""}"><div class="card"><span class="time">${fmt(arr)}–${fmt(eatEnd)}</span>
-   <h4>${nm(x)}<span class="tg" style="background:${x.col}">${x.c}</span></h4>
+   <h4>${nm(x)}<span class="tg" style="background:${x.col}">${esc(x.c)}</span>${vbadge(x)}</h4>
    <p>⭐ ${x.r}・${x.v.toLocaleString()} 則評論・${price(x)}・排名 #${x.k}</p>
    ${chips(x,3)}
    <p>${w.label} 午餐時段：${x.h[w.i]}${warn?` <span class="warn">⚠ 到店時間不在營業時段內，建議早點出發或換一間</span>`:""}</p>
-   <div class="tags"><button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" data-act="swap">換一間</button><button class="sbtn c" data-act="wheel">用轉盤決定</button>${isCustom?'<button class="sbtn" data-act="auto">改回推薦</button>':""}<button class="sbtn" data-act="skip">不想吃</button></div>
+   <div class="tags"><button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" data-act="swap">換一間</button><button class="sbtn c" data-act="wheel">用轉盤決定</button><button class="sbtn" data-log="${x.id}" data-date="${w.key}">✅ 吃了，記一筆</button>${isCustom?'<button class="sbtn" data-act="auto">改回推薦</button>':""}<button class="sbtn" data-act="skip">不想吃</button></div>
    ${alts.length?`<div class="alts">備案（同一天有開、不同口味優先）${alts.map(y=>`<div class="row"><span>${nm(y)}<br><small style="opacity:.8">${y.c}・${price(y)}・${y.mode} ${y.mins} 分・⭐${y.r}${dishOf(y).d[0]?"・🍽 "+dishOf(y).d[0].replace("★",""):""}</small></span><button class="sbtn g" data-alt="${y.id}">換成這間</button></div>`).join("")}</div>`:""}
   </div></div>
   <div class="it home ${anim&&!reduce?"pop":""}"><div class="card"><span class="time">${fmt(dep+len-5)}</span><h4>${x.mode=="走路"?"散步":"騎車"}回去</h4><p>${fmt(dep+len)} 午休結束，回座位喝口水 💧</p></div></div>
  </div>`;}
-$("#dayPanel").onclick=e=>{const b=e.target.closest("button");if(!b||b.dataset.sheet)return;const w=week[selDay],cur=plan[w.key];
+$("#dayPanel").onclick=e=>{const b=e.target.closest("button");if(!b||b.dataset.sheet||b.dataset.log)return;const w=week[selDay],cur=plan[w.key];
  if(b.dataset.alt){custom[w.key]=b.dataset.alt}
  else if(b.dataset.act=="swap"){const c=D.filter(y=>y.id!=cur&&!skip.has(y.id)&&y.h[w.i]&&!Object.entries(plan).some(([k,v])=>k!=w.key&&v==y.id));if(c.length)custom[w.key]=c[Math.floor(Math.random()*c.length)].id}
  else if(b.dataset.act=="auto"){delete custom[w.key]}
@@ -470,7 +542,7 @@ function mapDraw(){const s=$("#bookmap");const w=week[selDay],pick=plan[w.key];l
  roads.forEach(r=>{const pts=r.p.map(q=>MP(...q).join(",")).join(" ");h+=`<polyline class="roadedge" points="${pts}" stroke-width="${r.w+5}"/><polyline class="road" points="${pts}" stroke-width="${r.w}"/>`});
  roads.forEach(r=>{const L_=r.l[mview];if(!L_)return;const [x,y]=MP(L_[0],L_[1]);h+=`<text class="rl" x="${x}" y="${y}" text-anchor="middle" transform="rotate(${L_[2]} ${x} ${y})">${r.n}</text>`});
 
- const R=mview=="zoom"?11:8,pos={},vis=[...D].filter(x=>inMB(x.la,x.ln)).sort((a,b)=>b.k-a.k);vis.forEach(x=>pos[x.id]=MP(x.la,x.ln));const starP=MP(...CENTER);
+ const R=mview=="zoom"?11:8,pos={},vis=[...D].filter(x=>x.la!=null&&inMB(x.la,x.ln)).sort((a,b)=>b.k-a.k);vis.forEach(x=>pos[x.id]=MP(x.la,x.ln));const starP=MP(...CENTER);
  const fixedStar=()=>{vis.forEach(x=>{const a=pos[x.id];const dx=a[0]-starP[0],dy=a[1]-starP[1],dd=Math.hypot(dx,dy)||.01,mn=R+12;if(dd<mn){a[0]=starP[0]+dx/dd*mn;a[1]=starP[1]+dy/dd*mn}})};
  for(let it=0;it<50;it++){fixedStar();for(let i=0;i<vis.length;i++)for(let j=i+1;j<vis.length;j++){const a=pos[vis[i].id],b=pos[vis[j].id];const dx=b[0]-a[0],dy=b[1]-a[1],dd=Math.hypot(dx,dy)||.01,mn=R*2+1.5;if(dd<mn){const k=(mn-dd)/2/dd;a[0]-=dx*k;a[1]-=dy*k;b[0]+=dx*k;b[1]+=dy*k}}}
  vis.forEach(x=>{const [px,py]=pos[x.id],p=x.id==pick||(lastPick&&x.id==lastPick.id);
@@ -486,7 +558,7 @@ let lmap=null,llayer=null;
 function leafInit(){if(lmap||typeof L=="undefined")return;lmap=L.map("realmap",{scrollWheelZoom:false}).setView([24.7805,121.0215],15);
  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap contributors"}).addTo(lmap);llayer=L.layerGroup().addTo(lmap);leafDraw();}
 function leafDraw(){if(!llayer)return;llayer.clearLayers();const w=week[selDay],pick=plan[w.key];
- D.forEach(x=>{const p=x.id==pick;const ic=L.divIcon({className:"",html:`<div class="leaf-pin ${p?"pick":""}" style="background:${x.col};opacity:${skip.has(x.id)||!x.h[w.i]?.35:1}">${x.k}</div>`,iconSize:p?[32,32]:[26,26],iconAnchor:p?[16,16]:[13,13]});
+ D.filter(x=>x.la!=null).forEach(x=>{const p=x.id==pick;const ic=L.divIcon({className:"",html:`<div class="leaf-pin ${p?"pick":""}" style="background:${x.col};opacity:${skip.has(x.id)||!x.h[w.i]?.35:1}">${x.k}</div>`,iconSize:p?[32,32]:[26,26],iconAnchor:p?[16,16]:[13,13]});
   L.marker([x.la,x.ln],{icon:ic,zIndexOffset:p?1000:0}).addTo(llayer).on("click",()=>mapInfo(x));});
  L.marker(CENTER,{icon:L.divIcon({className:"",html:'<div class="leaf-pin" style="background:#FFFCF6">★</div>',iconSize:[26,26],iconAnchor:[13,13]})}).addTo(llayer).bindTooltip("出發點：金山街中段");}
 $(".mtabs").onclick=e=>{const b=e.target.closest(".pill");if(!b)return;$$(".mtabs .pill").forEach(p=>p.setAttribute("aria-pressed",p==b));const real=b.dataset.m=="real";if(!real){mview=b.dataset.m;setMB();mapDraw();}
@@ -496,9 +568,9 @@ $(".mtabs").onclick=e=>{const b=e.target.closest(".pill");if(!b)return;$$(".mtab
 // ===== list =====
 let lzone="all";
 function renderList(){const w=week[selDay];$("#shops").innerHTML=D.filter(x=>(lzone=="all"||x.z==lzone)&&!($("#lHide").checked&&skip.has(x.id))).map(x=>`<div class="card shop ${skip.has(x.id)?"out":""}"><div class="ic" style="background:${x.col}">${ICON[x.g]}</div><div>
- <h4><a href="#" data-sheet="${x.id}" style="text-decoration:none">#${x.k} ${nm(x)}</a></h4><div class="meta">${x.c}・${price(x)}・⭐${x.r}（${x.v.toLocaleString()} 則）<br>${x.mode}約 ${x.mins} 分・${w.label}（${DAYS[w.i]}）午餐 ${x.h[w.i]||"公休"}</div>
- ${chips(x,2)}<div class="acts"><button class="sbtn c" data-sheet="${x.id}">🍽 招牌菜</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn y" data-put="${x.id}">排進 ${w.label}</button><button class="sbtn" data-sk="${x.id}">${skip.has(x.id)?"加回來":"不想吃"}</button></div></div></div>`).join("");}
-$("#shops").onclick=e=>{const b=e.target.closest("button");if(!b||b.dataset.sheet)return;
+ <h4><a href="#" data-sheet="${x.id}" style="text-decoration:none">#${x.k} ${nm(x)}</a>${vbadge(x)}</h4><div class="meta">${esc(x.c)}・${price(x)}・⭐${x.r}（${x.v.toLocaleString()} 則）<br>${x.mode}約 ${x.mins} 分・${w.label}（${DAYS[w.i]}）午餐 ${x.h[w.i]||"公休"}</div>
+ ${chips(x,2)}<div class="acts"><button class="sbtn c" data-sheet="${x.id}">🍽 招牌菜</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn y" data-put="${x.id}">排進 ${w.label}</button><button class="sbtn" data-sk="${x.id}">${skip.has(x.id)?"加回來":"不想吃"}</button><button class="sbtn" data-log="${x.id}">📝 記一筆</button><button class="sbtn" data-edit="${x.id}">✏️ 修改</button></div></div></div>`).join("");}
+$("#shops").onclick=e=>{const b=e.target.closest("button");if(!b||b.dataset.sheet||b.dataset.log||b.dataset.edit)return;
  if(b.dataset.sk){const id=b.dataset.sk;skip.has(id)?skip.delete(id):skip.add(id);saveSkip();if(custom[week[selDay].key]==id&&skip.has(id))delete custom[week[selDay].key];}
  if(b.dataset.put){custom[week[selDay].key]=b.dataset.put;location.hash="#days"}
  LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);};
@@ -511,9 +583,104 @@ $("#fOpen").onchange=wheelPool;$("#fCheap").onchange=wheelPool;$("#spin").onclic
 const secs=["home","wheel","days","map","list"];
 addEventListener("scroll",()=>{let cur="home";secs.forEach(id=>{if($("#"+id).getBoundingClientRect().top<120)cur=id});$$(".nav a.lk").forEach(a=>a.classList.toggle("on",a.getAttribute("href")=="#"+cur))},{passive:true});
 
-function refreshAll(anim){renderTabs();renderDay(anim);todayCard();wheelPool();mapDraw();renderList();}
+// ===== weather (Open-Meteo, no key) =====
+const WX={};
+const WMO=c=>c==0?["☀️","晴"]:c<=2?["🌤","晴時多雲"]:c==3?["☁️","陰"]:c<=48?["🌫","起霧"]:c<=57?["🌦","毛毛雨"]:c<=67?["🌧","下雨"]:c<=77?["🌨","下雪"]:c<=82?["🌦","陣雨"]:["⛈","雷雨"];
+async function loadWx(){try{const u="https://api.open-meteo.com/v1/forecast?latitude=24.7772&longitude=121.0225&hourly=temperature_2m,precipitation_probability,weather_code,apparent_temperature&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=Asia%2FTaipei&forecast_days=10";
+ const r=await fetch(u);if(!r.ok)throw 0;const j=await r.json();
+ j.daily.time.forEach((d,i)=>{const hi=j.hourly.time.indexOf(d+"T12:00");WX[d]={code:hi>=0?j.hourly.weather_code[hi]:j.daily.weather_code[i],t:hi>=0?Math.round(j.hourly.temperature_2m[hi]):null,feel:hi>=0?Math.round(j.hourly.apparent_temperature[hi]):null,rain:hi>=0?j.hourly.precipitation_probability[hi]:j.daily.precipitation_probability_max[i],max:Math.round(j.daily.temperature_2m_max[i]),min:Math.round(j.daily.temperature_2m_min[i])}});
+ renderWx();renderTabs();renderDay(false);}catch(e){$("#wxCard").innerHTML='<div class="em">🌈</div><div><b>天氣暫時讀不到</b><small>可能是網路限制，稍後再重新整理看看</small></div>';}}
+const wxTip=w=>w.rain>=60?"記得帶傘，建議走路就到的店":w.t>=31?"很熱，挑近一點、有冷氣的店":w.t<=16?"有點冷，適合來碗熱湯麵或湯飯":w.rain>=30?"可能會下雨，帶把傘比較保險":"適合出門散步吃飯";
+function renderWx(){const t=ymd(new Date()),w=WX[t]||WX[week[selDay].key];if(!w)return;const [em,tx]=WMO(w.code);
+ $("#wxCard").innerHTML=`<div class="em">${em}</div><div><small>${WX[t]?"今天":"這天"}中午 12:00・金山街</small><b>${tx}・${w.t}°C（體感 ${w.feel}°C）・降雨 ${w.rain}%</b><small>全天 ${w.min}–${w.max}°C｜${wxTip(w)}</small></div>`;}
+function renderDayWx(){const w=WX[week[selDay].key];$("#dayWx").innerHTML=w?`<div class="wxbar"><span class="tg" style="background:#EAF5FA">${WMO(w.code)[0]} 中午 ${w.t}°C・降雨 ${w.rain}%</span><span>${wxTip(w)}</span></div>`:"";}
+
+// ===== log UI =====
+function openLogForm(id,date){const x=id?byId(id):null;const opts=[...D].sort((a,b)=>a.n.localeCompare(b.n,"zh-Hant")).map(y=>`<option value="${y.id}" ${x&&y.id==x.id?"selected":""}>${esc(y.n)}</option>`).join("");
+ showSheet(`<h3 style="margin-bottom:4px">📝 記一筆聚餐</h3><form class="frm" id="logF">
+ <label>店家<select name="id" required>${opts}</select></label>
+ <div class="row2"><label>日期<input type="date" name="date" value="${date||ymd(new Date())}" required></label><label>人數<input type="number" name="n" min="1" max="50" placeholder="例如 6"></label></div>
+ <label>和誰（選填）<input type="text" name="who" maxlength="60" placeholder="例如 SD3 小組、新人歡迎餐"></label>
+ <label>好吃程度</label><div class="hearts" id="hearts">${[1,2,3,4,5].map(i=>`<button type="button" data-h="${i}" aria-label="${i} 顆心" style="color:#E0786A">♥</button>`).join("")}</div>
+ <label>點了什麼／心得（選填）<textarea name="note" maxlength="300" placeholder="例如：蟹黃麵很讚，下次試抄手"></textarea></label>
+ <button class="btn" type="submit">儲存紀錄</button></form>`,"記一筆聚餐");
+ let score=0;$("#hearts").onclick=e=>{const b=e.target.closest("[data-h]");if(!b)return;score=+b.dataset.h;$$("#hearts button").forEach(h=>h.classList.toggle("on",+h.dataset.h<=score))};
+ $("#logF").onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);const who=[f.get("n")?f.get("n")+" 人":"",f.get("who").trim()].filter(Boolean).join("・");
+  LOG.push({id:f.get("id"),name:byId(f.get("id")).n,date:f.get("date"),who,note:f.get("note").trim(),score,ts:Date.now()});saveLog();closeSheet();refreshAll(false);toast("已記錄 ✔");};}
+function renderLog(){const ids=new Set(LOG.map(l=>l.id));$("#stShops").textContent=[...ids].filter(i=>byId(i)).length;$("#stTimes").textContent=LOG.length;$("#stLeft").textContent=D.filter(x=>!ids.has(x.id)).length;
+ const L2=[...LOG].sort((a,b)=>b.date.localeCompare(a.date)||b.ts-a.ts);
+ $("#logs").innerHTML=L2.length?L2.map(l=>{const d=new Date(l.date+"T12:00");return `<div class="card logi"><div class="dt"><b>${d.getMonth()+1}/${d.getDate()}</b><small>${d.getFullYear()}・週${DAYS[(d.getDay()+6)%7]}</small></div><div><h4>${byId(l.id)?`<a href="#" data-sheet="${l.id}" style="text-decoration:none">${esc(l.name)}</a>`:esc(l.name)}</h4><p>${[l.who&&esc(l.who),l.score&&`<span style="color:#E0786A">${"♥".repeat(l.score)}</span>`].filter(Boolean).join("・")}${l.note?"<br>"+esc(l.note):""}</p></div><button class="sbtn" data-del="${l.ts}" aria-label="刪除這筆">🗑</button></div>`}).join(""):'<div class="card" style="padding:14px;font-size:.9rem">還沒有紀錄。吃完飯按「✅ 吃了，記一筆」或上面的「📝 記一筆聚餐」就會出現在這裡。</div>';}
+$("#logs").onclick=e=>{const b=e.target.closest("[data-del]");if(!b)return;if(b.dataset.ok){LOG=LOG.filter(l=>String(l.ts)!=b.dataset.del);saveLog();refreshAll(false);toast("已刪除")}else{b.dataset.ok=1;b.textContent="確定刪除？";b.classList.add("c");setTimeout(()=>{if(b.isConnected){delete b.dataset.ok;b.textContent="🗑";b.classList.remove("c")}},3000)}};
+$("#newLog").onclick=()=>openLogForm(plan[week[selDay].key],week[selDay].key);
+$("#avoidRecent").checked=LS.get("jl_avoid",false);$("#onlyNew").checked=LS.get("jl_onlynew",false);
+$("#avoidRecent").onchange=e=>{LS.set("jl_avoid",e.target.checked);rebuild();refreshAll(true)};
+$("#onlyNew").onchange=e=>{LS.set("jl_onlynew",e.target.checked);wheelPool()};
+
+// ===== backup =====
+$("#backup").onclick=()=>{const data=JSON.stringify({v:1,log:LOG,skip:[...skip],shops:OV,custom:LS.get("jl_custom_"+week[0].key,{})});
+ showSheet(`<h3>💾 備份／還原</h3><div class="frm"><p class="note" style="margin-top:8px">換手機或清除瀏覽器資料前，先把下面這串複製起來（貼到 LINE 給自己）。要還原時，把它貼回下面的框框按「還原」。</p>
+ <textarea id="bkTxt" readonly style="min-height:90px">${esc(data)}</textarea><div class="tags"><button class="sbtn y" id="bkCopy">複製備份</button></div>
+ <label>貼上備份來還原<textarea id="rsTxt" placeholder="貼上備份文字"></textarea></label><button class="btn" id="rsGo">還原</button></div>`,"備份還原");
+ $("#bkCopy").onclick=async()=>{try{await navigator.clipboard.writeText(data);toast("已複製備份 ✔")}catch(e){$("#bkTxt").select();toast("請長按選取後複製")}};
+ $("#rsGo").onclick=()=>{try{const j=JSON.parse($("#rsTxt").value);if(!j||j.v!=1)throw 0;LOG=j.log||[];saveLog();skip=new Set(j.skip||[]);saveSkip();OV=j.shops||{add:[],edit:{},hide:[]};saveOV();if(j.custom){custom=j.custom;LS.set("jl_custom_"+week[0].key,custom)}buildD();rebuild();closeSheet();refreshAll(true);toast("已還原 ✔")}catch(e){toast("備份格式不對，請整段貼上")}};};
+
+// ===== shop editor =====
+const CATS=["麵食","拉麵","牛肉麵","米線","日式丼飯","日式定食","鐵板燒","炸物","韓式","泰式","越式","南洋","印度","義大利麵","漢堡","小火鍋","便當","雞肉飯","中式","客家菜","健康餐盒","素食","早午餐"];
+const parseLL=s=>{s=s||"";let m=s.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)||s.match(/!3d(-?\d+\.\d+)!4d(-?\d+\.\d+)/)||s.match(/[?&]q=(-?\d+\.\d+),(-?\d+\.\d+)/)||s.match(/^\s*(-?\d+\.\d+)\s*,\s*(-?\d+\.\d+)\s*$/);return m?[+m[1],+m[2]]:null};
+function hoursOf(x){const w=x.h.find(Boolean)||"11:00–14:00";const [a,b]=w.split("–");return{a,b,days:x.h.map(Boolean)}}
+function openShopForm(id){const x=id?byId(id):null;const hh=x?hoursOf(x):{a:"11:00",b:"14:00",days:[1,1,1,1,1,0,0]};const ds=x?dishOf(x):{d:[],n:""};
+ showSheet(`<h3>${x?"✏️ 修改店家":"➕ 新增店家"}</h3><form class="frm" id="shopF">
+ <label>店名<input type="text" name="n" required maxlength="40" value="${x?esc(x.n):""}" placeholder="例如 好吃麵館 金山店"></label>
+ <div class="row2"><label>類型<input type="text" name="c" list="catList" required maxlength="16" value="${x?esc(x.c):""}" placeholder="例如 拉麵"></label>
+ <label>價位<select name="p"><option value="1" ${x&&x.p==1?"selected":""}>$（約 200 以下）</option><option value="2" ${!x||x.p==2?"selected":""}>$$（約 200–400）</option></select></label></div>
+ <datalist id="catList">${CATS.map(c=>`<option value="${c}">`).join("")}</datalist>
+ <label>位置：貼 Google 地圖網址或「緯度,經度」<input type="text" name="loc" value="${x&&x.la!=null?x.la+","+x.ln:""}" placeholder="例如 24.7775,121.0224"></label>
+ <p class="hint">在 Google 地圖長按店家位置，上方會出現座標，點一下就能複製。沒有座標也可以，就填下面的走路分鐘數（不會出現在地圖上）。</p>
+ <label>從金山街中段走路約幾分鐘<input type="number" name="walk" min="1" max="40" value="${x&&x.la==null&&x.walk?x.walk:""}" placeholder="沒填座標時才需要"></label>
+ <div class="row2"><label>中午開門<input type="text" name="ha" value="${hh.a}" pattern="\\d{1,2}:\\d{2}" placeholder="11:00"></label><label>中午休息<input type="text" name="hb" value="${hh.b}" pattern="\\d{1,2}:\\d{2}" placeholder="14:00"></label></div>
+ <label>中午有開的日子</label><div class="days7">${DAYS.map((d,i)=>`<label><input type="checkbox" name="d${i}" ${hh.days[i]?"checked":""}>${d}</label>`).join("")}</div>
+ <div class="row2"><label>Google 星數（選填）<input type="number" name="r" step="0.1" min="1" max="5" value="${x&&x.r?x.r:""}"></label><label>評論數（選填）<input type="number" name="v" min="0" value="${x&&x.v?x.v:""}"></label></div>
+ <label>熱門餐點（用逗號分隔，第一個當招牌）<input type="text" name="dish" maxlength="120" value="${esc(ds.d.map(s=>s.replace("★","")).join("，"))}" placeholder="例如 牛肉麵，紅油抄手"></label>
+ <label>評論重點／備註（選填）<textarea name="note" maxlength="200">${esc(ds.n)}</textarea></label>
+ <button class="btn" type="submit">${x?"儲存修改":"新增到名單"}</button>
+ ${x?`<div class="tags" style="margin-top:10px"><button type="button" class="sbtn c" id="hideShop">🚫 標記歇業（從名單隱藏）</button>${x._ed||x._new?'<button type="button" class="sbtn" id="resetShop">↩️ 還原成原本資料</button>':""}</div>`:""}
+ <p class="hint" style="margin-top:10px">修改先存在這支手機。想讓同事也看到，到名單按「📤 發布給大家」。</p></form>`,x?"修改店家":"新增店家");
+ $("#shopF").onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);const ll=parseLL(f.get("loc"));
+  if(f.get("loc").trim()&&!ll){toast("看不懂位置，請貼含座標的網址或「緯度,經度」");return}
+  const ha=f.get("ha").trim()||"11:00",hb=f.get("hb").trim()||"14:00";const h=DAYS.map((d,i)=>f.get("d"+i)?`${ha.padStart(5,"0")}–${hb.padStart(5,"0")}`:"");
+  if(!h.some(Boolean)){toast("至少勾一天中午有開");return}
+  const dl=f.get("dish").split(/[，,、]/).map(s=>s.trim()).filter(Boolean).map((s,i)=>i==0?"★"+s:s);
+  const rec={n:f.get("n").trim(),c:f.get("c").trim(),p:+f.get("p"),h,la:ll?ll[0]:null,ln:ll?ll[1]:null,walk:ll?null:(+f.get("walk")||null),r:+f.get("r")||null,v:+f.get("v")||0,dish:{...(x?dishOf(x):{}),d:dl,n:f.get("note").trim()}};
+  if(!ll){rec.d=null}
+  if(f.get("loc").includes("google.")&&f.get("loc").includes("http"))rec.link=f.get("loc").trim();
+  if(x){if(x._new){const a=OV.add.find(a=>a.id==x.id);Object.assign(a,rec)}else OV.edit[x.id]=rec}
+  else OV.add.push({id:"u_"+Date.now().toString(36),...rec});
+  saveOV();buildD();rebuild();closeSheet();refreshAll(true);toast(x?"已更新 ✔":"已新增 ✔");};
+ if(x){$("#hideShop").onclick=e=>{if(!e.target.dataset.ok){e.target.dataset.ok=1;e.target.textContent="確定隱藏？再按一次";return}OV.hide.push(x.id);saveOV();buildD();rebuild();closeSheet();refreshAll(true);toast("已隱藏，可在「已隱藏的店」找回")};
+  const rs=$("#resetShop");if(rs)rs.onclick=()=>{if(x._new)OV.add=OV.add.filter(a=>a.id!=x.id);else delete OV.edit[x.id];saveOV();buildD();rebuild();closeSheet();refreshAll(true);toast("已還原")};}}
+$("#addShop").onclick=()=>openShopForm(null);
+$("#showHidden").onclick=()=>{const H=window.HIDDEN||[];showSheet(`<h3>👀 已隱藏的店</h3>${H.length?`<div class="list" style="margin-top:10px">${H.map(x=>`<div class="card" style="padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px"><span>${esc(x.n)}<br><small>${esc(x.c)}</small></span><button class="sbtn g" data-unhide="${x.id}">加回名單</button></div>`).join("")}</div>`:'<p class="note" style="margin-top:10px">目前沒有隱藏的店。</p>'}`,"已隱藏的店");
+ $("#sheet").onclick=e=>{const b=e.target.closest("[data-unhide]");if(!b)return;OV.hide=OV.hide.filter(i=>i!=b.dataset.unhide);saveOV();buildD();rebuild();closeSheet();refreshAll(true);toast("已加回名單")}};
+function renderLocalNote(){const n=OV.add.length+Object.keys(OV.edit).length+OV.hide.length;const el=$("#localNote");el.style.display=n?"block":"none";el.innerHTML=n?`✏️ 這支手機上有 ${n} 筆店家修改（新增 ${OV.add.length}、修改 ${Object.keys(OV.edit).length}、隱藏 ${OV.hide.length}），只有你看得到；按「📤 發布給大家」讓同事也看到。`:"";}
+
+// ===== publish via GitHub =====
+function exportShops(){const keep=D.concat([]).map(x=>{const o={id:x.id,n:x.n,c:x.c,p:x.p,h:x.h,la:x.la??null,ln:x.ln??null,r:x.r||null,v:x.v||0};if(x.walk&&x.la==null)o.walk=x.walk;if(x.link)o.link=x.link;if(x.dish)o.dish=x.dish;return o});
+ return JSON.stringify({updated:ymd(new Date()),shops:keep},null,1);}
+$("#publish").onclick=()=>{const js=exportShops();const n=OV.add.length+Object.keys(OV.edit).length+OV.hide.length;
+ showSheet(`<h3>📤 發布給大家</h3><div class="frm"><p class="note" style="margin-top:8px">${n?`會把你手機上的 ${n} 筆修改，連同原本名單一起發布（共 ${D.length} 間）。`:"你目前沒有修改，發布的會是現在的名單。"}需要 GitHub 帳號並有這個 repo 的權限（Vito 本人）。同事可以改用「備份」把文字傳給 Vito。</p>
+ <ol style="list-style:none;display:grid;gap:8px;margin-top:8px;font-size:.92rem"><li>① 按「複製名單」</li><li>② 按「開啟 GitHub」→ 在編輯框全選刪掉，貼上</li><li>③ 按綠色「Commit changes」，約 1 分鐘後大家重新整理就看得到</li></ol>
+ <div class="tags" style="margin-top:12px"><button class="sbtn y" id="pubCopy">① 複製名單</button><a class="sbtn s" href="https://github.com/${REPO}/edit/main/shops.json" target="_blank" rel="noopener">② 開啟 GitHub</a></div>
+ <textarea id="pubTxt" readonly style="min-height:80px;margin-top:10px">${esc(js)}</textarea>
+ <p class="hint" style="margin-top:10px">發布成功後，可以按這裡清掉本機修改，避免重複：</p><button class="sbtn" id="pubClear">清除本機的店家修改</button></div>`,"發布給大家");
+ $("#pubCopy").onclick=async()=>{try{await navigator.clipboard.writeText(js);toast("已複製名單 ✔")}catch(e){$("#pubTxt").select();toast("請長按選取後複製")}};
+ $("#pubClear").onclick=e=>{if(!e.target.dataset.ok){e.target.dataset.ok=1;e.target.textContent="確定已發布？再按一次清除";return}OV={add:[],edit:{},hide:[]};saveOV();buildD();rebuild();closeSheet();refreshAll(true);toast("已清除本機修改")};};
+
+// load published shops.json (if newer than embedded)
+async function loadShops(){try{const r=await fetch("shops.json",{cache:"no-store"});if(!r.ok)return;const j=await r.json();if(!j.shops||!j.shops.length)return;BASE=j.shops;buildD();rebuild();refreshAll(false);}catch(e){}}
+
+function refreshAll(anim){$("#tot").textContent=D.length;renderTabs();renderDay(anim);todayCard();wheelPool();mapDraw();renderList();renderLog();renderLocalNote();}
 document.fonts&&document.fonts.ready.then(()=>drawWheel());
-refreshAll(false);tick();
+rebuild();refreshAll(false);tick();loadWx();loadShops();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 </body>
