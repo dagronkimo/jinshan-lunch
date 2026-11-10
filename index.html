@@ -4,6 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>金山街午餐繪本・今天吃啥</title>
+<meta name="theme-color" content="#FFFCF6">
+<meta name="description" content="新竹金山街＋附近的午餐轉盤、團隊投票、這週午餐行程與地圖">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="金山街午餐">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta property="og:title" content="金山街今天吃啥？午餐繪本">
+<meta property="og:description" content="轉盤、團隊投票、這週午餐行程、招牌菜與地圖">
+<meta property="og:image" content="https://dagronkimo.github.io/jinshan-lunch/icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
@@ -206,6 +218,32 @@ a:focus-visible,button:focus-visible,input:focus-visible+span,select:focus-visib
 .legend button{font-family:inherit;color:var(--ink);background:none;border:0;cursor:pointer;font-size:.8rem;padding:2px 0;display:inline-flex;align-items:center}
 .legend button[aria-pressed="false"]{opacity:.35}
 .vmode{display:flex;gap:6px;margin:4px 0 8px}
+.os{font-size:.72rem;border:2px solid var(--ink);border-radius:999px;padding:0 7px;white-space:nowrap;vertical-align:1px}
+.os.open{background:var(--green)}.os.closing{background:var(--yellow)}.os.soon{background:var(--sky)}.os.off{background:#E9E4DA;opacity:.85}
+.install{margin-top:12px;padding:10px 14px;display:none;gap:10px;align-items:center;background:var(--yellow)}
+.install.show{display:flex}.install img{width:44px;height:44px;border-radius:12px;border:2.5px solid var(--ink)}
+.install div{flex:1;font-size:.86rem;line-height:1.4}
+.vopt{padding:10px 12px;display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:center;cursor:pointer;position:relative;overflow:hidden}
+.vopt input{position:absolute;opacity:0}
+.vopt .ck{width:26px;height:26px;border:var(--line);border-radius:9px;background:var(--white);display:grid;place-items:center;font-size:.9rem}
+.vopt.sel{background:#FFF6DC}.vopt.sel .ck{background:var(--yellow)}
+.vopt h4{font-weight:400;font-size:.98rem;line-height:1.3}
+.vopt .bar{height:10px;border:2px solid var(--ink);border-radius:999px;background:var(--paper);margin-top:5px;overflow:hidden}
+.vopt .bar i{display:block;height:100%;background:var(--coral);transition:width .4s}
+.vopt small{font-size:.76rem;opacity:.85}
+.vopt.win{outline:3px solid var(--ink);background:#FFF0EC}
+.vgrid{display:grid;gap:8px;margin-top:10px}
+.vhead{padding:12px 14px}
+.vhead h3{font-size:1.15rem;line-height:1.3}
+.vmeta{font-size:.84rem;margin-top:4px}
+.pick-list{max-height:46vh;overflow:auto;border:2.5px solid var(--ink);border-radius:14px;background:var(--white);padding:4px 8px;margin-top:6px}
+.pick-list label{display:flex!important;gap:8px;align-items:center;margin:0!important;padding:6px 2px;border-bottom:1.5px dashed #E1DACE;font-size:.9rem}
+.pick-list label:last-child{border-bottom:0}
+.dchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.dchips button{font-family:inherit;color:var(--ink);font-size:.82rem;border:2.5px solid var(--ink);border-radius:12px;padding:1px 9px;background:var(--white);cursor:pointer}
+.dchips button[aria-pressed="true"]{background:var(--yellow)}
+.topd{display:grid;gap:6px;margin-top:6px}
+.topd div{display:flex;justify-content:space-between;gap:8px;font-size:.88rem;border-bottom:1.5px dashed #E1DACE;padding:3px 0}
 footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + env(safe-area-inset-bottom))}
 .ver{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:0 10px;margin-bottom:6px;background:var(--white)}
 
@@ -227,7 +265,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
 <body>
 <nav class="nav" aria-label="主選單"><div class="in">
  <span class="logo" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M6 20h28a14 12 0 0 1-28 0z" fill="#F6D27A" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><path d="M10 20c4-3 6 2 10-1s6 2 10-1" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/><path d="M24 6l-8 14M30 8l-10 12" stroke="#3E3A39" stroke-width="3" stroke-linecap="round"/></svg>金山街午餐</span>
- <a class="lk" href="#home">首頁</a><a class="lk" href="#wheel">轉盤</a><a class="lk" href="#days">午餐行程</a><a class="lk" href="#map">地圖</a><a class="lk" href="#list">名單</a><a class="lk" href="#log">聚餐紀錄</a>
+ <a class="lk" href="#home">首頁</a><a class="lk" href="#wheel">轉盤</a><a class="lk" href="#vote">投票</a><a class="lk" href="#days">午餐行程</a><a class="lk" href="#map">地圖</a><a class="lk" href="#list">名單</a><a class="lk" href="#log">聚餐紀錄</a>
 </div></nav>
 <main class="wrap">
 
@@ -282,6 +320,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
  <div class="count" aria-live="polite"><div><b id="cd-h">--</b><span>時</span></div><div><b id="cd-m">--</b><span>分</span></div><div><b id="cd-s">--</b><span>秒</span></div></div>
  <p class="count-msg" id="cd-msg">距離午休還有</p>
  <div class="card wx" id="wxCard" aria-live="polite"><div class="em">⏳</div><div><b>讀取天氣中…</b><small>金山街這週中午的天氣</small></div></div>
+ <div class="card install" id="installCard"><img src="icon-192.png" alt=""><div><b style="font-weight:400">📲 加到手機主畫面</b><br><span id="installTxt">像 App 一樣一鍵打開，沒網路也看得到名單</span></div><button class="sbtn" id="installBtn">加入</button><button class="sbtn" id="installX" aria-label="不要再顯示">✕</button></div>
  <a class="card today-card" id="todayCard" href="#days" style="text-decoration:none"></a>
 </section>
 
@@ -304,6 +343,12 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
   <button class="btn" id="spin">轉！中午吃這間</button>
  </div>
  <div class="card res" id="res" aria-live="polite"></div>
+</section>
+
+<section id="vote">
+ <h2><span class="dot" style="background:var(--sky)"></span>團隊投票</h2>
+ <p class="note">開一場投票、把連結丟到群組，大家點進來勾想吃的，票數即時更新。平手就交給轉盤決勝！</p>
+ <div id="voteBox"></div>
 </section>
 
 <section id="days">
@@ -352,13 +397,14 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
  <div class="toolbar"><button class="sbtn y" id="newLog">📝 記一筆聚餐</button><button class="sbtn" id="backup">💾 備份／還原</button></div>
  <label class="chkl"><input type="checkbox" id="avoidRecent"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>轉盤和推薦避開「最近 7 天吃過」的店</label>
  <label class="chkl"><input type="checkbox" id="onlyNew"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>轉盤只轉「還沒去過」的店（探險模式）</label>
+ <div class="card" style="padding:12px 14px;margin-top:12px"><h3 style="font-size:1rem">🍽 我們最常點（最近 30 天）</h3><div class="topd" id="topDishes"></div></div>
  <div class="logs" id="logs" style="margin-top:12px"></div>
 </section>
 
 <footer>
- <span class="ver">版本 2026/11/10・繪本版＋7 大分類＋招牌菜＋聚餐紀錄＋天氣</span><br><span id="pubDate">店家名單更新：2026-11-10</span><br>
+ <span class="ver">版本 2026/11/10・團隊投票＋可加到主畫面</span><br><span id="pubDate">店家名單更新：2026-11-10</span><br>
  店家資料為 Google 地圖（2026 年 11 月）；價位 $ 約 NT$200 以下、$$ 約 NT$200–400<br>
- 走路／騎車時間以直線距離估算，營業時間可能變動，出發前請再確認<br>天氣資料：<a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>（金山街座標，中午 12:00 預報）<br>
+ 走路／騎車時間以直線距離估算，營業時間可能變動，出發前請再確認<br>團隊投票：透過 <a href="https://ntfy.sh/" target="_blank" rel="noopener">ntfy.sh</a> 傳送（約 12 小時後自動消失）<br>天氣資料：<a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>（金山街座標，中午 12:00 預報）<br>
  已排除：薑母鴨、居酒屋、串燒、燒肉、酒吧、咖啡店、只開晚上與高價吃到飽的店
 </footer>
 </main>
@@ -410,6 +456,16 @@ Object.assign(ICON,{
  kr:`<svg viewBox="0 0 48 48"><path d="M6 20h36l-4 18a4 4 0 0 1-4 3H14a4 4 0 0 1-4-3z" fill="#F2A497" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><path d="M3 20h42" stroke="#3E3A39" stroke-width="3" stroke-linecap="round"/><path d="M10 20c1-5 5-7 9-6M38 20c-1-5-5-7-9-6" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="24" cy="15" rx="8" ry="5" fill="#FFF" stroke="#3E3A39" stroke-width="2.5"/><circle cx="24" cy="15" r="3" fill="#F6D27A" stroke="#3E3A39" stroke-width="2"/><path class="a-steam" d="M16 8c-2-3 2-4 0-7M32 8c-2-3 2-4 0-7" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/></svg>`,
  west:`<svg viewBox="0 0 48 48"><path d="M8 22a16 12 0 0 1 32 0z" fill="#F6D27A" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><circle cx="18" cy="15" r="1.4" fill="#3E3A39"/><circle cx="26" cy="13" r="1.4" fill="#3E3A39"/><circle cx="31" cy="17" r="1.4" fill="#3E3A39"/><path d="M6 25c3-3 5 2 8-1s5 2 8-1 5 2 8-1 5 2 8-1 4 1 4 1" fill="#B9DAA5" stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round"/><rect x="7" y="27" width="34" height="6" rx="3" fill="#F2A497" stroke="#3E3A39" stroke-width="2.5"/><path d="M8 35h32v2a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4z" fill="#F6D27A" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/></svg>`,
  cn:`<svg viewBox="0 0 48 48"><path d="M8 26h32v10a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4z" fill="#F6D27A" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><path d="M8 31h32M8 36h32" stroke="#3E3A39" stroke-width="2"/><path d="M6 26c2-12 34-12 36 0z" fill="#B9DAA5" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="14" r="3" fill="#F2A497" stroke="#3E3A39" stroke-width="2.5"/><path class="a-steam" d="M14 9c-2-3 2-4 0-7M34 9c-2-3 2-4 0-7" fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round"/></svg>`});
+const SITE="https://dagronkimo.github.io/jinshan-lunch/";
+function openState(x,ref){const n=ref||new Date(),dow=(n.getDay()+6)%7,s=x.h[dow];if(!s)return{t:"今天公休",c:"off"};
+ const [a,b]=s.split("–").map(toMin),m=n.getHours()*60+n.getMinutes();
+ if(m<a)return a-m<=60?{t:`${fmt(a)} 開`,c:"soon"}:{t:`午餐 ${s}`,c:"soon"};
+ if(m<b)return b-m<=30?{t:`快休息・剩 ${b-m} 分`,c:"closing"}:{t:"營業中",c:"open"};
+ return{t:"午餐已休息",c:"off"}}
+const osb=x=>{const o=openState(x);return ` <span class="os ${o.c}">${o.t}</span>`};
+async function shareOut(text,link){const u=link||SITE;
+ if(navigator.share){try{await navigator.share({text,url:u});return}catch(e){if(e&&e.name=="AbortError")return}}
+ const a=document.createElement("a");a.href="https://line.me/R/msg/text/?"+encodeURIComponent(text+"\n"+u);a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();}
 const catChip=(k,on,cnt)=>`<button class="pill catp" data-cat="${k}" aria-pressed="${on}"><span class="cdot" style="background:${G[k].c}"></span>${G[k].n}${cnt!=null?` <small>${cnt}</small>`:""}</button>`;
 let cats=new Set(LS.get("jl_cats",[]));const saveCats=()=>LS.set("jl_cats",[...cats]);
 const inCat=x=>!cats.size||cats.has(x.g);
@@ -471,7 +527,7 @@ setInterval(tick,1000);
 
 function todayCard(){const w=week[selDay],x=byId(plan[w.key]);const el=$("#todayCard");
  if(!x){el.innerHTML="<div>這天沒有可排的店</div>";return}
- el.innerHTML=`${ICON[x.g]}<div><small>${isToday(w)?"今天":w.label+"（"+DAYS[w.i]+"）"}中午吃</small><b>${nm(x)}</b><small>${x.c}・${price(x)}・${x.mode}約 ${x.mins} 分・⭐${x.r}</small><small style="display:block">🍽 招牌：${(dishOf(x).d[0]||"").replace("★","")}</small></div>`;}
+ el.innerHTML=`${ICON[x.g]}<div><small>${isToday(w)?"今天":w.label+"（"+DAYS[w.i]+"）"}中午吃</small><b>${nm(x)}</b>${isToday(w)?osb(x):""}<small>${x.c}・${price(x)}・${x.mode}約 ${x.mins} 分・⭐${x.r}</small><small style="display:block">🍽 招牌：${(dishOf(x).d[0]||"").replace("★","")}</small></div>`;}
 
 // ===== wheel =====
 let zone="all",pool=[],rot=0,spinning=false,lastPick=null;
@@ -493,12 +549,13 @@ function spin(){if(spinning||!pool.length)return;const n=pool.length,a=2*Math.PI
  (function f(t){const p=Math.min(1,(t-t0)/dur);rot=start+delta*(1-Math.pow(1-p,4));drawWheel();if(p<1)requestAnimationFrame(f);else{spinning=false;$("#spin").disabled=false;showPick(pool[idx])}})(t0);}
 function showPick(x){lastPick=x;const w=week[selDay];const r=$("#res");r.classList.add("show");r.classList.remove("pop");void r.offsetWidth;if(!reduce)r.classList.add("pop");
  const hh=x.h[w.i];
- r.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div style="width:56px;flex:none">${ICON[x.g]}</div><div><small>轉到了！</small><h3>${nm(x)}</h3></div></div>
+ r.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div style="width:56px;flex:none">${ICON[x.g]}</div><div><small>轉到了！</small><h3>${nm(x)}</h3>${isToday(w)?osb(x):""}</div></div>
  <div class="tags"><span class="tg" style="background:${x.col}">${G[x.g].n}</span><span class="tg">${esc(x.c)}</span><span class="tg">${price(x)}</span><span class="tg">${x.mode}約 ${x.mins} 分</span><span class="tg">⭐ ${x.r}・${x.v.toLocaleString()} 則</span><span class="tg">#${x.k}</span></div>
  ${chips(x,3)}
  <p style="font-size:.88rem;margin-top:8px">${w.label}（${DAYS[w.i]}）午餐時段：${hh||'<span class="warn">公休</span>'}</p>
- <div class="acts"><button class="sbtn" data-sheet="${x.id}">🍽 招牌菜＆評論</button><button class="sbtn y" id="toPlan">排進 ${w.label}（${DAYS[w.i]}）午餐</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn" id="reSpin">不想吃，排除再轉</button></div>`;
+ <div class="acts"><button class="sbtn" data-sheet="${x.id}">🍽 招牌菜＆評論</button><button class="sbtn y" id="toPlan">排進 ${w.label}（${DAYS[w.i]}）午餐</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" id="shPick">📤 分享到 LINE</button><button class="sbtn" id="reSpin">不想吃，排除再轉</button></div>`;
  $("#toPlan").onclick=()=>{custom[w.key]=x.id;LS.set("jl_custom_"+week[0].key,custom);rebuild();renderDay(true);todayCard();mapDraw();location.hash="#days";};
+ $("#shPick").onclick=()=>shareOut(`🍽 轉盤決定：今天中午吃「${x.n}」！\n${G[x.g].n}・⭐${x.r}・${x.mode}約 ${x.mins} 分${dishOf(x).d[0]?"\n招牌："+dishOf(x).d[0].replace("★",""):""}\n導航：${nav(x)}`);
  $("#reSpin").onclick=()=>{skip.add(x.id);saveSkip();refreshAll();spin();};
  mapDraw();}
 
@@ -507,9 +564,9 @@ let lastFocus=null;
 function openSheet(x){const w=week[selDay],m=dishOf(x);lastFocus=document.activeElement;
  const src=m.src?m.src.map(([a,b])=>`<a href="${b}" target="_blank" rel="noopener">${a}</a>`).join("、"):"";
  $("#sheet").innerHTML=`<div class="grab"></div><button class="sbtn x" id="shX" aria-label="關閉">✕ 關閉</button>
- <div class="hd"><div class="ic" style="background:${x.col}">${ICON[x.g]}</div><div><small>#${x.k}・${G[x.g].n}・${esc(x.c)}・${price(x)}</small><h3>${nm(x)}</h3><small>⭐ ${x.r}（${x.v.toLocaleString()} 則評論）・${x.mode}約 ${x.mins} 分</small></div></div>
+ <div class="hd"><div class="ic" style="background:${x.col}">${ICON[x.g]}</div><div><small>#${x.k}・${G[x.g].n}・${esc(x.c)}・${price(x)}</small><h3>${nm(x)}</h3><small>⭐ ${x.r}（${x.v.toLocaleString()} 則評論）・${x.mode}約 ${x.mins} 分</small>${osb(x)}</div></div>
  <div class="box2"><h4>🍽 熱門餐點・評論最常點</h4><ol>${m.d.map((s,i)=>`<li class="${s.startsWith("★")?"hot":""}"><i>${i+1}</i>${s.replace("★","")}${s.startsWith("★")?' <span class="tg" style="background:var(--yellow)">招牌</span>':""}</li>`).join("")}</ol></div>
- <div class="box2"><h4>💬 評論常提到</h4><p style="font-size:.92rem">${m.n}</p>${m.t?`<p style="font-size:.88rem;margin-top:6px">💡 ${m.t}</p>`:""}</div>
+ ${topDishes(0,x.id).length?`<div class="box2"><h4>🙋 我們最常點</h4><div class="topd">${topDishes(0,x.id).slice(0,5).map(([d,n])=>`<div><span>${esc(d)}</span><span>${n} 次</span></div>`).join("")}</div></div>`:""}<div class="box2"><h4>💬 評論常提到</h4><p style="font-size:.92rem">${m.n}</p>${m.t?`<p style="font-size:.88rem;margin-top:6px">💡 ${m.t}</p>`:""}</div>
  <div class="box2"><h4>📒 我的聚餐紀錄</h4>${visits(x.id).length?`<ol>${visits(x.id).slice(0,5).map(l=>`<li><i>✔</i>${l.date.replace(/-/g,"/")}${l.who?"・"+esc(l.who):""}${l.score?`・<span style="color:#E0786A">${"♥".repeat(l.score)}</span>`:""}${l.note?`<br><small style="opacity:.8">${esc(l.note)}</small>`:""}</li>`).join("")}</ol>`:'<p style="font-size:.9rem">還沒去過，找一天去吃吃看！</p>'}<div class="tags"><button class="sbtn y" data-log="${x.id}">📝 記一筆</button><button class="sbtn" data-edit="${x.id}">✏️ 修改店家</button></div></div>
  <div class="box2"><h4>🕛 ${w.label}（${DAYS[w.i]}）午餐</h4><p style="font-size:.92rem">${x.h[w.i]||'<span class="warn">公休</span>'}</p><p style="font-size:.78rem;opacity:.8;margin-top:4px">${x.h.map((v,i)=>`${DAYS[i]} ${v||"休"}`).join("・")}</p></div>
  <div class="tags" style="margin-top:12px"><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><a class="sbtn" href="${url(x)}" target="_blank" rel="noopener">看 Google 評論</a><button class="sbtn y" data-put="${x.id}">排進 ${w.label}（${DAYS[w.i]}）</button></div>
@@ -537,11 +594,11 @@ function renderDay(anim){const w=week[selDay],x=byId(plan[w.key]);const P=$("#da
  <div class="tl">
   <div class="it walk ${anim&&!reduce?"pop":""}"><div class="card"><span class="time">${fmt(dep)}</span><h4>從金山街中段出發</h4><p>${x.mode=="走路"?"🚶 走路":"🛵 騎車"}約 ${x.mins} 分（${x.d<100?"就在附近":"直線 "+x.d+" 公尺"}）</p></div></div>
   <div class="it eat ${anim&&!reduce?"pop":""}"><div class="card"><span class="time">${fmt(arr)}–${fmt(eatEnd)}</span>
-   <h4>${nm(x)}<span class="tg" style="background:${x.col}">${esc(x.c)}</span>${vbadge(x)}</h4>
+   <h4>${nm(x)}<span class="tg" style="background:${x.col}">${esc(x.c)}</span>${vbadge(x)}${isToday(w)?osb(x):""}</h4>
    <p>⭐ ${x.r}・${x.v.toLocaleString()} 則評論・${price(x)}・排名 #${x.k}</p>
    ${chips(x,3)}
    <p>${w.label} 午餐時段：${x.h[w.i]}${warn?` <span class="warn">⚠ 到店時間不在營業時段內，建議早點出發或換一間</span>`:""}</p>
-   <div class="tags"><button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" data-act="swap">換一間</button><button class="sbtn c" data-act="wheel">用轉盤決定</button><button class="sbtn" data-log="${x.id}" data-date="${w.key}">✅ 吃了，記一筆</button>${isCustom?'<button class="sbtn" data-act="auto">改回推薦</button>':""}<button class="sbtn" data-act="skip">不想吃</button></div>
+   <div class="tags"><button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" data-act="swap">換一間</button><button class="sbtn c" data-act="wheel">用轉盤決定</button><button class="sbtn" data-log="${x.id}" data-date="${w.key}">✅ 吃了，記一筆</button><button class="sbtn g" data-act="share">📤 分享到 LINE</button>${isCustom?'<button class="sbtn" data-act="auto">改回推薦</button>':""}<button class="sbtn" data-act="skip">不想吃</button></div>
    ${alts.length?`<div class="alts">備案（同一天有開、不同口味優先）${alts.map(y=>`<div class="row"><span>${nm(y)}<br><small style="opacity:.8">${y.c}・${price(y)}・${y.mode} ${y.mins} 分・⭐${y.r}${dishOf(y).d[0]?"・🍽 "+dishOf(y).d[0].replace("★",""):""}</small></span><button class="sbtn g" data-alt="${y.id}">換成這間</button></div>`).join("")}</div>`:""}
   </div></div>
   <div class="it home ${anim&&!reduce?"pop":""}"><div class="card"><span class="time">${fmt(dep+len-5)}</span><h4>${x.mode=="走路"?"散步":"騎車"}回去</h4><p>${fmt(dep+len)} 午休結束，回座位喝口水 💧</p></div></div>
@@ -552,6 +609,7 @@ $("#dayPanel").onclick=e=>{const b=e.target.closest("button");if(!b||b.dataset.s
  else if(b.dataset.act=="auto"){delete custom[w.key]}
  else if(b.dataset.act=="skip"){skip.add(cur);saveSkip();delete custom[w.key]}
  else if(b.dataset.act=="wheel"){location.hash="#wheel";return}
+ else if(b.dataset.act=="share"){const x=byId(cur);shareOut(`🍱 ${w.label}（${DAYS[w.i]}）午餐：${x.n}\n${$("#sDep").value} 金山街中段出發・${x.mode}約 ${x.mins} 分\n${dishOf(x).d[0]?"招牌："+dishOf(x).d[0].replace("★","")+"\n":""}導航：${nav(x)}`);return}
  LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);};
 $("#tabs").onclick=e=>{const b=e.target.closest(".tab");if(!b)return;selDay=+b.dataset.i;renderTabs();renderDay(true);todayCard();wheelPool();mapDraw();};
 $("#resetWeek").onclick=()=>{custom={};LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true)};
@@ -585,7 +643,7 @@ function mapDraw(){const s=$("#bookmap");const w=week[selDay],pick=plan[w.key];l
   h+=`<g class="pin ${!inCat(x)?"catoff":skip.has(x.id)||!x.h[w.i]?"off":""} ${p?"pick":""}" data-id="${x.id}" tabindex="0" role="button" aria-label="${x.k} ${x.n}">${x.id==pick?`<circle class="ring" cx="${px}" cy="${py}" r="${R+6}"/>`:""}<circle cx="${px}" cy="${py}" r="${p?R+2:R}" fill="${x.col}"/><text x="${px}" y="${py}" style="font-size:${mview=="zoom"?13:11}px">${x.k}</text></g>`});
  const [sx,sy]=MP(...CENTER);h+=`<g transform="translate(${sx} ${sy})" style="pointer-events:none"><path d="M0 0l5 10 11 1-8 7 3 11-11-6-11 6 3-11-8-7 11-1z" transform="translate(0 -16) scale(.7)" fill="#F6D27A" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/></g>`;
  s.innerHTML=h;if(lmap)leafDraw();}
-function mapInfo(x){const w=week[selDay];$("#mapinfo").innerHTML=`<b style="font-weight:400;font-size:1.02rem">#${x.k} ${nm(x)}</b><br><span style="font-size:.84rem">${x.c}・${price(x)}・⭐${x.r}（${x.v.toLocaleString()}）・${x.mode}約 ${x.mins} 分・${w.label} 午餐 ${x.h[w.i]||"公休"}</span>
+function mapInfo(x){const w=week[selDay];$("#mapinfo").innerHTML=`<b style="font-weight:400;font-size:1.02rem">#${x.k} ${nm(x)}</b>${osb(x)}<br><span style="font-size:.84rem">${x.c}・${price(x)}・⭐${x.r}（${x.v.toLocaleString()}）・${x.mode}約 ${x.mins} 分・${w.label} 午餐 ${x.h[w.i]||"公休"}</span>
  ${chips(x,3)}<div class="tags"><button class="sbtn" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn y" data-put="${x.id}">排進 ${w.label}（${DAYS[w.i]}）</button></div>`;}
 $("#bookmap").onclick=e=>{const g=e.target.closest(".pin");if(g)mapInfo(byId(g.dataset.id))};
 $("#bookmap").onkeydown=e=>{if(e.key=="Enter"){const g=e.target.closest(".pin");if(g)mapInfo(byId(g.dataset.id))}};
@@ -605,7 +663,7 @@ $(".mtabs").onclick=e=>{const b=e.target.closest(".pill");if(!b)return;$$(".mtab
 let lzone="all";
 let lview=LS.get("jl_lview","rank");
 const shopCard=x=>{const w=week[selDay];return `<div class="card shop ${skip.has(x.id)?"out":""}"><div class="ic" style="background:${x.col}">${ICON[x.g]}</div><div>
- <h4><a href="#" data-sheet="${x.id}" style="text-decoration:none">#${x.k} ${nm(x)}</a>${vbadge(x)}</h4><div class="meta">${esc(x.c)}・${price(x)}・⭐${x.r}（${x.v.toLocaleString()} 則）<br>${x.mode}約 ${x.mins} 分・${w.label}（${DAYS[w.i]}）午餐 ${x.h[w.i]||"公休"}</div>
+ <h4><a href="#" data-sheet="${x.id}" style="text-decoration:none">#${x.k} ${nm(x)}</a>${vbadge(x)}${osb(x)}</h4><div class="meta">${esc(x.c)}・${price(x)}・⭐${x.r}（${x.v.toLocaleString()} 則）<br>${x.mode}約 ${x.mins} 分・${w.label}（${DAYS[w.i]}）午餐 ${x.h[w.i]||"公休"}</div>
  ${chips(x,2)}<div class="acts"><button class="sbtn c" data-sheet="${x.id}">🍽 招牌菜</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn y" data-put="${x.id}">排進 ${w.label}</button><button class="sbtn" data-sk="${x.id}">${skip.has(x.id)?"加回來":"不想吃"}</button><button class="sbtn" data-log="${x.id}">📝 記一筆</button><button class="sbtn" data-edit="${x.id}">✏️ 修改</button></div></div></div>`};
 function renderList(){const w=week[selDay];const L=D.filter(x=>inCat(x)&&(lzone=="all"||x.z==lzone)&&!($("#lHide").checked&&skip.has(x.id)));
  if(lview=="cat"){$("#shops").innerHTML=CATKEYS.map(k=>{const g=L.filter(x=>x.g==k);return g.length?`<div class="grouph"><span class="ic" style="background:${G[k].c}">${ICON[k]}</span>${G[k].n}<small>${g.length} 間</small></div>`+g.map(shopCard).join(""):""}).join("")||'<div class="card" style="padding:14px">這個分類沒有符合的店。</div>';}
@@ -649,14 +707,20 @@ function openLogForm(id,date){const x=id?byId(id):null;const opts=[...D].sort((a
  <div class="row2"><label>日期<input type="date" name="date" value="${date||ymd(new Date())}" required></label><label>人數<input type="number" name="n" min="1" max="50" placeholder="例如 6"></label></div>
  <label>和誰（選填）<input type="text" name="who" maxlength="60" placeholder="例如 SD3 小組、新人歡迎餐"></label>
  <label>好吃程度</label><div class="hearts" id="hearts">${[1,2,3,4,5].map(i=>`<button type="button" data-h="${i}" aria-label="${i} 顆心" style="color:#E0786A">♥</button>`).join("")}</div>
- <label>點了什麼／心得（選填）<textarea name="note" maxlength="300" placeholder="例如：蟹黃麵很讚，下次試抄手"></textarea></label>
+ <label>點了什麼（點選，可複選）</label><div class="dchips" id="dchips"></div>
+ <label>其他餐點（用逗號分隔，選填）<input type="text" name="other" maxlength="80" placeholder="例如 酸辣湯，燙青菜"></label>
+ <label>心得（選填）<textarea name="note" maxlength="300" placeholder="例如：蟹黃麵很讚，下次試抄手"></textarea></label>
  <button class="btn" type="submit">儲存紀錄</button></form>`,"記一筆聚餐");
+ const picked=new Set();const drawChips=()=>{const y=byId($("#logF select[name=id]").value);$("#dchips").innerHTML=(dishOf(y).d.length?dishOf(y).d:[]).map(s=>s.replace("★","")).map(s=>`<button type="button" aria-pressed="${picked.has(s)}" data-d="${esc(s)}">${esc(s)}</button>`).join("")||'<small style="opacity:.8">這間還沒有熱門餐點資料，請填在下面</small>'};
+ drawChips();$("#logF select[name=id]").onchange=()=>{picked.clear();drawChips()};
+ $("#dchips").onclick=e=>{const b=e.target.closest("[data-d]");if(!b)return;const s=b.dataset.d;picked.has(s)?picked.delete(s):picked.add(s);b.setAttribute("aria-pressed",picked.has(s))};
  let score=0;$("#hearts").onclick=e=>{const b=e.target.closest("[data-h]");if(!b)return;score=+b.dataset.h;$$("#hearts button").forEach(h=>h.classList.toggle("on",+h.dataset.h<=score))};
  $("#logF").onsubmit=e=>{e.preventDefault();const f=new FormData(e.target);const who=[f.get("n")?f.get("n")+" 人":"",f.get("who").trim()].filter(Boolean).join("・");
-  LOG.push({id:f.get("id"),name:byId(f.get("id")).n,date:f.get("date"),who,note:f.get("note").trim(),score,ts:Date.now()});saveLog();closeSheet();refreshAll(false);toast("已記錄 ✔");};}
-function renderLog(){const ids=new Set(LOG.map(l=>l.id));$("#stShops").textContent=[...ids].filter(i=>byId(i)).length;$("#stTimes").textContent=LOG.length;$("#stLeft").textContent=D.filter(x=>!ids.has(x.id)).length;
+  const dishes=[...picked,...f.get("other").split(/[，,、]/).map(s=>s.trim()).filter(Boolean)];LOG.push({id:f.get("id"),name:byId(f.get("id")).n,date:f.get("date"),who,dishes,note:f.get("note").trim(),score,ts:Date.now()});saveLog();closeSheet();refreshAll(false);toast("已記錄 ✔");};}
+function topDishes(days,id){const c={},now=new Date();LOG.forEach(l=>{if(id&&l.id!=id)return;if(days&&(now-new Date(l.date+"T12:00"))/864e5>days)return;(l.dishes||[]).forEach(d=>{const k=(id?"":l.name+"｜")+d;c[k]=(c[k]||0)+1})});return Object.entries(c).sort((a,b)=>b[1]-a[1])}
+function renderLog(){const td=topDishes(30).slice(0,8);$("#topDishes").innerHTML=td.length?td.map(([k,n],i)=>{const [s,d]=k.split("｜");return`<div><span>${i+1}. ${esc(d)}<small style="opacity:.7">・${esc(s)}</small></span><span>${n} 次</span></div>`}).join(""):'<small style="opacity:.8">記錄聚餐時勾選「點了什麼」，這裡就會統計出大家最常點的菜。</small>';const ids=new Set(LOG.map(l=>l.id));$("#stShops").textContent=[...ids].filter(i=>byId(i)).length;$("#stTimes").textContent=LOG.length;$("#stLeft").textContent=D.filter(x=>!ids.has(x.id)).length;
  const L2=[...LOG].sort((a,b)=>b.date.localeCompare(a.date)||b.ts-a.ts);
- $("#logs").innerHTML=L2.length?L2.map(l=>{const d=new Date(l.date+"T12:00");return `<div class="card logi"><div class="dt"><b>${d.getMonth()+1}/${d.getDate()}</b><small>${d.getFullYear()}・週${DAYS[(d.getDay()+6)%7]}</small></div><div><h4>${byId(l.id)?`<a href="#" data-sheet="${l.id}" style="text-decoration:none">${esc(l.name)}</a>`:esc(l.name)}</h4><p>${[l.who&&esc(l.who),l.score&&`<span style="color:#E0786A">${"♥".repeat(l.score)}</span>`].filter(Boolean).join("・")}${l.note?"<br>"+esc(l.note):""}</p></div><button class="sbtn" data-del="${l.ts}" aria-label="刪除這筆">🗑</button></div>`}).join(""):'<div class="card" style="padding:14px;font-size:.9rem">還沒有紀錄。吃完飯按「✅ 吃了，記一筆」或上面的「📝 記一筆聚餐」就會出現在這裡。</div>';}
+ $("#logs").innerHTML=L2.length?L2.map(l=>{const d=new Date(l.date+"T12:00");return `<div class="card logi"><div class="dt"><b>${d.getMonth()+1}/${d.getDate()}</b><small>${d.getFullYear()}・週${DAYS[(d.getDay()+6)%7]}</small></div><div><h4>${byId(l.id)?`<a href="#" data-sheet="${l.id}" style="text-decoration:none">${esc(l.name)}</a>`:esc(l.name)}</h4><p>${[l.who&&esc(l.who),l.score&&`<span style="color:#E0786A">${"♥".repeat(l.score)}</span>`].filter(Boolean).join("・")}${l.dishes&&l.dishes.length?"<br>🍽 "+l.dishes.map(esc).join("、"):""}${l.note?"<br>"+esc(l.note):""}</p></div><button class="sbtn" data-del="${l.ts}" aria-label="刪除這筆">🗑</button></div>`}).join(""):'<div class="card" style="padding:14px;font-size:.9rem">還沒有紀錄。吃完飯按「✅ 吃了，記一筆」或上面的「📝 記一筆聚餐」就會出現在這裡。</div>';}
 $("#logs").onclick=e=>{const b=e.target.closest("[data-del]");if(!b)return;if(b.dataset.ok){LOG=LOG.filter(l=>String(l.ts)!=b.dataset.del);saveLog();refreshAll(false);toast("已刪除")}else{b.dataset.ok=1;b.textContent="確定刪除？";b.classList.add("c");setTimeout(()=>{if(b.isConnected){delete b.dataset.ok;b.textContent="🗑";b.classList.remove("c")}},3000)}};
 $("#newLog").onclick=()=>openLogForm(plan[week[selDay].key],week[selDay].key);
 $("#avoidRecent").checked=LS.get("jl_avoid",false);$("#onlyNew").checked=LS.get("jl_onlynew",false);
@@ -741,9 +805,99 @@ async function loadShops(){try{const r=await fetch("shops.json",{cache:"no-store
  if(j.updated)$("#pubDate").textContent="店家名單更新：" +j.updated;
  buildD();rebuild();refreshAll(false);}catch(e){}}
 
+// ===== team vote (ntfy.sh relay, ~12h retention) =====
+const NTFY="https://ntfy.sh/";
+let VP=null,ES=null,VSEEN=new Set();
+let myName=LS.get("jl_name","");
+const pollLink=tp=>SITE+"?vote="+tp;
+const rid=n=>{const a=new Uint8Array(n);crypto.getRandomValues(a);return [...a].map(b=>"abcdefghijkmnpqrstuvwxyz23456789"[b%32]).join("")};
+async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("").slice(0,24)}
+async function vpost(tp,obj){const r=await fetch(NTFY+tp,{method:"POST",body:JSON.stringify(obj)});if(!r.ok)throw new Error(r.status);}
+function myPolls(){return LS.get("jl_polls",[]).filter(p=>Date.now()-p.ts<12*3600e3)}
+function rememberPoll(p){const L=myPolls().filter(x=>x.tp!=p.tp);L.unshift(p);LS.set("jl_polls",L.slice(0,8))}
+function renderVoteHome(){const L=myPolls();
+ $("#voteBox").innerHTML=`<div class="card vhead"><h3>🗳 今天中午大家想吃什麼？</h3><p class="vmeta">發起人選好候選店家 → 分享連結 → 大家投票（不用登入，填暱稱就好）。</p><button class="btn" id="vNew">開一場投票</button></div>
+ ${L.length?`<div class="card" style="padding:12px 14px;margin-top:10px"><h3 style="font-size:1rem">最近的投票</h3>${L.map(p=>`<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1.5px dashed #E1DACE"><span style="font-size:.9rem">${esc(p.title)}<br><small style="opacity:.7">${new Date(p.ts).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit"})}${p.key?"・我發起的":""}</small></span><button class="sbtn y" data-open="${p.tp}">打開</button></div>`).join("")}</div>`:""}`;
+ $("#vNew").onclick=openPollForm;$("#voteBox").querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPoll(b.dataset.open));}
+function openPollForm(){const w=week[selDay];const open=D.filter(x=>x.h[w.i]&&!skip.has(x.id));const planId=plan[w.key];
+ const pre=new Set([planId,...open.filter(inCat).slice(0,6).map(x=>x.id)].filter(Boolean));
+ showSheet(`<h3>🗳 開一場投票</h3><form class="frm" id="pollF">
+ <label>標題<input type="text" name="title" maxlength="40" value="${w.label}（${DAYS[w.i]}）午餐吃哪間？"></label>
+ <div class="row2"><label>每人最多選<select name="max"><option value="1">1 間</option><option value="2">2 間</option><option value="3" selected>3 間</option></select></label>
+ <label>投票截止<select name="dl"><option value="">不設定</option><option>11:30</option><option selected>11:45</option><option>12:00</option></select></label></div>
+ <label>你的暱稱<input type="text" name="me" maxlength="16" required value="${esc(myName)}" placeholder="例如 Vito"></label>
+ <label>候選店家（${w.label} 中午有開的 ${open.length} 間，建議 4–8 間）</label>
+ <div class="tags" style="margin-top:4px"><button type="button" class="sbtn" data-q="top">前 6 名</button><button type="button" class="sbtn" data-q="core">走路就到</button><button type="button" class="sbtn" data-q="none">全不選</button></div>
+ <div class="pick-list" id="pickList">${open.map(x=>`<label><input type="checkbox" value="${x.id}" ${pre.has(x.id)?"checked":""}><span class="cdot" style="background:${x.col}"></span>${esc(x.n)} <small style="opacity:.7">${G[x.g].n}・${x.mode}${x.mins}分</small></label>`).join("")}</div>
+ <p class="hint" id="pickCnt"></p>
+ <button class="btn" type="submit">建立投票並分享</button>
+ <p class="hint" style="margin-top:8px">投票資料透過免費的 ntfy.sh 傳送，只有暱稱與店名，約 12 小時後自動消失。</p></form>`,"開一場投票");
+ const cnt=()=>{$("#pickCnt").textContent=`已選 ${$$("#pickList input:checked").length} 間`};cnt();$("#pickList").onchange=cnt;
+ $("#pollF").querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{const q=b.dataset.q;$$("#pickList input").forEach((c,i)=>{const x=byId(c.value);c.checked=q=="top"?i<6:q=="core"?x.z=="core"&&i<12:false});cnt()});
+ $("#pollF").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target);const ids=$$("#pickList input:checked").map(c=>c.value);
+  if(ids.length<2){toast("至少選 2 間");return}if(ids.length>15){toast("最多 15 間");return}
+  myName=f.get("me").trim();LS.set("jl_name",myName);const tp="jl-"+rid(18),key=rid(16);
+  const poll={t:"poll",v:1,title:f.get("title").trim()||"午餐投票",max:+f.get("max"),dl:f.get("dl"),day:w.key,by:myName,own:await sha(key),opts:ids.map(id=>{const x=byId(id);return{id,n:x.n,g:x.g,m:x.mode,mi:x.mins}})};
+  const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent="建立中…";
+  try{await vpost(tp,poll);rememberPoll({tp,title:poll.title,ts:Date.now(),key});closeSheet();openPoll(tp,true)}
+  catch(err){btn.disabled=false;btn.textContent="建立投票並分享";toast("連不上投票伺服器，可能是公司網路擋住，換手機網路試試")}};}
+function openPoll(tp,fresh){vSel=null;vTouched=false;if(ES)ES.close();VSEEN=new Set();VP={tp,poll:null,votes:{},closed:null,connected:false};
+ $("#voteBox").innerHTML='<div class="card vhead"><p>⏳ 讀取投票中…</p></div>';
+ try{ES=new EventSource(NTFY+tp+"/sse?since=all");}catch(e){voteErr();return}
+ ES.addEventListener("open",()=>{VP.connected=true;setTimeout(()=>{if(VP&&VP.tp==tp&&!VP.poll)$("#voteBox").innerHTML='<div class="card vhead"><h3>找不到這場投票</h3><p class="vmeta">可能已超過 12 小時自動消失，或連結不完整。</p><button class="btn" id="vBack">回投票首頁</button></div>',$("#vBack")&&($("#vBack").onclick=closePoll)},6000)});
+ ES.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch(_){return}if(m.event!="message"||VSEEN.has(m.id))return;VSEEN.add(m.id);let p;try{p=JSON.parse(m.message)}catch(_){return}
+  if(p.t=="poll"&&!VP.poll)VP.poll=p;else if(p.t=="vote"&&p.who)VP.votes[p.uid||p.who]={...p,time:m.time};else if(p.t=="close")VP.pendingClose=p;
+  verifyClose().then(renderPoll);};
+ ES.onerror=()=>{if(!VP.connected&&!VP.poll)voteErr()};
+ if(fresh)toast("投票建立好了，按「分享投票連結」丟到群組 👇");
+ if(location.hash!="#vote")document.getElementById("vote").scrollIntoView({behavior:reduce?"auto":"smooth"});}
+async function verifyClose(){if(VP.pendingClose&&VP.poll&&!VP.closed){if(await sha(VP.pendingClose.key||"")==VP.poll.own)VP.closed=VP.pendingClose;VP.pendingClose=null}}
+function voteErr(){$("#voteBox").innerHTML='<div class="card vhead"><h3>連不上投票伺服器 😢</h3><p class="vmeta">投票透過 ntfy.sh 傳送，公司網路可能擋住了。請改用手機網路（關掉 Wi-Fi）再打開連結。</p><button class="btn" id="vBack">回投票首頁</button></div>';$("#vBack").onclick=closePoll}
+function closePoll(){if(ES)ES.close();ES=null;VP=null;history.replaceState(null,"",location.pathname+location.hash);renderVoteHome()}
+const myUid=()=>{let u=LS.get("jl_uid","");if(!u){u=rid(10);LS.set("jl_uid",u)}return u};
+function tally(){const c={};VP.poll.opts.forEach(o=>c[o.id]={o,n:0,who:[]});Object.values(VP.votes).forEach(v=>(v.picks||[]).forEach(id=>{if(c[id]){c[id].n++;c[id].who.push(v.who)}}));return Object.values(c).sort((a,b)=>b.n-a.n)}
+let vSel=null,vTouched=false;
+function renderPoll(){if(!VP||!VP.poll)return;const P=VP.poll,mine=VP.votes[myUid()],T=tally(),total=Object.keys(VP.votes).length,maxN=Math.max(1,...T.map(x=>x.n));
+ const my=myPolls().find(p=>p.tp==VP.tp),isOwner=!!(my&&my.key);if(!my)rememberPoll({tp:VP.tp,title:P.title,ts:Date.now()});
+ if(vSel===null)vSel=new Set();if(!vTouched&&mine)vSel=new Set(mine.picks);
+ const dlPassed=P.dl&&P.day==ymd(new Date())&&new Date().getHours()*60+new Date().getMinutes()>=toMin(P.dl);
+ const closed=VP.closed,top=T[0]&&T[0].n?T.filter(x=>x.n==T[0].n):[],winId=closed?closed.win:null;
+ $("#voteBox").innerHTML=`<div class="card vhead"><small>${esc(P.by)} 發起</small><h3>${esc(P.title)}</h3>
+ <p class="vmeta">${closed?"🏁 投票已結束":dlPassed?"⏰ 已過截止時間 "+P.dl+"（還能投，等發起人公布）":P.dl?"⏰ "+P.dl+" 截止":"沒有截止時間"}・每人最多 ${P.max} 間・已有 <b>${total}</b> 人投票</p>
+ <div class="tags"><button class="sbtn g" id="vShare">📤 分享投票連結</button><button class="sbtn" id="vCopy">複製連結</button><button class="sbtn" id="vBack">↩ 回投票首頁</button></div></div>
+ ${closed?(()=>{const o=P.opts.find(o=>o.id==winId)||{n:"?"};const x=byId(winId);return`<div class="card vhead pop" style="margin-top:10px;background:#FFF0EC"><small>🎉 投票結果</small><h3>${esc(o.n)}</h3><p class="vmeta">${closed.tie?"平手後由轉盤決勝・":""}${o.m||""}約 ${o.mi||"?"} 分</p><div class="tags">${x?`<button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn c" id="vPlan">排進今天午餐</button>`:""}<button class="sbtn g" id="vShareWin">📤 公布到 LINE</button></div></div>`})():""}
+ ${!closed?`<div class="card" style="padding:12px 14px;margin-top:10px"><label class="frm" style="display:block">你的暱稱<input type="text" id="vName" maxlength="16" value="${esc(myName)}" placeholder="例如 小明"></label></div>`:""}
+ <div class="vgrid">${T.map(r=>{const o=r.o,sel=vSel.has(o.id),win=winId==o.id;return`<div class="card vopt ${sel?"sel":""} ${win?"win":""}" data-vo="${o.id}" role="checkbox" aria-checked="${sel}" tabindex="0"><span class="ck">${win?"👑":sel?"✔":""}</span><div><h4>${esc(o.n)} <small>${G[o.g]?G[o.g].n:""}・${o.m||""}${o.mi||""}分</small></h4><div class="bar"><i style="width:${r.n/maxN*100}%"></i></div><small>${r.n} 票${r.who.length?"・"+r.who.map(esc).join("、"):""}</small></div></div>`}).join("")}</div>
+ ${!closed?`<button class="btn" id="vSend">${mine?"更新我的票":"送出我的票"}（已選 ${vSel.size}/${P.max}）</button>`:""}
+ ${isOwner&&!closed?`<div class="card" style="padding:12px 14px;margin-top:12px"><small>發起人專用</small><div class="tags">${top.length>1?`<button class="sbtn c" id="vTie">🎡 ${top.length} 間平手，用轉盤決勝</button>`:""}<button class="sbtn y" id="vClose" ${!total?"disabled":""}>🏁 結束並公布結果</button></div></div>`:""}`;
+ const vn=$("#vName");if(vn)vn.oninput=()=>{myName=vn.value};
+ $("#vShare").onclick=sharePoll;$("#vCopy").onclick=async()=>{try{await navigator.clipboard.writeText(pollLink(VP.tp));toast("已複製連結 ✔")}catch(e){toast(pollLink(VP.tp))}};$("#vBack").onclick=closePoll;
+ $$(".vopt").forEach(el=>{const tog=()=>{if(closed)return;vTouched=true;const id=el.dataset.vo;if(vSel.has(id))vSel.delete(id);else{if(vSel.size>=P.max){toast(`最多選 ${P.max} 間`);return}vSel.add(id)}renderPoll()};el.onclick=tog;el.onkeydown=e=>{if(e.key==" "||e.key=="Enter"){e.preventDefault();tog()}}});
+ const vs=$("#vSend");if(vs)vs.onclick=async()=>{const nmv=$("#vName").value.trim();if(!nmv){toast("先填暱稱");$("#vName").focus();return}if(!vSel.size){toast("至少選 1 間");return}
+  myName=nmv;LS.set("jl_name",myName);vs.disabled=true;try{await vpost(VP.tp,{t:"vote",uid:myUid(),who:myName,picks:[...vSel]});toast("已送出 ✔")}catch(e){toast("送出失敗，換手機網路試試");vs.disabled=false}};
+ const doClose=async(win,tie)=>{const key=my.key;try{await vpost(VP.tp,{t:"close",win,tie:!!tie,key})}catch(e){toast("公布失敗，請再試一次")}};
+ const vc=$("#vClose");if(vc)vc.onclick=()=>{if(top.length>1){toast("平手中，請先用轉盤決勝");return}doClose(T[0].o.id)};
+ const vt=$("#vTie");if(vt)vt.onclick=()=>{let i=0,steps=reduce?1:18;const names=top.map(r=>r.o.n);const pickI=Math.floor(Math.random()*top.length);
+  const tick2=()=>{vt.textContent="🎡 "+names[i%names.length];i++;if(i<steps)setTimeout(tick2,60+i*12);else{vt.textContent="🎉 "+names[pickI];doClose(top[pickI].o.id,true)}};tick2();};
+ const vp=$("#vPlan");if(vp)vp.onclick=()=>{const k=ymd(new Date());const wk=week.find(w=>w.key==k)||week[selDay];custom[wk.key]=winId;LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);location.hash="#days";toast("已排進午餐行程 ✔")};
+ const vw=$("#vShareWin");if(vw)vw.onclick=()=>{const x=byId(winId),o=P.opts.find(o=>o.id==winId);shareOut(`🏁 投票結果：今天中午吃「${o.n}」！（${total} 人投票）${x?"\n導航："+nav(x):""}`,pollLink(VP.tp))};}
+function sharePoll(){if(!VP||!VP.poll&&!VP.tp)return;const t=VP.poll?VP.poll.title:"午餐投票";shareOut(`🗳 ${t}\n點連結投票（不用登入）👇`,pollLink(VP.tp))}
+
+// ===== PWA install =====
+let deferredInstall=null;const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+function showInstall(){if(standalone||LS.get("jl_noinstall",false))return;if(!deferredInstall&&!isIOS)return;$("#installCard").classList.add("show");if(isIOS)$("#installTxt").textContent="用 Safari 的「分享」→「加入主畫面」，就能像 App 一樣打開";}
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;showInstall()});
+$("#installBtn").onclick=async()=>{if(deferredInstall){deferredInstall.prompt();const r=await deferredInstall.userChoice;deferredInstall=null;if(r.outcome=="accepted")$("#installCard").classList.remove("show");return}
+ showSheet(`<h3>📲 加到主畫面</h3><ol style="list-style:none;display:grid;gap:10px;margin-top:12px;font-size:.95rem"><li>① 用 <b>Safari</b> 打開這個網頁（LINE 裡開的話，先點右下角「⋯」→「用預設瀏覽器開啟」）</li><li>② 點下方中間的「分享」按鈕 <span class="tg">⬆︎</span></li><li>③ 往下滑，點「加入主畫面」</li><li>④ 右上角「加入」，桌面就會出現 🍜 金山街午餐</li></ol>`,"加到主畫面")};
+$("#installX").onclick=()=>{LS.set("jl_noinstall",true);$("#installCard").classList.remove("show")};
+if("serviceWorker" in navigator&&location.protocol=="https:")navigator.serviceWorker.register("sw.js").catch(()=>{});
+
 function refreshAll(anim){$("#tot").textContent=D.length;renderCats();renderTabs();renderDay(anim);todayCard();wheelPool();mapDraw();renderList();renderLog();renderLocalNote();}
 document.fonts&&document.fonts.ready.then(()=>drawWheel());
-$$("#lview .pill").forEach(p=>p.setAttribute("aria-pressed",p.dataset.v==lview));rebuild();refreshAll(false);tick();loadWx();loadShops();
+$$("#lview .pill").forEach(p=>p.setAttribute("aria-pressed",p.dataset.v==lview));rebuild();refreshAll(false);tick();loadWx();loadShops();showInstall();
+{const q=new URLSearchParams(location.search).get("vote");if(q&&/^jl-[a-z0-9]{10,40}$/.test(q))openPoll(q);else renderVoteHome();}
+setInterval(()=>{if(!$("#sheetBg").classList.contains("show")){todayCard();renderList()}},60000);
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 </body>
