@@ -325,7 +325,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
  </div>
  <h1>竹科~中午吃什麼?</h1>
  <p class="sub">新竹金山街＋附近 <b id="tot"></b> 間｜中午有開・價位 $～$$・Google 4.2 星以上、400 則評論以上</p>
- <div class="views" id="views" hidden aria-live="polite"><span>👀 瀏覽 <b id="vwAll">–</b> 次</span><span>🙋 <b id="vwPpl">–</b> 位同事用過</span><span>📅 今天 <b id="vwDay">–</b> 次</span></div>
+ <div class="views" id="views" hidden aria-live="polite"><span>👀 瀏覽 <b id="vwAll">–</b> 次</span><span>📅 今天 <b id="vwDay">–</b> 次</span></div>
  <div class="count" aria-live="polite"><div><b id="cd-h">--</b><span>時</span></div><div><b id="cd-m">--</b><span>分</span></div><div><b id="cd-s">--</b><span>秒</span></div></div>
  <p class="count-msg" id="cd-msg">距離午休還有</p>
  <div class="card wx" id="wxCard" aria-live="polite"><div class="em">⏳</div><div><b>讀取天氣中…</b><small>金山街這週中午的天氣</small></div></div>
@@ -413,7 +413,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
 <footer>
  <span class="ver">版本 2026/11/10・揪團點餐單＋瀏覽次數</span><br><span id="pubDate">店家名單更新：2026-11-10</span><br>
  店家資料為 Google 地圖（2026 年 11 月）；價位 $ 約 NT$200 以下、$$ 約 NT$200–400<br>
- 走路／騎車時間以直線距離估算，營業時間可能變動，出發前請再確認<br>瀏覽次數：透過 <a href="https://abacus.jasoncameron.dev/" target="_blank" rel="noopener">Abacus</a> 計數（同一支手機 30 分鐘內重複開只算一次，「同事」以裝置計）<br>團隊投票：透過 <a href="https://ntfy.sh/" target="_blank" rel="noopener">ntfy.sh</a> 傳送（約 12 小時後自動消失）<br>天氣資料：<a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>（金山街座標，中午 12:00 預報）<br>
+ 走路／騎車時間以直線距離估算，營業時間可能變動，出發前請再確認<br>瀏覽次數：透過 <a href="https://abacus.jasoncameron.dev/" target="_blank" rel="noopener">Abacus</a> 計數（同一支手機 30 分鐘內重複開只算一次）<br>團隊投票：透過 <a href="https://ntfy.sh/" target="_blank" rel="noopener">ntfy.sh</a> 傳送（約 12 小時後自動消失）<br>天氣資料：<a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>（金山街座標，中午 12:00 預報）<br>
  已排除：薑母鴨、居酒屋、串燒、燒肉、酒吧、咖啡店、只開晚上與高價吃到飽的店
 </footer>
 </main>
@@ -996,9 +996,9 @@ async function loadViews(){const live=/github\.io$/.test(location.hostname)||LS.
  const call=(op,k)=>fetch(CNT+op+"/"+CNS+"/"+k,{cache:"no-store"}).then(r=>r.ok?r.json():r.status==404?{value:0}:Promise.reject(r.status)).then(j=>+j.value||0);
  const fmt=n=>n.toLocaleString("zh-TW");
  try{const op=live&&fresh?"hit":"get";
-  const [all,day,ppl]=await Promise.all([call(op,"views"),call(op,dk),call(live&&!seen?"hit":"get","people")]);
-  if(live&&fresh)LS.set("jl_lastview",now);if(live&&!seen)LS.set("jl_seen",true);
-  $("#vwAll").textContent=fmt(all);$("#vwDay").textContent=fmt(day);$("#vwPpl").textContent=fmt(ppl);$("#views").hidden=false;}
+  const [all,day]=await Promise.all([call(op,"views"),call(op,dk)]);
+  if(live&&fresh)LS.set("jl_lastview",now);
+  $("#vwAll").textContent=fmt(all);$("#vwDay").textContent=fmt(day);$("#views").hidden=false;}
  catch(e){$("#views").hidden=true}}
 
 // ===== PWA install =====
