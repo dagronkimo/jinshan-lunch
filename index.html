@@ -236,6 +236,13 @@ a:focus-visible,button:focus-visible,input:focus-visible+span,select:focus-visib
 .vhead{padding:12px 14px}
 .vhead h3{font-size:1.15rem;line-height:1.3}
 .vmeta{font-size:.84rem;margin-top:4px}
+.oqk{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.oqk button{font:inherit;font-size:.82rem;border:2px solid var(--ink);border-radius:999px;background:var(--white);padding:4px 10px;cursor:pointer}.oqk button.hot{background:#FFF0EC}
+.orow{display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;padding:8px 0;border-bottom:1.5px dashed #E1DACE}
+.orow b{font-weight:400;font-size:.95rem}.orow input{grid-column:1/-1;font:inherit;font-size:.85rem;border:2px solid var(--ink);border-radius:10px;padding:5px 8px;background:var(--white)}
+.qty{display:flex;align-items:center;gap:4px}.qty button{width:30px;height:30px;border:2px solid var(--ink);border-radius:9px;background:var(--yellow);font:inherit;cursor:pointer}.qty span{min-width:20px;text-align:center}
+.oadd{display:grid;grid-template-columns:1fr auto;gap:6px;margin-top:8px}.oadd input{font:inherit;border:2px solid var(--ink);border-radius:10px;padding:6px 10px;background:var(--white)}
+.osum{font-size:.9rem}.osum li{list-style:none;padding:5px 0;border-bottom:1.5px dashed #E1DACE;display:flex;justify-content:space-between;gap:8px}.osum li b{font-weight:400}
+.osum h4{font-weight:400;font-size:.88rem;margin:10px 0 2px;opacity:.75}
 .pick-list{max-height:46vh;overflow:auto;border:2.5px solid var(--ink);border-radius:14px;background:var(--white);padding:4px 8px;margin-top:6px}
 .pick-list label{display:flex!important;gap:8px;align-items:center;margin:0!important;padding:6px 2px;border-bottom:1.5px dashed #E1DACE;font-size:.9rem}
 .pick-list label:last-child{border-bottom:0}
@@ -347,7 +354,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
 
 <section id="vote">
  <h2><span class="dot" style="background:var(--sky)"></span>團隊投票</h2>
- <p class="note">開一場投票、把連結丟到群組，大家點進來勾想吃的，票數即時更新。平手就交給轉盤決勝！</p>
+ <p class="note">開一場投票、把連結丟到群組，大家點進來勾想吃的，票數即時更新。平手就交給轉盤決勝！決定好店家後，同一個連結就能填<b>揪團點餐單</b>，自動整理成一張單。</p>
  <div id="voteBox"></div>
 </section>
 
@@ -622,7 +629,7 @@ function renderDay(anim){const w=week[selDay],x=byId(plan[w.key]);const P=$("#da
    <p>⭐ ${x.r}・${x.v.toLocaleString()} 則評論・${price(x)}・排名 #${x.k}</p>
    ${chips(x,3)}
    <p>${w.label} 午餐時段：${x.h[w.i]}${warn?` <span class="warn">⚠ 到店時間不在營業時段內，建議早點出發或換一間</span>`:""}</p>
-   <div class="tags"><button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" data-act="swap">換一間</button><button class="sbtn c" data-act="wheel">🎡 用轉盤決定這天</button><button class="sbtn" data-log="${x.id}" data-date="${w.key}">✅ 吃了，記一筆</button><button class="sbtn g" data-act="share">📤 分享到 LINE</button>${isCustom?'<button class="sbtn" data-act="auto">改回推薦</button>':""}<button class="sbtn" data-act="skip">不想吃</button></div>
+   <div class="tags"><button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" data-act="swap">換一間</button><button class="sbtn c" data-act="wheel">🎡 用轉盤決定這天</button><button class="sbtn y" data-act="order">📝 揪團點餐</button><button class="sbtn" data-log="${x.id}" data-date="${w.key}">✅ 吃了，記一筆</button><button class="sbtn g" data-act="share">📤 分享到 LINE</button>${isCustom?'<button class="sbtn" data-act="auto">改回推薦</button>':""}<button class="sbtn" data-act="skip">不想吃</button></div>
    ${alts.length?`<div class="alts">備案（同一天有開、不同口味優先）${alts.map(y=>`<div class="row"><span>${nm(y)}<br><small style="opacity:.8">${y.c}・${price(y)}・${y.mode} ${y.mins} 分・⭐${y.r}${dishOf(y).d[0]?"・🍽 "+dishOf(y).d[0].replace("★",""):""}</small></span><button class="sbtn g" data-alt="${y.id}">換成這間</button></div>`).join("")}</div>`:""}
   </div></div>
   <div class="it home ${anim&&!reduce?"pop":""}"><div class="card"><span class="time">${fmt(dep+len-5)}</span><h4>${x.mode=="走路"?"散步":"騎車"}回去</h4><p>${fmt(dep+len)} 午休結束，回座位喝口水 💧</p></div></div>
@@ -633,6 +640,7 @@ $("#dayPanel").onclick=e=>{const b=e.target.closest("button");if(!b||b.dataset.s
  else if(b.dataset.act=="auto"){delete custom[w.key]}
  else if(b.dataset.act=="skip"){skip.add(cur);saveSkip();delete custom[w.key]}
  else if(b.dataset.act=="wheel"){openDayWheel(w);return}
+ else if(b.dataset.act=="order"){openOrderForm(cur,w);return}
  else if(b.dataset.act=="share"){const x=byId(cur);shareOut(`🍱 ${w.label}（${DAYS[w.i]}）午餐：${x.n}\n${$("#sDep").value} 金山街中段出發・${x.mode}約 ${x.mins} 分\n${dishOf(x).d[0]?"招牌："+dishOf(x).d[0].replace("★","")+"\n":""}導航：${nav(x)}`);return}
  LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);};
 $("#tabs").onclick=e=>{const b=e.target.closest(".tab");if(!b)return;selDay=+b.dataset.i;renderTabs();renderDay(true);todayCard();wheelPool();mapDraw();};
@@ -840,9 +848,9 @@ async function vpost(tp,obj){const r=await fetch(NTFY+tp,{method:"POST",body:JSO
 function myPolls(){return LS.get("jl_polls",[]).filter(p=>Date.now()-p.ts<12*3600e3)}
 function rememberPoll(p){const L=myPolls().filter(x=>x.tp!=p.tp);L.unshift(p);LS.set("jl_polls",L.slice(0,8))}
 function renderVoteHome(){const L=myPolls();
- $("#voteBox").innerHTML=`<div class="card vhead"><h3>🗳 今天中午大家想吃什麼？</h3><p class="vmeta">發起人選好候選店家 → 分享連結 → 大家投票（不用登入，填暱稱就好）。</p><button class="btn" id="vNew">開一場投票</button></div>
- ${L.length?`<div class="card" style="padding:12px 14px;margin-top:10px"><h3 style="font-size:1rem">最近的投票</h3>${L.map(p=>`<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1.5px dashed #E1DACE"><span style="font-size:.9rem">${esc(p.title)}<br><small style="opacity:.7">${new Date(p.ts).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit"})}${p.key?"・我發起的":""}</small></span><button class="sbtn y" data-open="${p.tp}">打開</button></div>`).join("")}</div>`:""}`;
- $("#vNew").onclick=openPollForm;$("#voteBox").querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPoll(b.dataset.open));}
+ $("#voteBox").innerHTML=`<div class="card vhead"><h3>🗳 今天中午大家想吃什麼？</h3><p class="vmeta">發起人選好候選店家 → 分享連結 → 大家投票（不用登入，填暱稱就好）。</p><button class="btn" id="vNew">開一場投票</button><button class="btn" id="oNew" style="margin-top:8px;background:var(--leaf)">📝 已經決定店家？直接開點餐單</button></div>
+ ${L.length?`<div class="card" style="padding:12px 14px;margin-top:10px"><h3 style="font-size:1rem">最近的投票</h3>${L.map(p=>`<div class="row" style="justify-content:space-between;padding:6px 0;border-bottom:1.5px dashed #E1DACE"><span style="font-size:.9rem">${esc(p.title)}<br><small style="opacity:.7">${new Date(p.ts).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit"})}${p.ord?"・點餐單":""}${p.key?"・我發起的":""}</small></span><button class="sbtn y" data-open="${p.tp}">打開</button></div>`).join("")}</div>`:""}`;
+ $("#vNew").onclick=openPollForm;$("#oNew").onclick=()=>openOrderForm();$("#voteBox").querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>openPoll(b.dataset.open));}
 function openPollForm(){const w=week[selDay];const open=D.filter(x=>x.h[w.i]&&!skip.has(x.id));const planId=plan[w.key];
  const pre=new Set([planId,...open.filter(inCat).slice(0,6).map(x=>x.id)].filter(Boolean));
  showSheet(`<h3>🗳 開一場投票</h3><form class="frm" id="pollF">
@@ -865,17 +873,19 @@ function openPollForm(){const w=week[selDay];const open=D.filter(x=>x.h[w.i]&&!s
   const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent="建立中…";
   try{await vpost(tp,poll);rememberPoll({tp,title:poll.title,ts:Date.now(),key});closeSheet();openPoll(tp,true)}
   catch(err){btn.disabled=false;btn.textContent="建立投票並分享";toast("連不上投票伺服器，可能是公司網路擋住，換手機網路試試")}};}
-function openPoll(tp,fresh){vSel=null;vTouched=false;if(ES)ES.close();VSEEN=new Set();VP={tp,poll:null,votes:{},closed:null,connected:false};
- $("#voteBox").innerHTML='<div class="card vhead"><p>⏳ 讀取投票中…</p></div>';
+function openPoll(tp,fresh){vSel=null;vTouched=false;if(ES)ES.close();VSEEN=new Set();VP={tp,poll:null,votes:{},closed:null,connected:false,orders:{},lock:null,pendingLock:[]};oDraft=null;oTouched=false;
+ $("#voteBox").innerHTML='<div id="vMain"><div class="card vhead"><p>⏳ 讀取中…</p></div></div><div id="ordBox"></div>';
  try{ES=new EventSource(NTFY+tp+"/sse?since=all");}catch(e){voteErr();return}
  ES.addEventListener("open",()=>{VP.connected=true;setTimeout(()=>{if(VP&&VP.tp==tp&&!VP.poll)$("#voteBox").innerHTML='<div class="card vhead"><h3>找不到這場投票</h3><p class="vmeta">可能已超過 12 小時自動消失，或連結不完整。</p><button class="btn" id="vBack">回投票首頁</button></div>',$("#vBack")&&($("#vBack").onclick=closePoll)},6000)});
  ES.onmessage=e=>{let m;try{m=JSON.parse(e.data)}catch(_){return}if(m.event!="message"||VSEEN.has(m.id))return;VSEEN.add(m.id);let p;try{p=JSON.parse(m.message)}catch(_){return}
-  if(p.t=="poll"&&!VP.poll)VP.poll=p;else if(p.t=="vote"&&p.who)VP.votes[p.uid||p.who]={...p,time:m.time};else if(p.t=="close")VP.pendingClose=p;
+  if(p.t=="poll"&&!VP.poll){VP.poll=p;if(p.ord)VP.closed={win:p.opts[0].id,auto:1}}else if(p.t=="vote"&&p.who)VP.votes[p.uid||p.who]={...p,time:m.time};else if(p.t=="close")VP.pendingClose=p;
+  else if(p.t=="order"&&p.uid)VP.orders[p.uid]={...p,time:m.time};else if(p.t=="lock")VP.pendingLock.push(p);
   verifyClose().then(renderPoll);};
  ES.onerror=()=>{if(!VP.connected&&!VP.poll)voteErr()};
  if(fresh)toast("投票建立好了，按「分享投票連結」丟到群組 👇");
  if(location.hash!="#vote")document.getElementById("vote").scrollIntoView({behavior:reduce?"auto":"smooth"});}
-async function verifyClose(){if(VP.pendingClose&&VP.poll&&!VP.closed){if(await sha(VP.pendingClose.key||"")==VP.poll.own)VP.closed=VP.pendingClose;VP.pendingClose=null}}
+async function verifyClose(){if(VP.pendingClose&&VP.poll&&!VP.closed){if(await sha(VP.pendingClose.key||"")==VP.poll.own)VP.closed=VP.pendingClose;VP.pendingClose=null}
+ if(VP.poll)while(VP.pendingLock.length){const l=VP.pendingLock.shift();if(await sha(l.key||"")==VP.poll.own)VP.lock=l.on?l:null}}
 function voteErr(){$("#voteBox").innerHTML='<div class="card vhead"><h3>連不上投票伺服器 😢</h3><p class="vmeta">投票透過 ntfy.sh 傳送，公司網路可能擋住了。請改用手機網路（關掉 Wi-Fi）再打開連結。</p><button class="btn" id="vBack">回投票首頁</button></div>';$("#vBack").onclick=closePoll}
 function closePoll(){if(ES)ES.close();ES=null;VP=null;history.replaceState(null,"",location.pathname+location.hash);renderVoteHome()}
 const myUid=()=>{let u=LS.get("jl_uid","");if(!u){u=rid(10);LS.set("jl_uid",u)}return u};
@@ -886,10 +896,12 @@ function renderPoll(){if(!VP||!VP.poll)return;const P=VP.poll,mine=VP.votes[myUi
  if(vSel===null)vSel=new Set();if(!vTouched&&mine)vSel=new Set(mine.picks);
  const dlPassed=P.dl&&P.day==ymd(new Date())&&new Date().getHours()*60+new Date().getMinutes()>=toMin(P.dl);
  const closed=VP.closed,top=T[0]&&T[0].n?T.filter(x=>x.n==T[0].n):[],winId=closed?closed.win:null;
- $("#voteBox").innerHTML=`<div class="card vhead"><small>${esc(P.by)} 發起</small><h3>${esc(P.title)}</h3>
+ if(!$("#vMain"))return;
+ if(P.ord){renderOrderHead(P,isOwner);renderOrder(isOwner);return}
+ $("#vMain").innerHTML=`<div class="card vhead"><small>${esc(P.by)} 發起</small><h3>${esc(P.title)}</h3>
  <p class="vmeta">${closed?"🏁 投票已結束":dlPassed?"⏰ 已過截止時間 "+P.dl+"（還能投，等發起人公布）":P.dl?"⏰ "+P.dl+" 截止":"沒有截止時間"}・每人最多 ${P.max} 間・已有 <b>${total}</b> 人投票</p>
  <div class="tags"><button class="sbtn g" id="vShare">📤 分享投票連結</button><button class="sbtn" id="vCopy">複製連結</button><button class="sbtn" id="vBack">↩ 回投票首頁</button></div></div>
- ${closed?(()=>{const o=P.opts.find(o=>o.id==winId)||{n:"?"};const x=byId(winId);return`<div class="card vhead pop" style="margin-top:10px;background:#FFF0EC"><small>🎉 投票結果</small><h3>${esc(o.n)}</h3><p class="vmeta">${closed.tie?"平手後由轉盤決勝・":""}${o.m||""}約 ${o.mi||"?"} 分</p><div class="tags">${x?`<button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn c" id="vPlan">排進今天午餐</button>`:""}<button class="sbtn g" id="vShareWin">📤 公布到 LINE</button></div></div>`})():""}
+ ${closed?(()=>{const o=P.opts.find(o=>o.id==winId)||{n:"?"};const x=byId(winId);return`<div class="card vhead pop" style="margin-top:10px;background:#FFF0EC"><small>🎉 投票結果</small><h3>${esc(o.n)}</h3><p class="vmeta">${closed.tie?"平手後由轉盤決勝・":""}${o.m||""}約 ${o.mi||"?"} 分</p><div class="tags">${x?`<button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn c" id="vPlan">排進今天午餐</button>`:""}<button class="sbtn g" id="vShareWin">📤 公布到 LINE</button></div><p class="vmeta" style="margin-top:8px">👇 下面可以直接填<b>點餐單</b>，同一個連結大家都能填。</p></div>`})():""}
  ${!closed?`<div class="card" style="padding:12px 14px;margin-top:10px"><label class="frm" style="display:block">你的暱稱<input type="text" id="vName" maxlength="16" value="${esc(myName)}" placeholder="例如 小明"></label></div>`:""}
  <div class="vgrid">${T.map(r=>{const o=r.o,sel=vSel.has(o.id),win=winId==o.id;return`<div class="card vopt ${sel?"sel":""} ${win?"win":""}" data-vo="${o.id}" role="checkbox" aria-checked="${sel}" tabindex="0"><span class="ck">${win?"👑":sel?"✔":""}</span><div><h4>${esc(o.n)} <small>${G[o.g]?G[o.g].n:""}・${o.m||""}${o.mi||""}分</small></h4><div class="bar"><i style="width:${r.n/maxN*100}%"></i></div><small>${r.n} 票${r.who.length?"・"+r.who.map(esc).join("、"):""}</small></div></div>`}).join("")}</div>
  ${!closed?`<button class="btn" id="vSend">${mine?"更新我的票":"送出我的票"}（已選 ${vSel.size}/${P.max}）</button>`:""}
@@ -904,8 +916,76 @@ function renderPoll(){if(!VP||!VP.poll)return;const P=VP.poll,mine=VP.votes[myUi
  const vt=$("#vTie");if(vt)vt.onclick=()=>{let i=0,steps=reduce?1:18;const names=top.map(r=>r.o.n);const pickI=Math.floor(Math.random()*top.length);
   const tick2=()=>{vt.textContent="🎡 "+names[i%names.length];i++;if(i<steps)setTimeout(tick2,60+i*12);else{vt.textContent="🎉 "+names[pickI];doClose(top[pickI].o.id,true)}};tick2();};
  const vp=$("#vPlan");if(vp)vp.onclick=()=>{const k=ymd(new Date());const wk=week.find(w=>w.key==k)||week[selDay];custom[wk.key]=winId;LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);location.hash="#days";toast("已排進午餐行程 ✔")};
- const vw=$("#vShareWin");if(vw)vw.onclick=()=>{const x=byId(winId),o=P.opts.find(o=>o.id==winId);shareOut(`🏁 投票結果：今天中午吃「${o.n}」！（${total} 人投票）${x?"\n導航："+nav(x):""}`,pollLink(VP.tp))};}
-function sharePoll(){if(!VP||!VP.poll&&!VP.tp)return;const t=VP.poll?VP.poll.title:"午餐投票";shareOut(`🗳 ${t}\n點連結投票（不用登入）👇`,pollLink(VP.tp))}
+ const vw=$("#vShareWin");if(vw)vw.onclick=()=>{const x=byId(winId),o=P.opts.find(o=>o.id==winId);shareOut(`🏁 投票結果：今天中午吃「${o.n}」！（${total} 人投票）\n點連結填你要點什麼 📝${x?"\n導航："+nav(x):""}`,pollLink(VP.tp))};
+ if(closed)renderOrder(isOwner);else $("#ordBox").innerHTML="";}
+function sharePoll(){if(!VP||!VP.poll&&!VP.tp)return;const P=VP.poll,t=P?P.title:"午餐投票";
+ if(P&&P.ord)shareOut(`📝 ${t}\n${P.opts[0].n}${P.to?"・"+P.to:""}${P.dl?"・"+P.dl+" 收單":""}\n點連結填你要吃什麼（不用登入）👇`,pollLink(VP.tp));else shareOut(`🗳 ${t}\n點連結投票（不用登入）👇`,pollLink(VP.tp))}
+
+// ===== 揪團點餐單 =====
+let oDraft=null,oTouched=false;
+function openOrderForm(id,w){w=w||week.find(isToday)||week[selDay];id=id||plan[w.key];const open=D.filter(x=>!skip.has(x.id)).sort((a,b)=>(b.h[w.i]?1:0)-(a.h[w.i]?1:0)||a.k-b.k);
+ showSheet(`<h3>📝 開一張點餐單</h3><p class="note" style="margin:4px 0 0">分享連結後，大家各自填要吃什麼，自動整理成一張單，帶頭的人拿去點就好。</p><form class="frm" id="ordF">
+ <label>店家<select name="shop">${open.map(x=>`<option value="${x.id}" ${x.id==id?"selected":""}>${esc(x.n)}${x.h[w.i]?"":"（這天中午沒開）"}</option>`).join("")}</select></label>
+ <div class="row2"><label>方式<select name="to"><option>外帶</option><option>內用</option><option>外送</option></select></label>
+ <label>幾點收單<select name="dl"><option value="">不設定</option><option>11:00</option><option selected>11:15</option><option>11:30</option><option>11:45</option><option>12:00</option></select></label></div>
+ <label>你的暱稱（帶頭的人）<input type="text" name="me" maxlength="16" required value="${esc(myName)}" placeholder="例如 Vito"></label>
+ <button class="btn" type="submit">建立點餐單並分享</button>
+ <p class="hint" style="margin-top:8px">資料透過免費的 ntfy.sh 傳送，只有暱稱與餐點，約 12 小時後自動消失。</p></form>`,"開點餐單");
+ $("#ordF").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target),x=byId(f.get("shop"));myName=f.get("me").trim();LS.set("jl_name",myName);
+  const tp="jl-"+rid(18),key=rid(16),to=f.get("to");
+  const poll={t:"poll",v:1,ord:1,title:`${w.label}（${DAYS[w.i]}）${x.n} 點餐單`,to,dl:f.get("dl"),day:w.key,by:myName,own:await sha(key),max:1,opts:[{id:x.id,n:x.n,g:x.g,m:x.mode,mi:x.mins}]};
+  const btn=e.target.querySelector("button[type=submit]");btn.disabled=true;btn.textContent="建立中…";
+  try{await vpost(tp,poll);rememberPoll({tp,title:poll.title,ts:Date.now(),key,ord:1});closeSheet();openPoll(tp);toast("點餐單建立好了，按「分享點餐連結」丟到群組 👇")}
+  catch(err){btn.disabled=false;btn.textContent="建立點餐單並分享";toast("連不上伺服器，可能是公司網路擋住，換手機網路試試")}};}
+function renderOrderHead(P,isOwner){const o=P.opts[0],x=byId(o.id);
+ $("#vMain").innerHTML=`<div class="card vhead"><small>${esc(P.by)} 帶頭</small><h3>📝 ${esc(P.title)}</h3>
+ <p class="vmeta">${P.to?P.to+"・":""}${o.m||""}約 ${o.mi||"?"} 分・${VP.lock?"🔒 已收單":P.dl?"⏰ "+P.dl+" 收單":"還沒收單"}</p>
+ <div class="tags"><button class="sbtn g" id="vShare">📤 分享點餐連結</button><button class="sbtn" id="vCopy">複製連結</button>${x?`<button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a>`:""}<button class="sbtn" id="vBack">↩ 回首頁</button></div></div>`;
+ $("#vShare").onclick=sharePoll;$("#vCopy").onclick=async()=>{try{await navigator.clipboard.writeText(pollLink(VP.tp));toast("已複製連結 ✔")}catch(e){toast(pollLink(VP.tp))}};$("#vBack").onclick=closePoll;}
+const oKey=i=>i.n+"|"+(i.note||"");
+function orderAgg(){const L=Object.values(VP.orders).filter(o=>o.items&&o.items.length).sort((a,b)=>a.time-b.time),agg={};
+ L.forEach(o=>o.items.forEach(i=>{const a=agg[i.n]||(agg[i.n]={n:i.n,q:0,notes:{}});a.q+=i.q;if(i.note)a.notes[i.note]=(a.notes[i.note]||0)+i.q}));
+ return{L,agg:Object.values(agg).sort((a,b)=>b.q-a.q),qty:L.reduce((s,o)=>s+o.items.reduce((t,i)=>t+i.q,0),0)}}
+function orderText(){const P=VP.poll,o=P.opts.find(o=>o.id==VP.closed.win)||P.opts[0],{L,agg,qty}=orderAgg();
+ return `📝【${o.n}】點餐單${P.to?"（"+P.to+"）":""}\n共 ${L.length} 人・${qty} 份\n— 品項合計 —\n`+agg.map(a=>`${a.n} ×${a.q}${Object.keys(a.notes).length?"（"+Object.entries(a.notes).map(([k,v])=>k+(v>1?"×"+v:"")).join("、")+"）":""}`).join("\n")+
+ "\n— 每人明細 —\n"+L.map(p=>`${p.who}：${p.items.map(i=>i.n+"×"+i.q+(i.note?"（"+i.note+"）":"")).join("、")}`).join("\n")}
+function renderOrder(isOwner){const box=$("#ordBox");if(!box||!VP.closed)return;const P=VP.poll,o=P.opts.find(o=>o.id==VP.closed.win)||P.opts[0],x=byId(o.id),mine=VP.orders[myUid()],locked=!!VP.lock;
+ if(oDraft===null||(!oTouched&&mine))oDraft=mine?mine.items.map(i=>({...i})):[];
+ if(!box.dataset.tp||box.dataset.tp!=VP.tp+"|"+o.id+"|"+locked+"|"+!!(mine&&mine.items.length)){box.dataset.tp=VP.tp+"|"+o.id+"|"+locked+"|"+!!(mine&&mine.items.length);
+  const dl=x?dishOf(x).d:[];
+  box.innerHTML=`<div class="card" style="padding:12px 14px;margin-top:12px" id="ordForm"><h3 style="font-size:1.05rem">🍽 我要點什麼（${esc(o.n)}）</h3>
+  ${locked?`<p class="vmeta">🔒 帶頭的人已經收單，不能再改了。要加點請直接跟 ${esc(P.by)} 說。</p>`:`
+  <label class="frm" style="display:block;margin-top:6px">你的暱稱<input type="text" id="oName" maxlength="16" value="${esc(myName)}" placeholder="例如 小明"></label>
+  ${dl.length?`<p class="vmeta" style="margin-top:8px">熱門餐點，點一下加入：</p><div class="oqk">${dl.map(s=>`<button type="button" class="${s.startsWith("★")?"hot":""}" data-q="${esc(s.replace("★",""))}">${s.startsWith("★")?"👑 ":""}${esc(s.replace("★",""))}</button>`).join("")}</div>`:""}
+  <div class="oadd"><input type="text" id="oTxt" maxlength="30" placeholder="或自己輸入，例如：排骨飯"><button type="button" class="sbtn y" id="oAdd">＋ 加入</button></div>
+  <div id="oItems"></div>
+  <div class="tags" style="margin-top:10px"><button class="btn" id="oSend" style="flex:1"></button></div>
+  ${mine&&mine.items.length?`<button class="sbtn" id="oCancel" style="margin-top:6px">🙅 我這次不吃了</button>`:""}`}</div>
+  <div class="card" style="padding:12px 14px;margin-top:10px"><h3 style="font-size:1.05rem">📋 整理好的點餐單</h3><div id="oSum" class="osum"></div>
+  <div class="tags" style="margin-top:10px"><button class="sbtn y" id="oCopy">📋 複製點餐單</button><button class="sbtn g" id="oShare">📤 傳到 LINE</button>${isOwner?`<button class="sbtn c" id="oLock">${locked?"🔓 重新開放":"🔒 收單"}</button>`:""}</div></div>`;
+  if(!locked){const add=n=>{n=n.trim();if(!n)return;oTouched=true;const e=oDraft.find(i=>i.n==n&&!i.note);if(e)e.q=Math.min(20,e.q+1);else oDraft.push({n,q:1,note:""});drawItems()};
+   box.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>add(b.dataset.q));
+   $("#oAdd").onclick=()=>{add($("#oTxt").value);$("#oTxt").value=""};$("#oTxt").onkeydown=e=>{if(e.key=="Enter"){e.preventDefault();$("#oAdd").click()}};
+   $("#oName").oninput=e=>{myName=e.target.value};
+   $("#oSend").onclick=async()=>{const nmv=$("#oName").value.trim();if(!nmv){toast("先填暱稱");$("#oName").focus();return}if(!oDraft.length){toast("先加一樣餐點");return}
+    myName=nmv;LS.set("jl_name",myName);const b=$("#oSend");b.disabled=true;
+    try{await vpost(VP.tp,{t:"order",uid:myUid(),who:myName,items:oDraft.map(i=>({n:i.n,q:i.q,note:(i.note||"").trim()}))});oTouched=false;toast("已送出 ✔")}catch(e){toast("送出失敗，換手機網路試試")}b.disabled=false};
+   const oc=$("#oCancel");if(oc)oc.onclick=async()=>{try{await vpost(VP.tp,{t:"order",uid:myUid(),who:myName||"?",items:[]});oDraft=[];oTouched=false;box.dataset.tp="";toast("已取消你的餐點")}catch(e){toast("送出失敗")}};
+   drawItems();}
+  $("#oCopy").onclick=async()=>{try{await navigator.clipboard.writeText(orderText());toast("已複製，可以直接貼給店家 ✔")}catch(e){showSheet(`<h3>點餐單</h3><pre style="white-space:pre-wrap;font:inherit;margin-top:10px">${esc(orderText())}</pre>`,"點餐單")}};
+  $("#oShare").onclick=()=>shareOut(orderText(),pollLink(VP.tp));
+  const ol=$("#oLock");if(ol)ol.onclick=async()=>{const my=myPolls().find(p=>p.tp==VP.tp);try{await vpost(VP.tp,{t:"lock",on:!locked,key:my.key})}catch(e){toast("失敗，請再試一次")}};}
+ const {L,agg,qty}=orderAgg();
+ $("#oSum").innerHTML=L.length?`<p class="vmeta">共 <b>${L.length}</b> 人・<b>${qty}</b> 份${VP.lock?"・🔒 已收單":""}</p><h4>品項合計（拿這個點）</h4><ul>${agg.map(a=>`<li><b>${esc(a.n)}${Object.keys(a.notes).length?`<br><small style="opacity:.75">${Object.entries(a.notes).map(([k,v])=>esc(k)+(v>1?"×"+v:"")).join("、")}</small>`:""}</b><span>×${a.q}</span></li>`).join("")}</ul>
+ <h4>每人明細</h4><ul>${L.map(p=>`<li><b>${esc(p.who)}${p.uid==myUid()?"（我）":""}</b><span style="text-align:right">${p.items.map(i=>esc(i.n)+"×"+i.q+(i.note?`<small>（${esc(i.note)}）</small>`:"")).join("<br>")}</span></li>`).join("")}</ul>`:'<p class="vmeta">還沒有人填，先填自己的，再把連結分享出去吧！</p>';
+ const s=$("#oSend");if(s)s.textContent=`${mine&&mine.items.length?"更新我的餐點":"送出我的餐點"}（${oDraft.reduce((t,i)=>t+i.q,0)} 份）`;}
+function drawItems(){const el=$("#oItems");if(!el)return;
+ el.innerHTML=oDraft.length?oDraft.map((i,k)=>`<div class="orow"><b>${esc(i.n)}</b><div class="qty"><button type="button" data-m="${k}" aria-label="減少">−</button><span>${i.q}</span><button type="button" data-p="${k}" aria-label="增加">＋</button></div><button type="button" class="sbtn" data-r="${k}" aria-label="移除">✕</button><input type="text" data-n="${k}" maxlength="30" value="${esc(i.note||"")}" placeholder="備註：不要蔥、飯少、加辣…"></div>`).join(""):'<p class="vmeta" style="margin-top:8px">還沒加任何餐點</p>';
+ el.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{oTouched=true;const i=oDraft[b.dataset.m];if(i.q>1)i.q--;else oDraft.splice(b.dataset.m,1);drawItems()});
+ el.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{oTouched=true;const i=oDraft[b.dataset.p];i.q=Math.min(20,i.q+1);drawItems()});
+ el.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{oTouched=true;oDraft.splice(b.dataset.r,1);drawItems()});
+ el.querySelectorAll("[data-n]").forEach(inp=>inp.oninput=()=>{oTouched=true;oDraft[inp.dataset.n].note=inp.value});
+ const s=$("#oSend");if(s){const mine=VP.orders[myUid()];s.textContent=`${mine&&mine.items.length?"更新我的餐點":"送出我的餐點"}（${oDraft.reduce((t,i)=>t+i.q,0)} 份）`}}
 
 // ===== PWA install =====
 let deferredInstall=null;const standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
