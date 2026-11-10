@@ -335,7 +335,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
 </section>
 
 <footer>
- <span class="ver">版本 2026/11/10・繪本版＋招牌菜＋聚餐紀錄＋天氣</span><br>
+ <span class="ver">版本 2026/11/10・繪本版＋招牌菜＋聚餐紀錄＋天氣</span><br><span id="pubDate">店家名單更新：2026-11-10</span><br>
  店家資料為 Google 地圖（2026 年 11 月）；價位 $ 約 NT$200 以下、$$ 約 NT$200–400<br>
  走路／騎車時間以直線距離估算，營業時間可能變動，出發前請再確認<br>天氣資料：<a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>（金山街座標，中午 12:00 預報）<br>
  已排除：薑母鴨、居酒屋、串燒、燒肉、酒吧、咖啡店、只開晚上與高價吃到飽的店
@@ -666,17 +666,32 @@ function renderLocalNote(){const n=OV.add.length+Object.keys(OV.edit).length+OV.
 // ===== publish via GitHub =====
 function exportShops(){const keep=D.concat([]).map(x=>{const o={id:x.id,n:x.n,c:x.c,p:x.p,h:x.h,la:x.la??null,ln:x.ln??null,r:x.r||null,v:x.v||0};if(x.walk&&x.la==null)o.walk=x.walk;if(x.link)o.link=x.link;if(x.dish)o.dish=x.dish;return o});
  return JSON.stringify({updated:ymd(new Date()),shops:keep},null,1);}
-$("#publish").onclick=()=>{const js=exportShops();const n=OV.add.length+Object.keys(OV.edit).length+OV.hide.length;
- showSheet(`<h3>📤 發布給大家</h3><div class="frm"><p class="note" style="margin-top:8px">${n?`會把你手機上的 ${n} 筆修改，連同原本名單一起發布（共 ${D.length} 間）。`:"你目前沒有修改，發布的會是現在的名單。"}需要 GitHub 帳號並有這個 repo 的權限（Vito 本人）。同事可以改用「備份」把文字傳給 Vito。</p>
- <ol style="list-style:none;display:grid;gap:8px;margin-top:8px;font-size:.92rem"><li>① 按「複製名單」</li><li>② 按「開啟 GitHub」→ 在編輯框全選刪掉，貼上</li><li>③ 按綠色「Commit changes」，約 1 分鐘後大家重新整理就看得到</li></ol>
- <div class="tags" style="margin-top:12px"><button class="sbtn y" id="pubCopy">① 複製名單</button><a class="sbtn s" href="https://github.com/${REPO}/edit/main/shops.json" target="_blank" rel="noopener">② 開啟 GitHub</a></div>
- <textarea id="pubTxt" readonly style="min-height:80px;margin-top:10px">${esc(js)}</textarea>
- <p class="hint" style="margin-top:10px">發布成功後，可以按這裡清掉本機修改，避免重複：</p><button class="sbtn" id="pubClear">清除本機的店家修改</button></div>`,"發布給大家");
- $("#pubCopy").onclick=async()=>{try{await navigator.clipboard.writeText(js);toast("已複製名單 ✔")}catch(e){$("#pubTxt").select();toast("請長按選取後複製")}};
- $("#pubClear").onclick=e=>{if(!e.target.dataset.ok){e.target.dataset.ok=1;e.target.textContent="確定已發布？再按一次清除";return}OV={add:[],edit:{},hide:[]};saveOV();buildD();rebuild();closeSheet();refreshAll(true);toast("已清除本機修改")};};
+function changeSummary(){const L=[];OV.add.forEach(a=>L.push("➕ 新增："+a.n));Object.entries(OV.edit).forEach(([id,e])=>{const b=BASE.find(x=>x.id==id);L.push("✏️ 修改："+(b?b.n:e.n))});OV.hide.forEach(id=>{const b=BASE.find(x=>x.id==id);if(b)L.push("🚫 歇業移除："+b.n)});return L}
+function issueURL(){const L=changeSummary();const payload=JSON.stringify({add:OV.add,edit:OV.edit,hide:OV.hide.filter(id=>BASE.some(x=>x.id==id))});
+ const body=`由「金山街午餐繪本」網頁送出的店家更新。\n\n${L.join("\n")}\n\n請直接按下方綠色的 Submit new issue（不用改任何內容）。\n\n\`\`\`json\n${payload}\n\`\`\``;
+ return `https://github.com/${REPO}/issues/new?title=${encodeURIComponent("店家更新 "+ymd(new Date())+"（"+L.length+" 筆）")}&body=${encodeURIComponent(body)}`;}
+$("#publish").onclick=()=>{const L=changeSummary();const js=exportShops();
+ if(!L.length){showSheet(`<h3>📤 發布給大家</h3><p class="note" style="margin-top:10px">你目前沒有新增、修改或隱藏任何店家，沒有東西需要發布。先用「➕ 新增店家」或各店的「✏️ 修改」改好，再回來按這裡。</p>`,"發布給大家");return}
+ const u=issueURL(),tooLong=u.length>7500;
+ showSheet(`<h3>📤 發布給大家</h3><div class="frm"><div class="box2" style="margin-top:10px"><h4>這次要發布的修改（${L.length} 筆）</h4><ol>${L.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>
+ ${tooLong?`<p class="note" style="margin-top:10px">⚠ 這次修改太多，無法一鍵送出，請用下方「手動發布」。</p>`:`<a class="btn" style="display:block;text-align:center;text-decoration:none" href="${u}" target="_blank" rel="noopener">🚀 一鍵送出更新</a>
+ <ol style="list-style:none;display:grid;gap:6px;margin-top:10px;font-size:.88rem"><li>① 會打開 GitHub，內容都已經填好</li><li>② 直接按綠色的「Submit new issue」</li><li>③ 約 2 分鐘後，大家重新整理網頁就會看到新名單 🎉</li></ol>
+ <p class="hint" style="margin-top:8px">要先登入 GitHub。Vito 送出會自動套用；同事送出的，Vito 在那張單加上「approve」標籤後才會套用。</p>`}
+ <details style="margin-top:14px"><summary style="cursor:pointer;font-size:.88rem">手動發布（備用）</summary>
+ <ol style="list-style:none;display:grid;gap:6px;margin-top:8px;font-size:.86rem"><li>① 複製名單 → ② 開啟 GitHub → 全選刪掉後貼上 → ③ Commit changes</li></ol>
+ <div class="tags" style="margin-top:8px"><button class="sbtn y" id="pubCopy">① 複製名單</button><a class="sbtn s" href="https://github.com/${REPO}/edit/main/shops.json" target="_blank" rel="noopener">② 開啟 GitHub</a></div>
+ <textarea id="pubTxt" readonly style="min-height:70px;margin-top:8px">${esc(js)}</textarea></details>
+ <p class="hint" style="margin-top:12px">發布成功後，網頁會自動把已經發布的修改從這支手機清掉。</p></div>`,"發布給大家");
+ $("#pubCopy").onclick=async()=>{try{await navigator.clipboard.writeText(js);toast("已複製名單 ✔")}catch(e){$("#pubTxt").select();toast("請長按選取後複製")}};};
 
 // load published shops.json (if newer than embedded)
-async function loadShops(){try{const r=await fetch("shops.json",{cache:"no-store"});if(!r.ok)return;const j=await r.json();if(!j.shops||!j.shops.length)return;BASE=j.shops;buildD();rebuild();refreshAll(false);}catch(e){}}
+async function loadShops(){try{const r=await fetch("shops.json",{cache:"no-store"});if(!r.ok)return;const j=await r.json();if(!j.shops||!j.shops.length)return;BASE=j.shops;
+ const F=["n","c","p","h","la","ln","r","v"],same=(a,b)=>F.every(k=>JSON.stringify(a[k]??null)==JSON.stringify(b[k]??null));const before=JSON.stringify(OV);
+ OV.add=OV.add.filter(a=>!BASE.some(b=>b.id==a.id));OV.hide=OV.hide.filter(id=>BASE.some(b=>b.id==id));
+ Object.keys(OV.edit).forEach(id=>{const b=BASE.find(x=>x.id==id);if(!b||same(b,{...b,...OV.edit[id]}))delete OV.edit[id]});
+ if(JSON.stringify(OV)!=before){saveOV();toast("你的修改已發布，大家都看得到了 🎉")}
+ if(j.updated)$("#pubDate").textContent="店家名單更新：" +j.updated;
+ buildD();rebuild();refreshAll(false);}catch(e){}}
 
 function refreshAll(anim){$("#tot").textContent=D.length;renderTabs();renderDay(anim);todayCard();wheelPool();mapDraw();renderList();renderLog();renderLocalNote();}
 document.fonts&&document.fonts.ready.then(()=>drawWheel());
