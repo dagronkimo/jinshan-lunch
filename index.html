@@ -326,7 +326,7 @@ footer{text-align:center;font-size:.8rem;opacity:.8;padding:26px 0 calc(40px + e
 
 <section id="wheel">
  <h2><span class="dot" style="background:var(--coral)"></span>午餐轉盤</h2>
- <p class="note">轉到喜歡的店，可以直接排進這週某一天的午餐行程。</p>
+ <p class="note">轉到的店會<b>自動排進</b>下方「這週午餐行程」目前選的那一天（<span id="wDayLbl"></span>）；不喜歡可以按「復原」或再轉一次。</p>
  <div class="card wheel-card">
   <div class="pills" id="zone" role="group" aria-label="區域">
    <button class="pill" data-z="all" aria-pressed="true">全部</button><button class="pill" data-z="core" aria-pressed="false">金山街一帶・走路</button><button class="pill" data-z="near" aria-pressed="false">附近・騎車</button>
@@ -533,9 +533,10 @@ function todayCard(){const w=week[selDay],x=byId(plan[w.key]);const el=$("#today
 let zone="all",pool=[],rot=0,spinning=false,lastPick=null;
 const wheelDow=()=>week[selDay].i;
 function wheelPool(){pool=[];pool=D.filter(x=>inCat(x)&&(zone=="all"||x.z==zone)&&!skip.has(x.id)&&(!$("#fOpen").checked||x.h[wheelDow()])&&(!$("#fCheap").checked||x.p==1)&&!($("#avoidRecent").checked&&recent(x.id,7,week[selDay].date))&&!($("#onlyNew").checked&&visits(x.id).length));
- pool.sort((a,b)=>CATKEYS.indexOf(a.g)-CATKEYS.indexOf(b.g)||a.k-b.k);$("#wcount").textContent=`轉盤上有 ${pool.length} 間${cats.size?"（"+[...cats].map(c=>G[c].n).join("、")+"）":""}`;$("#spin").disabled=!pool.length;$("#fOpenDay").textContent=`${week[selDay].label}（${DAYS[week[selDay].i]}）`;drawWheel();}
+ pool.sort((a,b)=>CATKEYS.indexOf(a.g)-CATKEYS.indexOf(b.g)||a.k-b.k);$("#wcount").textContent=`轉盤上有 ${pool.length} 間${cats.size?"（"+[...cats].map(c=>G[c].n).join("、")+"）":""}`;$("#spin").disabled=!pool.length;$("#fOpenDay").textContent=`${week[selDay].label}（${DAYS[week[selDay].i]}）`;$("#wDayLbl").textContent=`${week[selDay].label}（${DAYS[week[selDay].i]}）`;drawWheel();}
 const WC=["#F2A497","#F6D27A","#A8D3E6","#B9DAA5"];
-function drawWheel(){const cv=$("#wc"),g=cv.getContext("2d"),R=360,n=pool.length;g.clearRect(0,0,720,720);g.save();g.translate(R,R);
+function drawWheel(){drawOn($("#wc"),pool,rot)}
+function drawOn(cv,pool,rot){const g=cv.getContext("2d"),R=360,n=pool.length;g.clearRect(0,0,720,720);g.save();g.translate(R,R);
  g.beginPath();g.arc(0,0,R-4,0,7);g.fillStyle="#FFFCF6";g.fill();
  g.rotate(rot);if(n){const a=2*Math.PI/n;
   for(let i=0;i<n;i++){g.beginPath();g.moveTo(0,0);g.arc(0,0,R-10,i*a,(i+1)*a);g.closePath();g.fillStyle=pool[i].col;g.fill();g.lineWidth=4;g.strokeStyle="#3E3A39";g.stroke();
@@ -547,14 +548,14 @@ function spin(){if(spinning||!pool.length)return;const n=pool.length,a=2*Math.PI
  if(reduce){rot=target;drawWheel();showPick(pool[idx]);return}
  spinning=true;$("#spin").disabled=true;const start=rot%(2*Math.PI),delta=((target-start)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)+2*Math.PI*6,t0=performance.now(),dur=4200;
  (function f(t){const p=Math.min(1,(t-t0)/dur);rot=start+delta*(1-Math.pow(1-p,4));drawWheel();if(p<1)requestAnimationFrame(f);else{spinning=false;$("#spin").disabled=false;showPick(pool[idx])}})(t0);}
-function showPick(x){lastPick=x;const w=week[selDay];const r=$("#res");r.classList.add("show");r.classList.remove("pop");void r.offsetWidth;if(!reduce)r.classList.add("pop");
+function showPick(x){lastPick=x;const w=week[selDay];const prevC=custom[w.key];setDayPick(w,x.id);toastUndo(`已排進 ${w.label}（${DAYS[w.i]}）午餐`,()=>{if(prevC)custom[w.key]=prevC;else delete custom[w.key];LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true)});const r=$("#res");r.classList.add("show");r.classList.remove("pop");void r.offsetWidth;if(!reduce)r.classList.add("pop");
  const hh=x.h[w.i];
  r.innerHTML=`<div style="display:flex;gap:12px;align-items:center"><div style="width:56px;flex:none">${ICON[x.g]}</div><div><small>轉到了！</small><h3>${nm(x)}</h3>${isToday(w)?osb(x):""}</div></div>
  <div class="tags"><span class="tg" style="background:${x.col}">${G[x.g].n}</span><span class="tg">${esc(x.c)}</span><span class="tg">${price(x)}</span><span class="tg">${x.mode}約 ${x.mins} 分</span><span class="tg">⭐ ${x.r}・${x.v.toLocaleString()} 則</span><span class="tg">#${x.k}</span></div>
  ${chips(x,3)}
  <p style="font-size:.88rem;margin-top:8px">${w.label}（${DAYS[w.i]}）午餐時段：${hh||'<span class="warn">公休</span>'}</p>
- <div class="acts"><button class="sbtn" data-sheet="${x.id}">🍽 招牌菜＆評論</button><button class="sbtn y" id="toPlan">排進 ${w.label}（${DAYS[w.i]}）午餐</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" id="shPick">📤 分享到 LINE</button><button class="sbtn" id="reSpin">不想吃，排除再轉</button></div>`;
- $("#toPlan").onclick=()=>{custom[w.key]=x.id;LS.set("jl_custom_"+week[0].key,custom);rebuild();renderDay(true);todayCard();mapDraw();location.hash="#days";};
+ <div class="acts"><button class="sbtn" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn y" href="#days" id="toPlan">✔ 已排進 ${w.label}（${DAYS[w.i]}），去看行程</a><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" id="shPick">📤 分享到 LINE</button><button class="sbtn" id="reSpin">不想吃，排除再轉</button></div>`;
+
  $("#shPick").onclick=()=>shareOut(`🍽 轉盤決定：今天中午吃「${x.n}」！\n${G[x.g].n}・⭐${x.r}・${x.mode}約 ${x.mins} 分${dishOf(x).d[0]?"\n招牌："+dishOf(x).d[0].replace("★",""):""}\n導航：${nav(x)}`);
  $("#reSpin").onclick=()=>{skip.add(x.id);saveSkip();refreshAll();spin();};
  mapDraw();}
@@ -581,6 +582,29 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-sheet]");i
 function showSheet(html,label){lastFocus=lastFocus||document.activeElement;$("#sheet").innerHTML=`<div class="grab"></div><button class="sbtn x" id="shX" aria-label="關閉">✕ 關閉</button>`+html;$("#sheet").setAttribute("aria-label",label||"視窗");const bg=$("#sheetBg");bg.classList.add("show");bg.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";}
 function toast(s){const t=$("#toast");t.textContent=s;t.classList.remove("show");void t.offsetWidth;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),2400)}
 
+function setDayPick(w,id){custom[w.key]=id;LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);}
+function toastUndo(msg,undo){const t=$("#toast");t.innerHTML=`${msg} <button class="sbtn" id="undoBtn" style="margin-left:6px;background:var(--paper)">↩ 復原</button>`;t.classList.remove("show");void t.offsetWidth;t.classList.add("show");
+ $("#undoBtn").onclick=()=>{undo();t.classList.remove("show");toast("已復原")};clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),5000)}
+// ----- per-day mini wheel -----
+function openDayWheel(w){let walkOnly=false,dRot=0,busy=false;
+ const cands=()=>D.filter(x=>x.h[w.i]&&!skip.has(x.id)&&inCat(x)&&(!walkOnly||x.z=="core")&&!Object.entries(plan).some(([k,v])=>k!=w.key&&v==x.id)&&!($("#avoidRecent").checked&&recent(x.id,7,w.date)));
+ showSheet(`<h3>🎡 ${w.label}（${DAYS[w.i]}）用轉盤決定</h3><p class="note" style="margin:4px 0 0">轉到哪間就直接填進這天的行程。候選：這天中午有開、這週其他天沒排到${cats.size?"、分類："+[...cats].map(c=>G[c].n).join("、"):""}。</p>
+ <label class="chkl"><input type="checkbox" id="dwWalk"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8l3 3 7-7" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>只轉走路就到的</label>
+ <div class="wheelbox" style="max-width:300px"><svg class="ptr" viewBox="0 0 40 44" aria-hidden="true"><path d="M6 4h28L20 40z" fill="#F2A497" stroke="#3E3A39" stroke-width="3" stroke-linejoin="round"/></svg><canvas id="dwc" width="720" height="720" aria-label="${w.label} 的轉盤"></canvas><button class="hub" id="dwHub" aria-label="轉">轉！</button></div>
+ <p class="wcount" id="dwCnt"></p><div id="dwRes" aria-live="polite"></div><button class="btn" id="dwSpin">轉！${w.label} 吃這間</button>`,"這天的轉盤");
+ let list=[];const draw=()=>{list=cands();$("#dwCnt").textContent=`轉盤上有 ${list.length} 間`;$("#dwSpin").disabled=!list.length;drawOn($("#dwc"),list,dRot)};draw();
+ $("#dwWalk").onchange=e=>{walkOnly=e.target.checked;draw()};
+ const go=()=>{if(busy||!list.length)return;const n=list.length,a=2*Math.PI/n,idx=Math.floor(Math.random()*n);const target=-Math.PI/2-(idx*a+a/2)+(Math.random()-.5)*a*.6;
+  const done=()=>{busy=false;$("#dwSpin").disabled=false;const x=list[idx],prev=custom[w.key];setDayPick(w,x.id);
+   $("#dwRes").innerHTML=`<div class="card pop" style="padding:12px 14px;margin-top:10px;background:#FFF0EC"><small>✔ 已填進 ${w.label}（${DAYS[w.i]}）的行程</small><h3 style="font-size:1.15rem">${nm(x)}</h3>${chips(x,3)}<p style="font-size:.84rem;margin-top:6px">${G[x.g].n}・${x.mode}約 ${x.mins} 分・午餐 ${x.h[w.i]}</p>
+   <div class="tags"><button class="sbtn y" id="dwOk">就吃這間，看行程</button><button class="sbtn" id="dwUndo">↩ 復原</button></div></div>`;
+   $("#dwOk").onclick=()=>{closeSheet();document.getElementById("dayPanel").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"})};
+   $("#dwUndo").onclick=()=>{if(prev)custom[w.key]=prev;else delete custom[w.key];LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);$("#dwRes").innerHTML="";draw();toast("已復原")};$("#dwSpin").textContent="再轉一次";};
+  if(reduce){dRot=target;drawOn($("#dwc"),list,dRot);done();return}
+  busy=true;$("#dwSpin").disabled=true;const start=dRot%(2*Math.PI),delta=((target-start)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)+2*Math.PI*5,t0=performance.now(),dur=3600;
+  (function f(t){const p=Math.min(1,(t-t0)/dur);dRot=start+delta*(1-Math.pow(1-p,4));drawOn($("#dwc"),list,dRot);if(p<1)requestAnimationFrame(f);else done()})(t0);};
+ $("#dwSpin").onclick=go;$("#dwHub").onclick=go;}
+
 // ===== days =====
 function renderTabs(){$("#tabs").innerHTML=week.map((w,i)=>`<button class="tab ${isToday(w)?"today":""}" role="tab" aria-selected="${i==selDay}" data-i="${i}"><b>${w.label}</b><small>週${DAYS[w.i]}${WX[w.key]?" "+WMO(WX[w.key].code)[0]:""}</small></button>`).join("");}
 function renderDay(anim){const w=week[selDay],x=byId(plan[w.key]);const P=$("#dayPanel");renderDayWx();
@@ -598,7 +622,7 @@ function renderDay(anim){const w=week[selDay],x=byId(plan[w.key]);const P=$("#da
    <p>⭐ ${x.r}・${x.v.toLocaleString()} 則評論・${price(x)}・排名 #${x.k}</p>
    ${chips(x,3)}
    <p>${w.label} 午餐時段：${x.h[w.i]}${warn?` <span class="warn">⚠ 到店時間不在營業時段內，建議早點出發或換一間</span>`:""}</p>
-   <div class="tags"><button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" data-act="swap">換一間</button><button class="sbtn c" data-act="wheel">用轉盤決定</button><button class="sbtn" data-log="${x.id}" data-date="${w.key}">✅ 吃了，記一筆</button><button class="sbtn g" data-act="share">📤 分享到 LINE</button>${isCustom?'<button class="sbtn" data-act="auto">改回推薦</button>':""}<button class="sbtn" data-act="skip">不想吃</button></div>
+   <div class="tags"><button class="sbtn y" data-sheet="${x.id}">🍽 招牌菜＆評論</button><a class="sbtn s" href="${nav(x)}" target="_blank" rel="noopener">導航</a><button class="sbtn g" data-act="swap">換一間</button><button class="sbtn c" data-act="wheel">🎡 用轉盤決定這天</button><button class="sbtn" data-log="${x.id}" data-date="${w.key}">✅ 吃了，記一筆</button><button class="sbtn g" data-act="share">📤 分享到 LINE</button>${isCustom?'<button class="sbtn" data-act="auto">改回推薦</button>':""}<button class="sbtn" data-act="skip">不想吃</button></div>
    ${alts.length?`<div class="alts">備案（同一天有開、不同口味優先）${alts.map(y=>`<div class="row"><span>${nm(y)}<br><small style="opacity:.8">${y.c}・${price(y)}・${y.mode} ${y.mins} 分・⭐${y.r}${dishOf(y).d[0]?"・🍽 "+dishOf(y).d[0].replace("★",""):""}</small></span><button class="sbtn g" data-alt="${y.id}">換成這間</button></div>`).join("")}</div>`:""}
   </div></div>
   <div class="it home ${anim&&!reduce?"pop":""}"><div class="card"><span class="time">${fmt(dep+len-5)}</span><h4>${x.mode=="走路"?"散步":"騎車"}回去</h4><p>${fmt(dep+len)} 午休結束，回座位喝口水 💧</p></div></div>
@@ -608,7 +632,7 @@ $("#dayPanel").onclick=e=>{const b=e.target.closest("button");if(!b||b.dataset.s
  else if(b.dataset.act=="swap"){const c=D.filter(y=>y.id!=cur&&!skip.has(y.id)&&y.h[w.i]&&!Object.entries(plan).some(([k,v])=>k!=w.key&&v==y.id));if(c.length)custom[w.key]=c[Math.floor(Math.random()*c.length)].id}
  else if(b.dataset.act=="auto"){delete custom[w.key]}
  else if(b.dataset.act=="skip"){skip.add(cur);saveSkip();delete custom[w.key]}
- else if(b.dataset.act=="wheel"){location.hash="#wheel";return}
+ else if(b.dataset.act=="wheel"){openDayWheel(w);return}
  else if(b.dataset.act=="share"){const x=byId(cur);shareOut(`🍱 ${w.label}（${DAYS[w.i]}）午餐：${x.n}\n${$("#sDep").value} 金山街中段出發・${x.mode}約 ${x.mins} 分\n${dishOf(x).d[0]?"招牌："+dishOf(x).d[0].replace("★","")+"\n":""}導航：${nav(x)}`);return}
  LS.set("jl_custom_"+week[0].key,custom);rebuild();refreshAll(true);};
 $("#tabs").onclick=e=>{const b=e.target.closest(".tab");if(!b)return;selDay=+b.dataset.i;renderTabs();renderDay(true);todayCard();wheelPool();mapDraw();};
